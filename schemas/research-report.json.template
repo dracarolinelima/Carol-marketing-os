@@ -1,78 +1,165 @@
 {
-  "_template_version": "1.0",
-  "_description": "Research report produced by MOS-Researcher. Consumed by MOS-Strategist. Used for competitor analysis, market sizing, and trend scanning. Distinct from audience-profile — this covers markets and competitors, not the target audience.",
-  "_instructions": "Replace all [FILL IN] values. Save as research-report-[TOPIC]-[DATE].json",
-
+  "_template_version": "2.0",
+  "_description": "Relatorio de pesquisa externa de mercado produzido pelo MOS-Market Research para o Carol Marketing OS.",
+  "_instructions": "Usar para mercado, concorrencia, tendencias, canais e comportamento externo. Nao usar como substituto de Audience Intelligence ou Scientific Research. Separar fatos, associacoes, hipoteses e implicacoes estrategicas.",
   "report_id": "RES-[YYYYMMDD]-[001]",
-  "created_by": "MOS-Researcher",
+  "status": "draft",
+  "created_by": "MOS-Market Research",
   "created_date": "[YYYY-MM-DD]",
-  "report_type": "[FILL IN: competitor_analysis | market_sizing | trend_scan | channel_analysis]",
-  "subject": "[FILL IN: What was researched — e.g., 'Top 5 SEO agency competitors' or 'LinkedIn ad market for B2B SaaS']",
-
-  "research_question": "[FILL IN: The single question this report answers — e.g., 'What are our top 3 competitors doing differently in their LinkedIn content?']",
-
+  "approved_by": null,
+  "approved_date": null,
+  "report_type": "[COMPETITOR_ANALYSIS | TREND_SCAN | CHANNEL_ANALYSIS | MARKET_CONTEXT | DEMAND_SIGNAL | OTHER]",
+  "subject": "[Tema pesquisado]",
+  "research_question": "[Pergunta especifica que esta pesquisa deve responder]",
+  "scope": {
+    "geography": null,
+    "time_period": null,
+    "channels": [],
+    "included_topics": [],
+    "excluded_topics": [],
+    "scope_notes": null
+  },
   "key_findings": [
     {
-      "finding": "[FILL IN: Finding #1 — specific and citable]",
-      "confidence": "[high | medium | low]",
-      "source": "[FILL IN: Specific source — URL, review site, competitor page]",
-      "strategic_implication": "[FILL IN: What should we do with this? 'This means we should...' not 'This is interesting']"
-    },
-    {
-      "finding": "[FILL IN: Finding #2]",
-      "confidence": "[high | medium | low]",
-      "source": "[FILL IN]",
-      "strategic_implication": "[FILL IN]"
-    },
-    {
-      "finding": "[FILL IN: Finding #3 — max 5 total findings, force-rank]",
-      "confidence": "[high | medium | low]",
-      "source": "[FILL IN]",
-      "strategic_implication": "[FILL IN]"
+      "finding": "[Achado especifico e verificavel]",
+      "classification": "[FATO_OBSERVADO | ASSOCIACAO | HIPOTESE]",
+      "confidence": "[HIGH | MEDIUM | LOW]",
+      "source_references": [],
+      "limitations": null,
+      "strategic_implication": null
     }
   ],
-
-  "competitor_map": [
+  "external_language": {
+    "recurring_terms": [],
+    "recurring_questions": [],
+    "recurring_concerns": [],
+    "exact_quotes": [
+      {
+        "quote": "[Trecho curto quando necessario]",
+        "source_reference": "[Fonte verificavel]",
+        "context": null
+      }
+    ],
+    "interpretation_notes": []
+  },
+  "competitor_or_peer_observations": [
     {
-      "name": "[FILL IN: Competitor name]",
-      "url": "[FILL IN: Website]",
-      "strengths": ["[FILL IN: What they do well — be specific and fair]"],
-      "weaknesses": ["[FILL IN: Where they fall short — based on reviews/data, not opinion]"],
-      "pricing": "[FILL IN: Known pricing or 'unknown']",
-      "positioning": "[FILL IN: How they position themselves in 1 sentence]",
-      "key_differentiator": "[FILL IN: The one thing that makes them stand out]",
-      "source": "[FILL IN: How you gathered this data — their website, G2 reviews, etc.]"
+      "name": "[Nome]",
+      "type": "[competitor | peer | reference | other]",
+      "url": null,
+      "observed_positioning": null,
+      "observed_topics": [],
+      "observed_formats": [],
+      "observed_offers_or_services": [],
+      "observed_proof_signals": [],
+      "observed_strengths": [],
+      "observed_gaps": [],
+      "source_references": [],
+      "limitations": [],
+      "do_not_infer": "Nao inferir qualidade clinica, resultado financeiro ou eficacia apenas pela presenca digital."
     }
   ],
-
+  "trend_observations": [
+    {
+      "trend": "[Tendencia ou sinal observado]",
+      "evidence": [],
+      "time_relevance": null,
+      "confidence": "[HIGH | MEDIUM | LOW]",
+      "possible_relevance": null,
+      "limitations": null
+    }
+  ],
+  "channel_observations": [
+    {
+      "channel": "[instagram | meta_ads | search | other]",
+      "observation": "[Comportamento ou padrao externo observado]",
+      "source_references": [],
+      "confidence": "[HIGH | MEDIUM | LOW]",
+      "limitations": null
+    }
+  ],
   "market_context": {
-    "market_size": "[FILL IN: Known market size if relevant, or null]",
-    "growth_rate": "[FILL IN: Known growth rate if relevant, or null]",
-    "key_trends": [
-      "[FILL IN: Trend affecting this market]",
-      "[FILL IN: Another trend]"
-    ],
-    "regulatory_notes": "[FILL IN: Any compliance or regulatory factors, or null]"
+    "market_size": null,
+    "growth_rate": null,
+    "demand_signals": [],
+    "regulatory_or_platform_notes": [],
+    "context_limitations": [],
+    "notes": "Nao preencher market size ou growth rate se nao houver fonte confiavel e relevancia para a decisao."
   },
-
-  "recommended_angles": [
-    "[FILL IN: Specific campaign or messaging angle this research suggests we test]",
-    "[FILL IN: Another angle]"
+  "strategic_implications": [
+    {
+      "implication": "[Implicacao possivel para a estrategia]",
+      "classification": "[ASSOCIACAO | HIPOTESE | DECISAO_ESTRATEGICA]",
+      "supported_by": [],
+      "requires_internal_validation": true,
+      "notes": null
+    }
   ],
-
-  "watch_list": [
-    "[FILL IN: Competitor or trend to monitor — include why and how often to check]"
+  "content_opportunities": [
+    {
+      "opportunity": "[Pergunta, tema ou abordagem a considerar]",
+      "basis": [],
+      "patient_journey_stage": null,
+      "content_function": null,
+      "scientific_research_required": false,
+      "notes": null
+    }
   ],
-
   "research_methodology": {
-    "sources_consulted": [
-      "[FILL IN: e.g., 'Competitor websites — 5 sites', 'G2 competitor reviews — 40 reviews', 'Web search — 15 articles']"
-    ],
-    "data_points_collected": "[FILL IN: Total number]",
-    "data_cutoff_date": "[FILL IN: When was the most recent data collected?]",
-    "known_gaps": "[FILL IN: What we couldn't find that would have improved this report]"
+    "search_methods": [],
+    "sources_consulted": [],
+    "source_types": [],
+    "data_points_collected": null,
+    "data_cutoff_date": "[YYYY-MM-DD]",
+    "known_gaps": [],
+    "selection_biases": [],
+    "methodological_limitations": []
   },
-
-  "confidence": "[FILL IN: high | medium | low — overall report confidence]",
-  "confidence_reasoning": "[FILL IN: Why this confidence level?]"
+  "source_quality": {
+    "high_quality_sources": [],
+    "lower_quality_sources": [],
+    "conflicting_sources": [],
+    "unverified_claims": [],
+    "notes": null
+  },
+  "confidence": {
+    "overall": "[HIGH | MEDIUM | LOW | MIXED]",
+    "reasoning": "[Explicar a confianca com base na qualidade, quantidade, atualidade e consistencia das fontes]",
+    "high_confidence_findings": [],
+    "lower_confidence_findings": []
+  },
+  "unknowns": [],
+  "recommended_next_steps": [],
+  "handoff": {
+    "next_agent": "[MOS-Strategist | MOS-Audience Intelligence | MOS-Scientific Research | MOS-Performance Analyst | HUMAN | null]",
+    "what_market_research_supports": [],
+    "what_market_research_does_not_support": [],
+    "internal_validation_needed": [],
+    "scientific_validation_needed": [],
+    "human_decisions_needed": []
+  },
+  "guardrails": {
+    "do_not_invent": [
+      "dados de mercado",
+      "tendencias",
+      "precos de concorrentes",
+      "resultados de concorrentes",
+      "metricas",
+      "popularidade",
+      "evidencia cientifica",
+      "demanda",
+      "causalidade"
+    ],
+    "do_not_assume": [
+      "que tendencia significa estrategia adequada",
+      "que popularidade significa eficacia",
+      "que concorrente visivel tem melhor resultado",
+      "que pratica comum tem suporte cientifico",
+      "que comportamento externo representa nossas pacientes",
+      "que associacao significa causalidade"
+    ],
+    "medical_boundary": "Alegacoes clinicas encontradas na pesquisa externa nao sao consideradas evidencia medica validada. Encaminhar ao MOS-Scientific Research quando forem relevantes.",
+    "internal_data_boundary": "Pesquisa externa nao substitui dados internos. Conclusoes sobre as pacientes da Dra. Caroline devem ser validadas pelo MOS-Audience Intelligence.",
+    "precedence": "Seguranca, etica, legislacao e normas profissionais > evidencia cientifica aplicavel > Marketing Core > dados internos confiaveis > estrategia aprovada > Brand/Voice Guide > aprendizados aprovados > skills e frameworks externos."
+  }
 }
