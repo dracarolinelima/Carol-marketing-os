@@ -1,364 +1,1216 @@
-# Marketing Wisdom — Frameworks & Playbooks
+# Carol Marketing OS — Marketing Wisdom
 
-This file contains battle-tested marketing frameworks the agents consult before executing. These aren't theories — they're patterns extracted from running campaigns, analyzing data, and iterating over years.
+## Purpose
 
-**How agents use this file:**
-- MOS-Copywriter checks Hook Formulas before writing any headline
-- MOS-Researcher checks BOFU-First Research and Competitive Gap before any analysis
-- MOS-Strategist checks Growth Playbooks and Price Ladder before any brief
-- All agents check this before defaulting to generic marketing advice
+This file contains reusable marketing principles and decision frameworks for 
+Dra. Caroline Lima's Marketing OS.
 
----
+It is not the strategic source of truth.
 
-## A. Content Hook Formulas
+The primary strategic authority is:
 
-Every piece of content lives or dies in the first line. These 6 patterns are proven to stop the scroll.
+`memory/carol-marketing-os/marketing-core.md`
 
-### The 6 Proven Hook Patterns
+This file translates that strategy into practical operating principles that 
+agents may consult during research, strategy, creation, editing, design and 
+performance analysis.
 
-**1. Observation + Stat + Contrast + Promise**
-> "I've been watching [trend]. [Specific stat]. [What most people think vs. what's actually true]. I'm going to show you [what to do about it]."
+These principles must never override:
 
-Example: "I've been watching something interesting happen. ChatGPT has over a billion searches per day now. 95% of the sources it cites are from the last 10 months. If your best content is from 2023, you're not in the game. Here's how to fix that."
+1. safety, ethics, law or professional rules;
+2. applicable scientific evidence and guidelines;
+3. the Marketing Core;
+4. reliable internal data;
+5. explicit human decisions.
 
-**2. Personal Limitation + Achievement**
-> "I can't [thing]. Never have been able to. But this week I [specific achievement that seems impossible given the limitation]."
+The purpose is not to preserve generic marketing doctrine.
 
-Example: "I can't code. Never have been able to. But this week I built systems that used to require an entire development team."
-
-**3. Social Proof Opening**
-> "I [was with / talked to] [specific number] [impressive group] [recently]. [Surprising finding]. [Stat that backs it up]."
-
-Example: "I had lunch with 40 8-9 figure founders a few weeks ago. I asked how many were using AI coding tools. 70% raised their hands. And most of these people aren't technical."
-
-**4. Contrarian Challenge**
-> "Everyone says [common wisdom]. That's surface-level thinking. [What actually matters is...]"
-
-Example: "I talk to SEO professionals all the time. When I ask them about AI and search, they say 'optimize for keywords and tags.' That's surface-level thinking. Everyone's doing that already. What actually matters is understanding that every platform works differently."
-
-**5. Simple Declarative**
-> "[Bold, clear statement that frames the entire piece]."
-
-Example: "High performers want to hang out with other high performers."
-
-**6. Harsh Reality**
-> "Harsh reality: [uncomfortable truth most people are avoiding]."
-
-Example: "Harsh reality: most people are coming back to the office."
-
-### Story Pattern
-
-Every good marketing story follows this structure:
-**Context** → **Specific details** (names, places, times, actual numbers) → **Point/Lesson**
-
-Stories without specifics are forgettable. "I met a successful entrepreneur" is weak. "I met a founder running a $200M ad agency in Tokyo who took me to a fish auction at 3:30am" is memorable.
-
-### Engagement Closers
-
-End content with one of these — never with "Like and share" or "Follow for more":
-- "What did I miss?"
-- "What do you think?"
-- "Leave a reply below."
-- Direct provocative question that invites debate
-
-### Numbers That Create Authority
-
-Use specific numbers to signal credibility:
-- **Revenue thresholds**: "$13M+", "$200M+", "9-figure"
-- **Specific stats**: "95%", "70%", "3-5x"
-- **Time frames**: "in the last 10 months", "this week", "a few weeks ago"
-- **Group sizes**: "40 founders", "30,000 members", "16,500 members"
-
-Vague numbers destroy authority. "Many companies" = weak. "70% of the 40 founders I surveyed" = strong.
-
-### Short-Form Video Patterns
-
-**Clone Format (Side-by-Side Comparison):**
-- Left side: "Average [Role]" doing it wrong (3-5 bullet mistakes)
-- Right side: "Smart [Role]" doing it right (3-5 bullet improvements)
-- Same inputs, dramatically different outcomes
-- Caption: Result statement + CTA
-
-**Hot Take Format:**
-- Written hook: Bold, slightly provocative statement
-- Verbal hook: "Alright, I'm kidding. [What's actually true]."
-- Body: 3 numbered steps
-- CTA: Follow-up offer
-
-### Banned Openers
-
-Never start content with:
-- "I'm excited to share..."
-- "In today's world..."
-- "As a [title], I..."
-- "I wanted to reach out..."
-- Generic questions that aren't genuinely surprising
-- "I hope this finds you well"
+The purpose is to improve decisions over time.
 
 ---
 
-## B. BOFU Domination Framework
+# A. Core Marketing Objective
 
-Most marketers optimize for traffic. The highest ROI comes from optimizing for revenue — and that means dominating bottom-of-funnel (BOFU) content.
+The central marketing objective is:
 
-### The Core Insight
+**Increase the proportion of women who arrive already perceiving value in the 
+care, understanding why they are specifically seeking Dra. Caroline, and with 
+willingness compatible with the consultation ticket.**
 
-Decision-stage content converts 10-50x better than top-of-funnel blog posts. A "best [service] agency" page with 500 monthly visits will generate more revenue than a "what is [service]" page with 50,000 visits.
+This is different from maximizing:
 
-### 6 BOFU Content Categories
+- followers;
+- views;
+- likes;
+- comments;
+- reach;
+- raw leads;
+- cheap leads.
 
-Research and create content in ALL of these categories:
+Those metrics may be useful signals.
 
-**1. Agency/Service Comparison Pages**
-- "Best [service] agency for [industry]"
-- "Top [service] agencies [year]"
-- "[Service] agency comparison"
-- Target: 10K+ monthly searches combined
+They are not the final objective.
 
-**2. Pricing & Cost Transparency Pages**
-- "[Service] agency cost"
-- "How much does [service] cost"
-- "[Service] pricing guide"
-- Highest commercial intent — people searching pricing are ready to buy
+The desired progression is:
 
-**3. Industry-Specific Service Pages**
-- "[Industry] marketing agency" (fintech, healthcare, legal, real estate, SaaS, etc.)
-- Each vertical: 20 pillar articles + case studies + free tools
-- Premium positioning: verticals charge 2-3x generalist rates
-
-**4. Platform-Specific Pages**
-- "[Platform] marketing agency" (Shopify, HubSpot, Salesforce, etc.)
-- Partner listings and certifications as proof points
-
-**5. "vs" Comparison Pages**
-- "[Competitor A] vs [Competitor B]"
-- "In-house vs agency"
-- "[Service A] vs [Service B]"
-
-**6. Buyer's Guide & Selection Pages**
-- "How to choose a [service] agency"
-- "What to look for in a [service] provider"
-- "[Service] agency vetting checklist"
-- "Questions to ask a [service] agency"
-
-### BOFU Content Architecture
-
-Use a hub-spoke model:
-- **Hub**: Main service page (e.g., "/seo-services")
-- **Spokes**: Industry pages, comparison pages, pricing pages, vs pages, buyer's guides
-- Internal link every spoke back to the hub
-- Each spoke targets a specific long-tail keyword cluster
-
-### Measurement
-
-Don't measure BOFU content by traffic. Measure by:
-- Conversion rate (target: 3-5%+ for BOFU pages)
-- Free consult/demo submissions
-- Revenue attributed to organic landing page
-- Cost per acquisition vs. paid channels
+ATTENTION
+→ UNDERSTANDING
+→ TRUST
+→ QUALIFIED DEMAND
+→ CONFIRMED APPOINTMENT
+→ ATTENDANCE
+→ VERIFIED REVENUE
+→ DOWNSTREAM VALUE WHEN MEASURABLE
+→ RECURRENCE / REFERRAL WHEN APPLICABLE
 
 ---
 
-## C. Exponential Growth Playbooks
+# B. Positioning Principle
 
-7 strategies that create compounding growth loops instead of linear traffic.
+The positioning territory is:
 
-### Playbook 1: Free Tool Flywheel
+**COMPREENDER. INDIVIDUALIZAR. RESOLVER.**
 
-Turn free tools into a growth engine:
+Internal brand principle:
 
-**Credits System:**
-- Free users: 10 uses/day
-- Email signup: 50 uses/day
-- Referral: +25 uses per friend
-- Social share: +10 uses
-- Link back to your site: unlimited
+**A paciente chega por um sintoma. Eu enxergo o quadro.**
 
-**Marketplace Approach:**
-- Don't build 1 tool. Build 25.
-- Each tool = separate landing page = separate keyword = separate traffic source
-- Cross-link all tools = internal linking powerhouse
-- Each tool captures emails independently
+This means:
 
-### Playbook 2: LLM Citation Strategy
+- listening to the complaint;
+- understanding context;
+- connecting clinically relevant information;
+- investigating adequately;
+- explaining the reasoning clearly;
+- individualizing the strategy;
+- using technology when it adds value;
+- pursuing a concrete path toward resolution or improved function.
 
-Become the source AI models cite when answering questions in your space:
+It does not mean:
 
-- Create micro-pages answering specific questions in your domain
-- Format data as "According to [Your Brand] research..."
-- Use schema.org/Dataset markup for AI comprehension
-- Add "Cite This" buttons to make sharing frictionless
-- Publish fresh data regularly — AI models prioritize recent content
+- claiming that every symptom has one hidden cause;
+- promising complete resolution;
+- criticizing other physicians;
+- presenting complexity merely to appear sophisticated.
 
-### Playbook 3: Vertical Domination
-
-Launch vertical content brands instead of being a generalist:
-
-- Each vertical gets: 20 pillar articles + 10 case studies + free tools
-- Each links back to main brand
-- Network effect: more verticals = more internal links = more authority
-- Vertical specialists command 2-3x higher pricing
-
-### Playbook 4: Programmatic SEO 2.0
-
-Create pages at scale with a quality layer:
-
-- **Pattern 1**: "[Industry] [Service] Agency" (1,000+ pages)
-- **Pattern 2**: "[Service] Agency in [City]" (500+ pages)
-- **Pattern 3**: "[Tool A] vs [Tool B]" comparisons (300+ pages)
-- Quality layer: AI generates base → human review → deploy
-- Each page must add unique value — no thin content
-
-### Playbook 5: Language Arbitrage
-
-Target underserved language markets:
-
-- Non-English content in many markets has dramatically better CTR (up to 13x)
-- LATAM, European, and Asian markets are underserved in many B2B categories
-- Publish in target language first, then translate to English
-- Lower competition = faster rankings = cheaper traffic
-
-### Playbook 6: "Marketing Mistakes" Content
-
-Create content about what NOT to do:
-
-- Nobody creates "how to avoid failure" content — the space is wide open
-- Failure/pain content has 3-5x higher engagement than success content
-- Attracts burned prospects (high-value, motivated buyers who've tried and failed)
-- Lower keyword competition on negative/mistake terms
-
-### Playbook 7: Data Network Effects
-
-Build a system where user-generated data makes the platform smarter:
-
-- Create a benchmarks database: users submit data → get personalized report
-- More submissions = better benchmarks = more traffic = more submissions
-- This becomes "the Glassdoor of [your industry]"
-- License the data to create a separate revenue stream
+Authority should be **demonstrated through reasoning**, not declared through 
+advertising language.
 
 ---
 
-## D. Activation & Retention Science
+# C. Brand Communication Principle
 
-### The Activation Gap
+Desired communication:
 
-Most products have a massive gap between signup and first value delivery. Users sign up, see an empty dashboard, don't know what to do, and leave. The fix is systematic, not motivational.
+**Autoridade tranquila + clareza + profundidade + proximidade.**
 
-### 5-Move Activation Playbook
+The patient should perceive:
 
-**Move 1: Fix Identity Tracking**
-- Prerequisite for everything. If you can't measure the funnel, you can't fix it.
-- Ensure a single identity chain from signup through first value moment.
+**Uma médica que sabe muito, pensa profundamente e consegue explicar de maneira 
+simples.**
 
-**Move 2: Zero-Friction First Value**
-- Remove every wall between signup and first output.
-- Auto-generate the first piece of value. Don't ask users to configure anything first.
-- Target: first value in under 2 minutes.
-- If user doesn't provide input, use defaults. Nobody should see an empty screen.
+Operational principle:
 
-**Move 3: Automated Value Queue**
-- Turn your product from pull (user has to come back and do something) to push (product generates value and notifies user).
-- After first value, auto-queue 3 more outputs.
-- Send notification when they're ready.
+**Profundidade sem complicação. Autoridade sem distância. Valor demonstrado 
+pelo raciocínio, não declarado pela propaganda.**
 
-**Move 4: Segment-Specific Interventions**
+Listening is important, but listening alone is not the differentiation.
 
-Not all inactive users are the same. Build 3 segments and treat each differently:
+The perceived value comes from the combination of:
 
-| Segment | Definition | Intervention |
-|---------|-----------|-------------|
-| **Ghost Users** | Signed up, 0 actions | Send sample output email. If no response in 7 days, personal founder email: "What blocked you?" |
-| **One-and-Done** | 1+ action, no return in 7 days | Show them the potential: "Your [thing] could [achieve result] — here's what to do next" |
-| **Power Users** | 5+ actions/week | Personal outreach for case study. Offer team seats. Ask for referrals. These are your champions. |
-
-**Move 5: Close the Feedback Loop**
-- Show users the results of their actions.
-- "Your [output] achieved [result]" creates the motivation to do more.
-- Auto-suggest next action based on results.
-
-### Key Metrics to Track
-
-| Metric | Typical | Target After 8 Weeks |
-|--------|---------|---------------------|
-| Session → First Value | 5-10% | 30% |
-| Week 1 retention | 25-30% | 45% |
-| Actions per user/month | Low single digits | 15+ |
-| Month 2 retention | ~20% | 35% |
+LISTENING
++ REASONING
++ INVESTIGATION
++ CONNECTION OF RELEVANT INFORMATION
++ EXPLANATION
++ INDIVIDUALIZATION
++ APPROPRIATE TECHNOLOGY
++ RESOLUTIVITY
 
 ---
 
-## E. Price Ladder Architecture
+# D. Evidence Discipline
 
-### Strategic Price Escalation
+Every meaningful conclusion should be classified internally as one of the 
+following:
 
-Never launch at full price. Build a ladder:
+## FATO OBSERVADO
 
-| Stage | Pricing | Purpose |
-|-------|---------|---------|
-| **Presale** | Lowest (e.g., 30% of target) | Validate demand, build early advocates |
-| **Launch** | Below target (e.g., 50-70%) | Drive adoption, gather case studies |
-| **Self-serve** | Target price | Standard product pricing |
-| **Managed** | Premium (e.g., 5-10x self-serve) | Done-for-you layer on top of product |
-| **Full service** | Highest | Complete agency/consulting engagement |
+Directly supported by available evidence.
 
-### Upsell Signal Detection
+Example:
 
-Don't upsell randomly. Watch for these signals:
+"Among the readable Meta conversations analyzed, approximately half opened by 
+asking about price."
 
-- **Usage volume**: User hits usage limits consistently → upsell to higher tier
-- **Feature requests**: Asks for features in the premium tier → show the tier
-- **Company size**: Growth indicators (hiring, funding) → offer managed services
-- **Results**: Getting great results → "Want us to do more of this for you?"
+This does not automatically explain why.
 
-### The Product-to-Services Funnel
+## ASSOCIAÇÃO
 
-This is the agency's edge: products generate leads for services.
+Two variables appear related, but causality has not been established.
 
-```
-Free trial → Paid self-serve → Managed services → Full agency engagement
-   ($0)        ($X/month)        ($XX/month)         ($XXX/month)
-```
+Example:
 
-Each tier generates leads for the next. The product isn't just revenue — it's a qualification filter.
+"Patients arriving by referral appeared frequently among the confirmed payer 
+sample."
 
----
+This does not prove referral causes higher conversion.
 
-## F. Campaign Measurement Philosophy
+## HIPÓTESE
 
-### ROI-First Thinking
+A plausible explanation that should be investigated or tested.
 
-Before building any campaign, define:
-1. **What is the minimum ROI?** (e.g., 4:1 — every $1 spent returns $4)
-2. **How will we measure it?** (specific metric, not "awareness")
-3. **What's the timeline?** (when do we evaluate success?)
+Example:
 
-### Revenue Metrics Over Vanity Metrics
+"Some Meta creatives may be attracting people before enough value perception 
+has been created."
 
-| Don't Optimize For | Optimize For |
-|--------------------|-------------|
-| Impressions | Revenue per impression |
-| Clicks | Cost per qualified lead |
-| Traffic | Revenue per visitor |
-| Open rates | Revenue per email send |
-| Followers | Revenue per follower |
-| Page views | Conversion rate |
+This requires evidence or testing.
 
-### Conservative Projections
+## DECISÃO ESTRATÉGICA
 
-When projecting campaign results:
-- Use 50% of the "expected" conversion rate
-- Plan for 2x the expected timeline
-- If it still hits your ROI bar at conservative numbers, it's worth doing
-- If it only works at optimistic numbers, it's a gamble
+A deliberate choice based on the best available evidence and business 
+priorities.
+
+Example:
+
+"Create more content that demonstrates clinical reasoning before asking for 
+conversion."
+
+A strategic decision may be reasonable even when perfect evidence is 
+unavailable.
+
+Never silently transform:
+
+ASSOCIATION → CAUSALITY
+
+or
+
+HYPOTHESIS → FACT.
 
 ---
 
-## How to Grow This File
+# E. Scientific Communication Principle
 
-After every campaign that runs, add what you learned:
-- What hook pattern worked best?
-- What segment responded most?
-- What channel over/underperformed expectations?
-- What would you do differently?
+Medical content must match the strength of the scientific evidence.
 
-This file should get smarter with every campaign. After 20 campaigns, it becomes your agency's unfair advantage.
+Useful internal editorial categories:
+
+**FORTE**
+Evidence sufficiently robust for confident communication within appropriate 
+clinical boundaries.
+
+**MODERADO**
+Reasonably supported, but relevant limitations or uncertainty remain.
+
+**LIMITADO**
+Evidence exists but is preliminary, inconsistent, indirect or methodologically 
+limited.
+
+**INSUFICIENTE / CONTROVERSO**
+Evidence does not justify a confident claim or relevant controversy remains.
+
+These are editorial communication categories.
+
+Do not falsely present them as formal GRADE ratings unless the source itself 
+provides a formal evidence grade.
+
+Prefer, when applicable:
+
+- professional guidelines;
+- consensus statements;
+- systematic reviews;
+- meta-analyses;
+- randomized controlled trials;
+- observational studies;
+- mechanistic/preclinical evidence;
+- expert opinion.
+
+Do not apply this hierarchy mechanically.
+
+The appropriate evidence depends on the clinical question.
+
+Never fabricate:
+
+- authors;
+- titles;
+- journals;
+- guidelines;
+- DOI;
+- PMID;
+- study results;
+- sample sizes;
+- effect sizes.
+
+Do not present:
+
+plausibility → as demonstrated clinical benefit
+
+association → as causality
+
+one study → as scientific consensus
+
+absence of evidence → as proof of absence.
+
+---
+
+# F. Audience Understanding
+
+The current ICP should not be reduced to age, income or demographic 
+stereotypes.
+
+The core patient is a woman who perceives that a gynecological, hormonal or 
+reproductive issue is affecting her life and wants more than a quick answer to 
+one symptom.
+
+She tends to value:
+
+- specialization;
+- depth;
+- clear explanation;
+- adequate investigation;
+- safety;
+- individualization;
+- clinical reasoning;
+- technology when useful;
+- a concrete treatment path;
+- improved function and quality of life.
+
+Three broad needs organize much of the demand:
+
+**COMPREENDER**
+"What is actually happening?"
+
+**RESOLVER**
+"What can we do about it?"
+
+**RECUPERAR**
+"How can I function and feel better again?"
+
+Do not infer socioeconomic class or purchasing power merely from symptoms, 
+location or behavior.
+
+---
+
+# G. Audience Segments
+
+Current strategic clinical segments include:
+
+## A. Pain / Bleeding / Endometriosis / Adenomyosis
+
+Common communication territories:
+
+- menstrual pain;
+- pelvic pain;
+- abnormal bleeding;
+- pain during intercourse;
+- bowel or urinary symptoms when clinically relevant;
+- investigation;
+- diagnosis;
+- treatment options;
+- surgical and non-surgical reasoning.
+
+## B. Perimenopause / Menopause
+
+Common territories:
+
+- symptom recognition;
+- sleep;
+- vasomotor symptoms;
+- cognition;
+- libido;
+- mood;
+- metabolic/body changes;
+- hormone therapy;
+- individualized risk-benefit reasoning.
+
+## C. Hysteroscopy / Polyps / Fibroids / Incidental Findings
+
+Common territories:
+
+- understanding the finding;
+- when intervention is necessary;
+- diagnostic versus operative hysteroscopy;
+- what happens during the procedure;
+- technology;
+- comfort and safety;
+- resolutivity when clinically appropriate.
+
+## D. Fertility
+
+Common territories:
+
+- investigation;
+- ovulation;
+- ovarian function;
+- PCOS;
+- reproductive planning;
+- individualized fertility reasoning.
+
+## E. Contraception
+
+Common territories:
+
+- method selection;
+- individual preferences;
+- contraindications;
+- side effects;
+- IUDs;
+- hormonal and non-hormonal options.
+
+## F. PCOS / Metabolism / Body Composition
+
+Strategically relevant.
+
+Current internal historical data undercapture this area.
+
+Do not treat the absence of questionnaire frequency as evidence of low demand.
+
+Further research is required before strong population-level conclusions.
+
+---
+
+# H. Patient Language Principle
+
+Use real patient language to improve relevance.
+
+Internal sources may include:
+
+- raw CRM conversations;
+- pre-consult questionnaires;
+- reviews;
+- consultation patterns;
+- frequently asked questions;
+- secretary feedback;
+- verified patient journey data.
+
+Patient language may reveal:
+
+- how symptoms are described;
+- what creates anxiety;
+- what is misunderstood;
+- what patients want explained;
+- what objections occur;
+- what questions precede booking.
+
+Do not copy sensitive or identifiable patient material into public content.
+
+Do not exaggerate isolated statements into population truths.
+
+---
+
+# I. Content Functions
+
+Every substantial content piece should have a primary function.
+
+## DESCOBERTA
+
+Objective:
+
+Help the right woman recognize that the topic is relevant to her.
+
+Typical outcomes:
+
+- qualified attention;
+- recognition;
+- sharing;
+- profile exploration.
+
+## COMPREENSÃO
+
+Objective:
+
+Help the audience understand a symptom, condition, finding, mechanism or 
+decision.
+
+Typical outcomes:
+
+- saves;
+- deeper consumption;
+- trust;
+- improved health literacy.
+
+## AUTORIDADE / RESOLUTIVIDADE
+
+Objective:
+
+Demonstrate how Carol reasons, investigates, decides and treats.
+
+Typical outcomes:
+
+- differentiation;
+- trust;
+- perceived expertise;
+- value perception.
+
+Authority should emerge from the reasoning itself.
+
+## CONVERSÃO
+
+Objective:
+
+Help an already interested patient understand the next appropriate step.
+
+Typical outcomes:
+
+- profile action;
+- WhatsApp contact;
+- qualified inquiry;
+- appointment request.
+
+Not every post should directly convert.
+
+---
+
+# J. Patient Journey
+
+A useful content journey is:
+
+**RECONHECER**
+"This may be relevant to what I am experiencing."
+
+→
+
+**ENTENDER**
+"Now I understand the problem better."
+
+→
+
+**CONFIAR**
+"This physician appears to understand this deeply and explain it clearly."
+
+→
+
+**PROCURAR**
+"I want her assessment for my case."
+
+Content strategy should consider which transition each piece is designed to 
+support.
+
+---
+
+# K. Hook Principle
+
+Hooks are tools, not formulas.
+
+The objective of the opening is to create **qualified attention**, not maximum 
+interruption.
+
+A strong hook should usually do at least one of the following:
+
+- identify a relevant symptom;
+- surface a meaningful misunderstanding;
+- create useful clinical contrast;
+- reveal why a detail matters;
+- introduce a decision the patient may face;
+- create recognition;
+- open a clinically relevant information gap.
+
+Good hooks can be:
+
+- direct;
+- observational;
+- educational;
+- specific;
+- narrative;
+- case-based when ethical;
+- question-based when the question is genuinely useful.
+
+Do not require a fixed hook formula.
+
+Avoid defaulting to:
+
+- artificial controversy;
+- fear;
+- manufactured urgency;
+- humiliation;
+- aggressive contrarianism;
+- unsupported statistics;
+- exaggerated promises;
+- trauma language used only for attention.
+
+Avoid cliché structures such as:
+
+- "Seu corpo está gritando..."
+- "Ninguém te contou isso..."
+- "O segredo que ninguém conta..."
+- "A verdade que os médicos não falam..."
+- "Harsh reality..."
+- "Todo mundo faz isso errado..."
+- "Você merece..." without substantive context;
+- "Aqui é diferente..." without demonstrating why;
+- "Método exclusivo";
+- "Revolucionário".
+
+Do not use a dramatic opener merely because a framework says it performs well.
+
+---
+
+# L. Specificity Principle
+
+Specificity can improve credibility.
+
+But numbers create authority only when they are:
+
+- true;
+- relevant;
+- verifiable;
+- appropriately contextualized.
+
+Never invent precision.
+
+Do not use numbers merely to create the appearance of authority.
+
+Examples of appropriate specificity:
+
+- verified procedure experience;
+- verified study results with context;
+- concrete clinical examples;
+- real operational facts;
+- accurately measured performance data.
+
+If a number cannot be verified, flag it.
+
+---
+
+# M. Storytelling Principle
+
+Stories are useful when they help the audience understand:
+
+- a problem;
+- a clinical decision;
+- a journey;
+- a misconception;
+- a transformation in understanding;
+- a treatment process;
+- Carol's professional perspective.
+
+A useful structure may be:
+
+CONTEXT
+→ TENSION / QUESTION
+→ CLINICAL REASONING
+→ DECISION / ACTION
+→ MEANING
+
+This is not mandatory.
+
+Do not manufacture dramatic conflict merely to make a story more engaging.
+
+For patient stories:
+
+- preserve privacy;
+- respect professional rules;
+- avoid guaranteed-outcome implications;
+- distinguish individual experience from expected population outcome;
+- obtain appropriate authorization when required.
+
+---
+
+# N. CTA Principle
+
+CTA should follow the content function.
+
+Possible CTA objectives include:
+
+- save for later;
+- share with someone who needs the explanation;
+- reflect on a symptom;
+- answer a meaningful question;
+- view related content;
+- understand the next step;
+- contact the clinic when appropriate.
+
+Do not automatically end every post with:
+
+"Agende sua consulta."
+
+Do not force engagement bait.
+
+A post may also end without an explicit CTA when the conclusion itself is 
+stronger.
+
+---
+
+# O. Referral and Transferred Trust
+
+Referral is strategically important because it can transfer trust before the 
+first contact.
+
+In the confirmed payer sample already analyzed, referral appeared frequently, 
+including referrals from healthcare professionals.
+
+This is a meaningful strategic signal.
+
+It is not yet a definitive population estimate of total acquisition.
+
+Marketing should attempt to reproduce some mechanisms of transferred trust 
+through:
+
+- technical clarity;
+- demonstrated reasoning;
+- educational usefulness;
+- credible proof;
+- ethical patient experiences;
+- professional authority;
+- resolutivity;
+- content worth sharing.
+
+Do not create financial referral incentives without appropriate ethical/legal 
+evaluation.
+
+---
+
+# P. Paid Media Principle
+
+Paid media should not be evaluated by lead volume alone.
+
+Current evidence suggests Meta leads in the analyzed sample were more likely 
+than organic leads to begin the conversation by asking about price.
+
+This is an observed difference.
+
+It does not prove:
+
+- Meta does not work;
+- Meta leads are inherently poor;
+- price-first leads cannot convert;
+- the problem is necessarily targeting;
+- the problem is necessarily creative.
+
+Possible explanations may involve:
+
+- creative;
+- targeting;
+- campaign objective;
+- audience temperature;
+- value perception;
+- landing/contact experience;
+- secretary response;
+- price communication;
+- scheduling;
+- availability;
+- deposit process.
+
+Performance analysis must investigate the funnel before prescribing a solution.
+
+---
+
+# Q. Price and Objection Principle
+
+A price question is not automatically a bad lead.
+
+An insurance question is not automatically a bad lead.
+
+These behaviors may reflect:
+
+- practical screening;
+- low value perception;
+- uncertainty;
+- comparison shopping;
+- normal decision-making;
+- genuine financial mismatch.
+
+Determine downstream behavior before assigning meaning.
+
+Do not optimize marketing simply to eliminate all price questions.
+
+The objective is to increase the proportion of people who understand enough 
+value to evaluate price in context.
+
+---
+
+# R. Conversion Principle
+
+"Conversion" must always specify the stage.
+
+Examples:
+
+**Booking conversion**
+Lead → confirmed appointment.
+
+**Attendance conversion**
+Confirmed appointment or eligible lead → verified attendance.
+
+**Revenue conversion**
+Lead or acquired patient → verified revenue.
+
+**Treatment / procedure conversion**
+Only when reliable downstream evidence exists.
+
+Do not report "conversion rate" without defining the numerator and denominator.
+
+---
+
+# S. Measurement Hierarchy
+
+Marketing performance should be evaluated through a hierarchy.
+
+## 1. Qualified Attention
+
+Examples:
+
+- relevant reach;
+- watch behavior;
+- saves;
+- shares;
+- profile exploration;
+- meaningful engagement.
+
+## 2. Trust Signals
+
+Examples:
+
+- repeated consumption;
+- profile depth;
+- direct questions;
+- content sharing;
+- referral behavior;
+- evidence that the audience understands Carol's differentiation.
+
+## 3. Qualified Lead
+
+Qualification must be based on operational criteria and downstream evidence.
+
+Do not use Cliente IO AI labels as ground truth.
+
+## 4. Confirmed Appointment
+
+Use observable booking evidence.
+
+## 5. Verified Attendance
+
+Use the designated authoritative operational source.
+
+## 6. Verified Revenue
+
+Use authoritative operational/financial evidence.
+
+## 7. Downstream Value
+
+When measurable:
+
+- procedure;
+- treatment;
+- recurrence;
+- referral.
+
+Vanity metrics remain diagnostic signals, not final success criteria.
+
+---
+
+# T. Source-of-Truth Principle
+
+Different systems answer different questions.
+
+## Meta Ads Manager
+
+Authoritative for:
+
+- spend;
+- campaign/ad set/ad structure;
+- delivery metrics;
+- platform advertising data.
+
+Not authoritative for actual attendance or final revenue.
+
+## Cliente IO Raw Conversation
+
+Useful for:
+
+- lead existence;
+- questions;
+- objections;
+- chronology;
+- secretary interaction;
+- booking evidence;
+- deposit evidence when observable;
+- source clues.
+
+**Cliente IO AI classifications are not ground truth.**
+
+## Attendance Spreadsheet
+
+Primary current operational source for:
+
+- verified attendance;
+- consultation amount paid when reliably recorded.
+
+Do not infer attendance from a booking conversation.
+
+Do not infer revenue from a quoted price.
+
+---
+
+# U. Attribution Principle
+
+Attribution should reflect evidence strength.
+
+Useful categories:
+
+**DIRECT ATTRIBUTION**
+Strong traceable evidence links acquisition to the source.
+
+**SUPPORTED ASSOCIATION**
+Evidence supports a relationship but does not establish exclusive attribution.
+
+**HYPOTHESIS**
+A plausible explanation requiring further evidence.
+
+**INSUFFICIENT DATA**
+Available evidence does not support a reliable conclusion.
+
+Direct attribution does not necessarily mean sole causality.
+
+A patient may:
+
+see content
+→ receive referral
+→ search profile
+→ watch several posts
+→ click an ad
+→ contact WhatsApp.
+
+Avoid false precision in multi-touch journeys.
+
+---
+
+# V. Performance Diagnosis Principle
+
+When performance is weak, do not jump directly to:
+
+"we need more content"
+
+or
+
+"we need better ads."
+
+Diagnose the stage first.
+
+Possible leaks include:
+
+- insufficient qualified attention;
+- weak value perception;
+- wrong audience;
+- poor creative-message fit;
+- poor transition from content to profile;
+- poor transition from profile to contact;
+- secretary response;
+- response delay;
+- unclear price communication;
+- scheduling friction;
+- limited availability;
+- deposit process;
+- cancellation;
+- no-show;
+- attribution failure;
+- measurement failure.
+
+The solution should target the actual bottleneck.
+
+---
+
+# W. Experimentation Principle
+
+Marketing decisions should improve through controlled learning.
+
+A useful experiment defines:
+
+1. What are we changing?
+2. Why do we think it may work?
+3. What outcome should change?
+4. What evidence would support the hypothesis?
+5. What evidence would weaken it?
+6. When is the result eligible for evaluation?
+7. What important confounders exist?
+
+Avoid changing many important variables simultaneously when the objective is to 
+learn causality.
+
+Not every marketing action requires a formal experiment.
+
+Use rigor proportionally.
+
+---
+
+# X. Learning Principle
+
+After campaigns and meaningful content tests, capture:
+
+- what happened;
+- what was expected;
+- what differed;
+- what audience responded;
+- where the funnel changed;
+- what remains unknown;
+- what should be tested next.
+
+But:
+
+ONE RESULT ≠ PERMANENT RULE.
+
+Use the progression:
+
+OBSERVATION
+→ REPEATED SIGNAL
+→ CANDIDATE LEARNING
+→ HUMAN REVIEW
+→ APPROVED OPERATING RULE
+
+The Marketing Core must not be automatically rewritten by campaign performance.
+
+---
+
+# Y. Commercial Impact Principle
+
+When relevant, connect marketing recommendations to:
+
+- qualified demand;
+- booking;
+- attendance;
+- revenue;
+- capacity;
+- operational workload;
+- acquisition cost;
+- opportunity cost.
+
+A strategy that generates more leads but overwhelms service capacity may be 
+worse than a strategy that generates fewer, better-fit leads.
+
+Marketing and operations are connected.
+
+---
+
+# Z. Conservative Decision-Making
+
+Do not build projections from optimistic assumptions disguised as facts.
+
+When forecasting:
+
+- show assumptions;
+- use ranges when appropriate;
+- separate known values from estimates;
+- account for time lag;
+- account for missing data;
+- identify important operational constraints.
+
+Do not invent universal benchmarks such as:
+
+"good conversion is X%"
+
+without an appropriate comparable context.
+
+Carol's own historical baseline should become increasingly important as 
+reliable data accumulate.
+
+---
+
+# AA. Organic Content and Paid Media
+
+Organic and paid media can serve different roles.
+
+Organic may:
+
+- build trust over time;
+- demonstrate reasoning;
+- deepen familiarity;
+- create shareable authority;
+- support referral;
+- capture existing demand.
+
+Paid media may:
+
+- expand reach;
+- test messages;
+- accelerate exposure;
+- capture or create demand;
+- retarget relevant audiences.
+
+Do not assume one is superior universally.
+
+Evaluate each by its role in the full funnel.
+
+---
+
+# AB. Proof Principle
+
+Proof can include:
+
+- clinical reasoning;
+- verified professional experience;
+- scientific references;
+- appropriate credentials;
+- patient reviews;
+- ethical case narratives;
+- procedural capability;
+- technology;
+- clear explanations;
+- verified outcomes when ethically and scientifically appropriate.
+
+Proof should reduce uncertainty.
+
+It should not become:
+
+- boasting;
+- artificial scarcity;
+- unsupported superiority claims;
+- outcome guarantees;
+- invented authority markers.
+
+---
+
+# AC. Visual Communication Principle
+
+The visual system should support the message rather than compete with it.
+
+Current aesthetic direction:
+
+- warm;
+- editorial;
+- sophisticated without ostentation;
+- calm;
+- medically credible;
+- feminine without cliché.
+
+Current Instagram standard for new feed static posts and carousel slides:
+
+**1080 × 1440 px — 3:4**
+
+Legacy templates:
+
+**1080 × 1350 px — 4:5**
+
+Do not stretch legacy layouts mechanically.
+
+Recompose hierarchy and negative space.
+
+Extra vertical space is not permission for extra copy.
+
+---
+
+# AD. Content Density Principle
+
+One piece should generally communicate one primary idea.
+
+Depth comes from:
+
+- reasoning;
+- sequencing;
+- examples;
+- clarity;
+- useful nuance.
+
+Depth does not require putting every relevant fact into one post.
+
+When a subject becomes overloaded:
+
+split the communication.
+
+---
+
+# AE. Ethical Persuasion Principle
+
+Persuasion should improve the patient's ability to make an informed decision.
+
+Use:
+
+- clarity;
+- relevance;
+- evidence;
+- reasoning;
+- appropriate proof;
+- expectation setting;
+- reduced uncertainty.
+
+Avoid:
+
+- fear exploitation;
+- shame;
+- fabricated urgency;
+- false scarcity;
+- manipulation of health anxiety;
+- guaranteed outcomes;
+- misleading before-and-after implications;
+- attacks on other professionals.
+
+The goal is not to pressure the patient.
+
+The goal is to make value understandable.
+
+---
+
+# AF. What Not to Import Automatically
+
+External marketing frameworks may be useful references.
+
+They must not become default rules merely because they are popular.
+
+Do not automatically import:
+
+- BOFU-first doctrine;
+- SaaS activation frameworks;
+- churn frameworks;
+- product-led growth;
+- free-tool flywheels;
+- email funnels;
+- price ladders;
+- programmatic SEO;
+- aggressive contrarian hooks;
+- mandatory debate CTAs;
+- generic "high-ticket" scripts;
+- generic luxury positioning;
+- viral formulas;
+- universal benchmark numbers.
+
+Evaluate whether the framework fits:
+
+- healthcare;
+- private medical practice;
+- Carol's positioning;
+- patient decision-making;
+- scientific integrity;
+- professional ethics;
+- current business objective.
+
+---
+
+# AG. Decision Priority
+
+When several marketing opportunities compete for attention, prioritize using:
+
+1. expected relevance to the business objective;
+2. quality of supporting evidence;
+3. likely impact on the actual bottleneck;
+4. fit with Carol's positioning;
+5. scientific and ethical safety;
+6. operational feasibility;
+7. measurement feasibility;
+8. learning value.
+
+Do not prioritize something merely because it is trending or easy to produce.
+
+---
+
+# AH. Final Principle
+
+The Marketing OS exists to make better marketing decisions, not to produce more 
+marketing activity.
+
+The system should continuously improve its ability to answer:
+
+- Who are we trying to reach?
+- What does she need to understand?
+- What evidence supports what we say?
+- Why should she trust Carol specifically?
+- What should we communicate now?
+- What happened after we communicated it?
+- Where is the actual funnel bottleneck?
+- What did we learn?
+- What should change next?
+
+The desired outcome is not maximum content.
+
+It is:
+
+**better communication → stronger value perception → more qualified demand → 
+better business outcomes.**
