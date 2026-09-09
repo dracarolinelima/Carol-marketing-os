@@ -1,55 +1,472 @@
-# Marketing OS Agent Team - Autonomy Configuration
-# Created: [FILL IN: your setup date]
+# Carol Marketing OS - Autonomy Configuration
+# Version: 1.0
+# Status: Human-supervised deployment
+#
+# LEVELS
+# C = Draft / Recommend + Wait for human approval
+# B = Execute low-risk internal decision + report
+# A = Autonomous execution within explicitly approved boundaries
+#
+# IMPORTANT:
+# Autonomy graduates by DECISION TYPE, not by agent as a whole.
+# Success in one decision type never grants autonomy in another.
 
 agent: marketing-os
-current_level: C  # C = Draft + Wait (requires explicit approval)
+current_phase: human_supervised
 
-# Decision-specific autonomy levels
+strategic_authority: memory/carol-marketing-os/marketing-core.md
+
+# ============================================================
+# DECISION-SPECIFIC AUTONOMY
+# ============================================================
+
 decision_levels:
-  route_to_researcher: C
-  route_to_strategist: C
-  route_to_copywriter: C
-  produce_audience_profile: C
-  produce_research_report: C
-  produce_creative_brief: C
-  produce_campaign_plan: C
-  produce_copy: C
-  allocate_budget: C          # ALWAYS C - never autonomous
-  publish_or_send: C          # ALWAYS C - never autonomous
 
-# Graduation tracking
-metrics:
-  total_recommendations: 0
-  approved: 0
-  skipped: 0
-  rejected: 0
-  last_rejection_date: null
-  tracking_started: null  # Fill in your start date
+  # ----------------------------------------------------------
+  # ORCHESTRATION / ROUTING
+  # May graduate with demonstrated reliability.
+  # ----------------------------------------------------------
 
-# Graduation rules
+  route_internal_audience_research:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_external_market_research:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_scientific_research:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_strategy:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_creation:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_editorial_review:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_visual_direction:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  route_performance_analysis:
+    owner: mos-orchestrator
+    level: C
+    max_level: A
+
+  select_minimum_sufficient_workflow:
+    owner: mos-orchestrator
+    level: C
+    max_level: B
+
+  # ----------------------------------------------------------
+  # RESEARCH / ANALYSIS
+  # Internal analytical work may gradually become more
+  # autonomous, but conclusions remain constrained by
+  # evidence quality and source hierarchy.
+  # ----------------------------------------------------------
+
+  analyze_internal_audience_data:
+    owner: mos-audience-intelligence
+    level: C
+    max_level: B
+
+  produce_audience_findings:
+    owner: mos-audience-intelligence
+    level: C
+    max_level: B
+
+  analyze_external_market:
+    owner: mos-market-research
+    level: C
+    max_level: B
+
+  produce_market_research:
+    owner: mos-market-research
+    level: C
+    max_level: B
+
+  retrieve_scientific_evidence:
+    owner: mos-scientific-research
+    level: C
+    max_level: B
+
+  summarize_scientific_evidence:
+    owner: mos-scientific-research
+    level: C
+    max_level: B
+
+  classify_evidence_strength:
+    owner: mos-scientific-research
+    level: C
+    max_level: B
+
+  analyze_marketing_performance:
+    owner: mos-performance-analyst
+    level: C
+    max_level: B
+
+  classify_performance_finding:
+    owner: mos-performance-analyst
+    level: C
+    max_level: B
+
+  recommend_performance_test:
+    owner: mos-performance-analyst
+    level: C
+    max_level: B
+
+  # ----------------------------------------------------------
+  # STRATEGY
+  # Strategy remains supervised during the current phase.
+  # ----------------------------------------------------------
+
+  create_content_strategy:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  create_creative_brief:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  select_content_function:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  select_journey_stage:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  recommend_content_format:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  recommend_cta_logic:
+    owner: mos-strategist
+    level: C
+    max_level: B
+
+  # ----------------------------------------------------------
+  # CREATION
+  # Draft generation may improve operational autonomy,
+  # but external use remains human-approved.
+  # ----------------------------------------------------------
+
+  produce_content_draft:
+    owner: mos-copywriter
+    level: C
+    max_level: B
+
+  revise_content_from_feedback:
+    owner: mos-copywriter
+    level: C
+    max_level: B
+
+  # ----------------------------------------------------------
+  # QUALITY CONTROL
+  # The Editor may become more autonomous in detecting and
+  # correcting low-risk issues, but cannot replace human
+  # medical approval where required.
+  # ----------------------------------------------------------
+
+  perform_editorial_review:
+    owner: mos-editor
+    level: C
+    max_level: B
+
+  correct_brand_style_issue:
+    owner: mos-editor
+    level: C
+    max_level: B
+
+  flag_medical_claim:
+    owner: mos-editor
+    level: C
+    max_level: B
+
+  request_scientific_reverification:
+    owner: mos-editor
+    level: C
+    max_level: B
+
+  # ----------------------------------------------------------
+  # VISUAL DIRECTION
+  # ----------------------------------------------------------
+
+  produce_visual_direction:
+    owner: mos-art-director
+    level: C
+    max_level: B
+
+  apply_approved_design_system:
+    owner: mos-art-director
+    level: C
+    max_level: B
+
+  recommend_template:
+    owner: mos-art-director
+    level: C
+    max_level: B
+
+  # ==========================================================
+  # PERMANENT HUMAN GATES
+  #
+  # These decisions do NOT graduate automatically.
+  # ==========================================================
+
+  publish_or_send_external:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  approve_final_medical_content:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  approve_sensitive_clinical_claim:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  make_patient_specific_clinical_decision:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  change_marketing_core:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  change_core_positioning:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  change_major_brand_rule:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  change_major_design_system_rule:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  approve_first_template_format_migration:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  allocate_or_change_ad_budget:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  launch_or_stop_paid_campaign:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  adopt_lead_qualification_model:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  create_permanent_performance_rule:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  make_major_tracking_infrastructure_change:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+  send_patient_identifiable_data_external:
+    owner: human
+    level: C
+    max_level: C
+    permanent_human_gate: true
+
+# ============================================================
+# GRADUATION TRACKING
+# ============================================================
+
+tracking:
+
+  principle: decision_specific
+
+  global_totals:
+    recommendations_reviewed: 0
+    approved_without_change: 0
+    approved_with_minor_change: 0
+    materially_revised: 0
+    rejected: 0
+
+  tracking_started: null
+
+  decision_history: {}
+
+# ============================================================
+# GRADUATION RULES
+# ============================================================
+
 graduation_rules:
+
+  general:
+    automatic_graduation: false
+    human_confirmation_required: true
+    evaluate_each_decision_type_separately: true
+
   c_to_b:
-    min_recommendations: 20
-    min_approval_rate: 85
-    max_rejections_last_10: 0
+    min_reviewed_decisions: 20
     min_days_tracking: 14
+    min_approved_without_material_change_rate: 85
+    max_material_failures_last_10: 0
+    requires_human_confirmation: true
 
   b_to_a:
-    min_days_on_b: 28
-    min_approval_rate: 95
-    max_manual_interventions_30d: 0
+    eligible_only_when_max_level_is_A: true
+    min_reviewed_decisions_on_B: 30
+    min_days_on_B: 28
+    min_approved_without_material_change_rate: 95
+    max_material_failures_last_20: 0
+    requires_human_confirmation: true
 
-# History
+# ============================================================
+# WHAT COUNTS AS A MATERIAL FAILURE
+# ============================================================
+
+material_failure_examples:
+
+  - unsupported factual claim
+  - fabricated source or evidence
+  - material scientific misrepresentation
+  - association presented as causality
+  - incorrect audience conclusion from internal data
+  - incorrect funnel classification affecting a business decision
+  - use of Cliente IO AI classification as ground truth
+  - attendance inferred without authoritative evidence
+  - revenue inferred from quoted price or unverified payment
+  - material violation of Marketing Core
+  - material brand or positioning violation
+  - privacy violation
+  - bypass of required human approval
+  - unauthorized external action
+  - unauthorized budget change
+
+# ============================================================
+# NON-MATERIAL EDITS
+# ============================================================
+
+non_material_edit_examples:
+
+  - punctuation preference
+  - minor wording preference
+  - small rhythm improvement
+  - formatting cleanup
+  - equivalent CTA wording
+  - cosmetic visual adjustment within approved system
+
+# ============================================================
+# AUTONOMY BOUNDARIES
+# ============================================================
+
+boundaries:
+
+  evidence:
+    never_fabricate: true
+    preserve_uncertainty: true
+    distinguish_fact_association_hypothesis_decision: true
+
+  medical:
+    scientific_research_does_not_replace_clinical_judgment: true
+    patient_specific_decisions_require_human: true
+
+  performance:
+    cliente_io_ai_labels_are_ground_truth: false
+    crm_booking_does_not_prove_attendance: true
+    quoted_price_does_not_prove_revenue: true
+    missing_data_does_not_equal_zero: true
+
+  strategy:
+    agents_may_not_autonomously_rewrite_marketing_core: true
+    performance_findings_do_not_automatically_become_rules: true
+
+  external_actions:
+    publish_requires_human: true
+    send_requires_human: true
+    budget_change_requires_human: true
+    campaign_launch_requires_human: true
+
+  privacy:
+    minimize_patient_data: true
+    prefer_anonymized_data: true
+    unnecessary_pii_in_persistent_memory_forbidden: true
+
+# ============================================================
+# LEVEL CHANGE HISTORY
+# ============================================================
+
 level_changes:
-  - date: null  # Fill in your start date
+
+  - date: 2026-09-09
+    decision_type: system_initialization
     from: null
     to: C
-    reason: "Initial deployment"
+    reason: "Carol Marketing OS human-supervised deployment"
 
-# Instructions for updating this file:
-# After each agent recommendation:
-#   - Increment total_recommendations
-#   - Increment approved, skipped, or rejected
-# When an agent earns a level change:
-#   - Update current_level
-#   - Add entry to level_changes
+# ============================================================
+# UPDATE INSTRUCTIONS
+# ============================================================
+
+# After a reviewed decision:
+#
+# 1. Identify the exact decision type.
+# 2. Record the outcome for THAT decision type.
+# 3. Distinguish:
+#      approved_without_change
+#      approved_with_minor_change
+#      materially_revised
+#      rejected
+# 4. Do not combine unrelated decision types to justify graduation.
+# 5. Reaching numerical thresholds does NOT automatically change level.
+# 6. Human confirmation is required before every level change.
+# 7. Decisions marked permanent_human_gate never graduate.
+#
+# The purpose of autonomy is to reduce unnecessary supervision
+# without reducing scientific, strategic, ethical or business quality.
