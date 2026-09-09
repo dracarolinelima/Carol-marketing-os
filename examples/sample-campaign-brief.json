@@ -1,111 +1,282 @@
 {
-  "_note": "This is an example of what MOS-Strategist produces after consuming the audience profile. Uses Growth Playbook #6 (Marketing Mistakes Content) and Revenue-First Measurement.",
+  "_note": "Synthetic example showing the expected structure of a Strategist 
+campaign or content brief inside Carol Marketing OS. It is not an active 
+campaign and contains no invented performance target, budget, patient result or 
+medical claim.",
 
-  "brief_id": "BRIEF-20260215-001",
-  "status": "ready_for_review",
+  "brief_id": "BRIEF-EXAMPLE-001",
+
+  "status": "example_only",
+
   "created_by": "MOS-Strategist",
-  "created_date": "2026-02-15",
-  "approved_by": null,
-  "approved_date": null,
 
-  "campaign_context": {
-    "name": "Attribution Reality Check",
-    "goal": "Generate 30 demo requests from marketing directors at B2B SaaS companies in 45 days",
-    "deadline": "2026-04-01",
-    "budget": "$5,000 (organic + $2K LinkedIn ad boost)",
-    "channels": ["linkedin_organic", "linkedin_ads", "email_nurture"],
-    "campaign_duration": "45 days",
-    "growth_playbook": "Playbook 6: Marketing Mistakes Content — failure/pain content gets 3-5x higher engagement. This audience has been burned by analytics tools before."
+  "approved_by": null,
+
+  "strategic_context": {
+    "business_objective": "Increase the proportion of women who arrive already 
+perceiving value in the care, understanding why they are specifically seeking 
+Dra. Caroline and showing compatibility with the service model and ticket.",
+    "marketing_objective": "Build qualified understanding and trust around a 
+clinically relevant problem before the patient reaches the scheduling 
+conversation.",
+    "primary_channel": "Instagram",
+    "traffic_context": "organic",
+    "campaign_required": false,
+    "note": "A campaign, deadline, budget or numerical target should only be 
+added when they genuinely exist."
   },
 
   "audience": {
-    "primary_segment": "Marketing Directors at B2B SaaS companies, $5M-$30M ARR",
-    "audience_profile_id": "AUD-20260215-001",
-    "pain_point": "Can't connect marketing spend to revenue — CFO thinks marketing is a cost center",
-    "current_belief": "Attribution is impossible to get right. Every tool gives different numbers. Just pick one and hope.",
-    "desired_belief": "Revenue attribution is solvable without an engineering team. The right tool makes you the smartest person in the leadership meeting.",
-    "objections": [
-      "We tried attribution tools before and they didn't work — why is this different?",
-      "Our tech stack is too messy for any tool to track properly",
-      "My engineering team won't implement another tracking system"
+    "segment": "pain_bleeding_endometriosis_adenomyosis",
+    "audience_profile_id": "AUD-EXAMPLE-001",
+    "patient_need": "COMPREENDER",
+    "journey_stage": "ENTENDER",
+    "content_function": "COMPREENSÃO",
+    "context": "Women experiencing gynecologic symptoms whose combination may be 
+clinically more informative than one isolated complaint.",
+    "important_boundary": "Do not assume diagnosis, socioeconomic class, 
+previous medical failures or number of physicians consulted."
+  },
+
+  "source_basis": {
+    "internal_evidence": [
+      {
+        "source": "pre-consult questionnaire",
+        "use": "Patient language and symptom/interference patterns",
+        "limitation": "Questionnaire respondents are not automatically 
+representative of all leads or paying patients."
+      },
+      {
+        "source": "raw CRM conversations",
+        "use": "Questions, objections, language and pre-purchase behavior",
+        "limitation": "Cliente IO AI classifications are not ground truth."
+      },
+      {
+        "source": "public reviews",
+        "use": "Post-experience value perception and authentic patient 
+language",
+        "limitation": "Reviews are self-selected and are not a population 
+satisfaction rate."
+      }
     ],
-    "voice_of_customer": [
-      "I spend more time building reports than reading them",
-      "My CEO thinks marketing is a cost center because I can't prove otherwise",
-      "We tried 3 attribution tools and they all showed different numbers"
+    "external_market_research_required": false,
+    "scientific_research_required": true
+  },
+
+  "strategic_thesis": {
+    "type": "DECISAO_ESTRATEGICA",
+    "statement": "Demonstrate how clinical context can change investigation 
+instead of simply telling the audience that the consultation is 
+individualized.",
+    "positioning_connection": "COMPREENDER. INDIVIDUALIZAR. RESOLVER.",
+    "internal_brand_principle": "A paciente chega por um sintoma. Eu enxergo o 
+quadro."
+  },
+
+  "primary_job": "Help the audience understand that the clinical meaning of 
+menstrual pain can change when it appears together with other relevant symptoms, 
+and that this may change the investigation.",
+
+  "core_message": {
+    "working_message": "Uma queixa isolada conta uma parte da história. Quando 
+sintomas relevantes aparecem juntos, o raciocínio e a investigação podem 
+mudar.",
+    "communication_goal": "Show clinical reasoning in a concrete and 
+understandable way.",
+    "do_not_turn_into": [
+      "Every symptom has one hidden cause.",
+      "Complex disease is always present.",
+      "Other physicians failed to investigate correctly.",
+      "A symptom combination proves endometriosis or another diagnosis."
     ]
   },
 
-  "messaging": {
-    "core_promise": "Know exactly which campaigns drive revenue — without begging engineering for help.",
-    "key_differentiator": "Works across your entire stack in 15 minutes, not 15 weeks. No engineering required.",
-    "proof_points": [
-      "Acme SaaS cut reporting time from 12 hours/week to 45 minutes and identified $340K in wasted ad spend",
-      "Average customer proves ROI to their CFO within the first board meeting (30 days)",
-      "92% of users connect all channels within the first hour — no code required"
-    ],
-    "tone": "Direct, empathetic, slightly provocative. We understand the pain because we've seen it 100 times."
-  },
-
-  "deliverables": [
+  "medical_claims": [
     {
-      "type": "linkedin_post",
-      "quantity": 5,
-      "format": "Text post, 1200 chars max. Use Hook Formula #6 (Harsh Reality) for posts 1-2, Formula #4 (Contrarian Challenge) for posts 3-4, Formula #3 (Social Proof) for post 5.",
-      "cta": "Link to 'Attribution Reality Check' landing page",
-      "destination_url": "/attribution-reality-check",
-      "notes": "Each post should end with an engagement closer from marketing-wisdom.md"
-    },
-    {
-      "type": "email_sequence",
-      "quantity": 4,
-      "format": "4-email nurture sequence for demo request leads. Segment: One-and-Done pattern from marketing-wisdom.md. 150-200 words each.",
-      "cta": "Book a 15-Minute Demo",
-      "destination_url": "/demo",
-      "notes": "Use activation gap principles — push value, don't pull users. Email 1 should include a sample dashboard screenshot."
-    },
-    {
-      "type": "landing_page",
-      "quantity": 1,
-      "format": "Long-form landing page. Hero + social proof + 3 pain points + solution + case study + FAQ + CTA. Follow BOFU copy principles.",
-      "cta": "See Your Revenue Attribution in 15 Minutes",
-      "destination_url": "/attribution-reality-check",
-      "notes": "This is BOFU content — visitors are comparing solutions. Lead with differentiators, not features. Address objections inline."
+      "claim_id": "CLM-EXAMPLE-001",
+      "working_claim": "The combination and context of gynecologic symptoms can 
+influence differential diagnosis and investigation.",
+      "verification_status": "SCIENTIFIC_RESEARCH_REQUIRED",
+      "required_output": [
+        "verifiable source",
+        "applicable population",
+        "evidence type",
+        "strength or quality when responsibly determinable",
+        "limitations",
+        "appropriate wording"
+      ],
+      "publication_rule": "Creator must not strengthen or publish the claim 
+beyond the verified evidence package."
     }
   ],
 
-  "constraints": {
-    "never_mention": [
-      "Don't trash GA4 directly — our audience uses it and we integrate with it",
-      "Don't claim 'perfect attribution' — no tool is perfect, and our audience is skeptical of overclaims",
-      "Don't use: streamline, leverage, game-changing, best-in-class"
-    ],
-    "required_elements": [
-      "Include '15 minutes' time-to-value claim in every piece",
-      "Link to live demo or sandbox, not just a form",
-      "Include at least one voice-of-customer quote per deliverable"
-    ],
-    "brand_voice_file": "brands/your-agency/voice.md",
-    "client_file": null
+  "content_direction": {
+    "recommended_format": "Instagram Reel",
+    "reason": "Spoken explanation allows Carol to demonstrate clinical reasoning 
+naturally and concretely.",
+    "opening_direction": "Begin with a recognizable clinical situation or 
+meaningful distinction rather than a sensational hook.",
+    "reasoning_example": "Você pode ter chegado por causa da cólica. Mas, quando 
+junto isso ao sangramento, dor na relação e alteração intestinal, a investigação 
+muda.",
+    "note": "This is a reasoning example, not a diagnosis or universal rule.",
+    "desired_takeaway": "Individualization becomes visible through the reasoning 
+itself.",
+    "cta_function": "understanding_or_save_if_naturally_useful",
+    "cta_required": false
   },
 
-  "measurement": {
-    "primary_kpi": "Demo requests",
-    "primary_kpi_target": "30 in 45 days",
-    "secondary_kpis": [
-      "LinkedIn post engagement rate (target: 3%+)",
-      "Email sequence click-through rate (target: 4%+)",
-      "Landing page conversion rate (target: 5%+)"
+  "creator_constraints": {
+    "voice": "Autoridade tranquila + clareza + profundidade + proximidade.",
+    "principle": "Profundidade sem complicação. Autoridade sem distância. Valor 
+demonstrado pelo raciocínio, não declarado pela propaganda.",
+    "must_preserve": [
+      "clinical nuance",
+      "evidence strength",
+      "audience segment",
+      "primary job",
+      "journey stage",
+      "content function"
     ],
-    "reporting_cadence": "Weekly",
-    "tracking_notes": "UTM: utm_campaign=attribution-reality-check, utm_source=linkedin/email. Track demo-to-opportunity conversion at 60 days."
+    "avoid": [
+      "medical clickbait",
+      "fear-based framing",
+      "attacks on other physicians",
+      "fabricated patient quotes",
+      "fabricated statistics",
+      "generic luxury or premium positioning",
+      "mandatory contrarian framing",
+      "automatic scheduling CTA",
+      "em dash in public-facing brand copy"
+    ]
   },
 
-  "activation_plan": {
-    "first_value_moment": "See their own data visualized in the demo — not a generic demo, their actual channels",
-    "time_to_value": "15 minutes from signup to first connected dashboard",
-    "ghost_user_plan": "Auto-generate sample report using their website URL. Send via email within 1 hour of signup.",
-    "one_and_done_plan": "If they connect 1 channel but don't return: send 'Here's what we found' email with 3 insights from their data.",
-    "success_signal": "User connects 3+ channels and views their attribution dashboard"
-  }
+  "editorial_gate": {
+    "medical_review_required": true,
+    "brand_review_required": true,
+    "checks": [
+      "Does the final copy preserve the verified medical claim?",
+      "Was association converted into causality?",
+      "Was the applicable population generalized?",
+      "Does the content imply diagnosis from symptoms alone?",
+      "Does authority come from reasoning rather than self-promotion?",
+      "Does the tone remain calm, clear, deep and close?",
+      "Are professional and ethical boundaries preserved?"
+    ]
+  },
+
+  "visual_direction": {
+    "art_director_required": true,
+    "current_feed_format": "1080x1440_3:4",
+    "legacy_format": "1080x1350_4:5",
+    "migration_rule": "Do not mechanically stretch a legacy 4:5 template into 
+3:4. Recompose vertical space and require human visual validation for the first 
+migration of each template family.",
+    "principles": [
+      "one primary idea per surface",
+      "quiet editorial sophistication",
+      "medical credibility",
+      "negative space is intentional",
+      "extra height does not justify extra copy"
+    ]
+  },
+
+  "human_approval": {
+    "required_before_publication": true,
+    "reason": "Final medical content and publication remain human gates."
+  },
+
+  "measurement_plan": {
+    "measurement_principle": "Measure the piece according to its strategic job 
+and connect social signals to downstream business outcomes when reliable data 
+allow.",
+    "content_level_signals": [
+      "qualified reach",
+      "retention",
+      "saves when meaningful",
+      "relevant shares",
+      "profile exploration",
+      "qualified questions"
+    ],
+    "downstream_funnel": [
+      "lead",
+      "qualified lead",
+      "confirmed appointment",
+      "verified attendance",
+      "verified revenue"
+    ],
+    "source_truth": {
+      "social_platform_metrics": "Instagram or Meta platform data",
+      "lead_and_raw_conversation": "Cliente IO raw record/conversation",
+      "booking": "Observable raw CRM evidence meeting the operational booking 
+definition",
+      "attendance": "Internal attendance spreadsheet or designated authoritative 
+operational source",
+      "revenue": "Authoritative operational or financial record"
+    },
+    "warnings": [
+      "Do not use Cliente IO AI classifications as ground truth.",
+      "Do not infer attendance from appointment confirmation.",
+      "Do not infer revenue from quoted price.",
+      "Do not call high engagement a commercial success without downstream 
+evidence."
+    ]
+  },
+
+  "performance_learning": {
+    "rule": "One content result should not automatically become a permanent 
+strategy rule.",
+    "learning_path": [
+      "OBSERVATION",
+      "REPEATED_SIGNAL",
+      "CANDIDATE_LEARNING",
+      "HUMAN_REVIEW",
+      "APPROVED_RULE"
+    ]
+  },
+
+  "handoff_sequence": [
+    {
+      "to": "MOS-Scientific Research",
+      "purpose": "Verify material medical claims and return an evidence 
+package."
+    },
+    {
+      "to": "MOS-Creator / Copywriter",
+      "purpose": "Turn the approved direction and verified evidence into 
+patient-facing copy."
+    },
+    {
+      "to": "MOS-Editor",
+      "purpose": "Review medical accuracy, evidence proportionality, brand 
+alignment and professional boundaries."
+    },
+    {
+      "to": "MOS-Art Director",
+      "purpose": "Translate editorially stable content into the approved visual 
+system."
+    },
+    {
+      "to": "HUMAN APPROVAL",
+      "purpose": "Approve final content before publication."
+    },
+    {
+      "to": "MOS-Performance Analyst",
+      "purpose": "Evaluate content and downstream funnel evidence after 
+publication."
+    }
+  ],
+
+  "unknowns": [
+    "The final wording of the medical claim remains unknown until Scientific 
+Research verifies it.",
+    "No numerical performance target should be invented for this example.",
+    "No budget should be assumed.",
+    "No publication date or frequency should be assumed.",
+    "No business outcome should be predicted before measurement."
+  ],
+
+  "success_definition": "The brief succeeds when downstream agents can execute 
+the intended strategy without inventing audience facts, medical evidence, proof, 
+targets or business outcomes."
 }
