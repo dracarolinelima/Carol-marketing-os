@@ -1,82 +1,138 @@
 {
-  "_template_version": "1.0",
-  "_description": "Creative brief produced by MOS-Strategist. Consumed by MOS-Copywriter. Fill in all fields before handing off.",
-  "_instructions": "Replace all [FILL IN] values. Remove fields not applicable. Save as creative-brief-[CAMPAIGN-NAME]-[DATE].json",
-
+  "_template_version": "2.0",
+  "_description": "Brief estratégico do Carol Marketing OS.",
+  "_instructions": "Preencher apenas os campos aplicáveis. Não inventar dados, metas, evidências, prazos, orçamento ou resultados.",
   "brief_id": "BRIEF-[YYYYMMDD]-[001]",
   "status": "draft",
   "created_by": "MOS-Strategist",
   "created_date": "[YYYY-MM-DD]",
   "approved_by": null,
   "approved_date": null,
-
-  "campaign_context": {
-    "name": "[FILL IN: Campaign name for reference]",
-    "goal": "[FILL IN: Specific, measurable goal — not 'awareness'. E.g., '50 trial signups in 30 days']",
-    "deadline": "[FILL IN: YYYY-MM-DD]",
-    "budget": "[FILL IN: $X total or $X/month]",
-    "channels": ["[FILL IN: e.g., linkedin, email, paid_search, organic_social]"],
-    "campaign_duration": "[FILL IN: e.g., '30 days', 'always-on']"
+  "context": {
+    "name": "[Nome interno do conteúdo ou campanha]",
+    "type": "[single_content | content_series | organic_campaign | paid_campaign | other]",
+    "business_objective": "[Objetivo de negócio, se aplicável]",
+    "marketing_objective": "[O que esta iniciativa deve ajudar a produzir]",
+    "channel": "[instagram | meta_ads | website | whatsapp | other]",
+    "format": "[reel | carousel | static_post | stories | ad | page | other]",
+    "deadline": null,
+    "budget": null,
+    "notes": null
   },
-
+  "strategic_classification": {
+    "patient_journey_stage": "[RECONHECER | ENTENDER | CONFIAR | PROCURAR | null]",
+    "content_function": "[DESCOBERTA | COMPREENSÃO | AUTORIDADE_RESOLUTIVIDADE | CONVERSÃO | null]",
+    "patient_need": "[COMPREENDER | RESOLVER | RECUPERAR | null]",
+    "segment": "[Segmento clínico ou estratégico relevante]",
+    "classification_notes": null
+  },
   "audience": {
-    "primary_segment": "[FILL IN: Specific audience — not 'everyone'. E.g., 'Marketing Directors at B2B SaaS companies, $10M-$50M ARR']",
-    "audience_profile_id": "[FILL IN: Reference to audience-profile.json if exists, or null]",
-    "pain_point": "[FILL IN: The #1 problem this audience has that we're addressing]",
-    "current_belief": "[FILL IN: What they believe right now that we want to change]",
-    "desired_belief": "[FILL IN: What we want them to believe after seeing this campaign]",
-    "objections": [
-      "[FILL IN: Top objection #1 — why they might not respond]",
-      "[FILL IN: Top objection #2]",
-      "[FILL IN: Top objection #3]"
-    ],
-    "voice_of_customer": [
-      "[FILL IN: Actual phrase from research/interviews — use their exact words]",
-      "[FILL IN: Another actual phrase]"
-    ]
+    "audience_profile_id": null,
+    "target_context": "[Quem precisa receber esta mensagem e em qual contexto]",
+    "observed_need": "[Necessidade sustentada pelos dados disponíveis]",
+    "patient_language": [],
+    "relevant_objections_or_barriers": [],
+    "source_basis": [],
+    "limitations": [],
+    "unknowns": []
   },
-
-  "messaging": {
-    "core_promise": "[FILL IN: The ONE thing we want them to remember. Single sentence.]",
-    "key_differentiator": "[FILL IN: Why us and not the alternative. Be specific.]",
-    "proof_points": [
-      "[FILL IN: Specific stat, result, or client name — never fabricate. E.g., '47% increase in pipeline for ClientX in 90 days']",
-      "[FILL IN: Another proof point]",
-      "[FILL IN: Another proof point]"
-    ],
-    "tone": "[FILL IN: e.g., 'confident and direct, not salesy' — reference voice.md for full guidance]"
+  "strategy": {
+    "strategic_thesis": "[Hipótese ou decisão estratégica central]",
+    "thesis_type": "[FATO_OBSERVADO | ASSOCIAÇÃO | HIPÓTESE | DECISÃO_ESTRATÉGICA]",
+    "central_message": "[Uma ideia principal que deve permanecer após o conteúdo]",
+    "desired_effect": "[O que queremos que a pessoa compreenda, perceba, considere ou faça]",
+    "reason_to_believe": [],
+    "differentiation": "[Como demonstrar valor pelo raciocínio sem autopromoção genérica]",
+    "cta_role": "[Função estratégica da CTA ou null]",
+    "cta": null
   },
-
+  "evidence": {
+    "medical_claims_present": false,
+    "scientific_research_required": false,
+    "claims": [
+      {
+        "claim": "[Alegação médica ou científica, se houver]",
+        "status": "[VERIFIED | NEEDS_RESEARCH | HUMAN_REVIEW | NOT_APPLICABLE]",
+        "evidence_strength": "[FORTE | MODERADO | LIMITADO | INSUFICIENTE_CONTROVERSO | NOT_APPLICABLE]",
+        "source_reference": null,
+        "limitations": null
+      }
+    ],
+    "internal_evidence": [],
+    "evidence_notes": null
+  },
+  "creative_direction": {
+    "content_angle": "[Abordagem editorial]",
+    "opening_direction": "[Direção de abertura, sem fórmula obrigatória]",
+    "reasoning_to_demonstrate": "[Raciocínio que deve ficar visível no conteúdo]",
+    "must_include": [],
+    "must_avoid": [],
+    "voice": "Autoridade tranquila + clareza + profundidade + proximidade",
+    "copy_notes": null
+  },
   "deliverables": [
     {
-      "type": "[FILL IN: linkedin_post | email_sequence | landing_page | ad_copy | blog_post | social_post]",
+      "deliverable_id": "[CNT-YYYY-001 ou outro ID aplicável]",
+      "type": "[reel | carousel | static_post | stories | ad | page | other]",
       "quantity": 1,
-      "format": "[FILL IN: Specific format. E.g., '150-word caption, no hashtags, single image' or '5-email sequence, 200 words each']",
-      "cta": "[FILL IN: Specific CTA text. E.g., 'Book a Free 30-Minute Audit']",
-      "destination_url": "[FILL IN: Where the CTA links to]",
-      "notes": "[FILL IN: Any special instructions for this deliverable, or null]"
+      "specifications": "[Somente requisitos realmente necessários]",
+      "cta": null,
+      "destination": null,
+      "notes": null
     }
   ],
-
-  "constraints": {
-    "never_mention": [
-      "[FILL IN: Things to avoid — competitors you don't want called out, sensitive topics, claims you can't back up]"
-    ],
-    "required_elements": [
-      "[FILL IN: Must-include elements — legal disclaimers, specific URLs, required taglines, or null]"
-    ],
-    "brand_voice_file": "brands/your-agency/voice.md",
-    "client_file": "[FILL IN: path to CLIENT.md if this is for a client, or null]"
+  "editorial_review": {
+    "medical_review_required": false,
+    "brand_review_required": true,
+    "editor_flags": [],
+    "human_approval_required": true
   },
-
+  "visual_direction": {
+    "art_director_required": false,
+    "design_system_reference": "Carol Design System",
+    "feed_static_and_carousel_standard": "1080x1440 (3:4)",
+    "legacy_4_5_migration_pending": true,
+    "visual_notes": null
+  },
   "measurement": {
-    "primary_kpi": "[FILL IN: The one metric that defines success for this campaign]",
-    "primary_kpi_target": "[FILL IN: The specific number we're aiming for]",
-    "secondary_kpis": [
-      "[FILL IN: Supporting metric to track]",
-      "[FILL IN: Another supporting metric]"
+    "measurement_required": true,
+    "primary_question": "[O que precisamos aprender ou verificar com esta iniciativa]",
+    "funnel_stage_to_observe": [],
+    "metrics": [],
+    "authoritative_sources": [],
+    "attribution_status": "[DIRECT_ATTRIBUTION | SUPPORTED_ASSOCIATION | HYPOTHESIS | INSUFFICIENT_DATA | NOT_APPLICABLE]",
+    "denominator_notes": null,
+    "time_lag_notes": null,
+    "tracking_notes": null
+  },
+  "handoff": {
+    "next_agent": "[MOS-Creator | MOS-Scientific Research | MOS-Editor | MOS-Art Director | MOS-Performance Analyst | HUMAN | null]",
+    "required_inputs": [],
+    "blocked_by": [],
+    "human_decisions_needed": []
+  },
+  "guardrails": {
+    "do_not_invent": [
+      "dados internos",
+      "dados de pacientes",
+      "prevalência",
+      "resultados",
+      "provas sociais",
+      "evidência científica",
+      "metas",
+      "orçamento",
+      "receita",
+      "atribuição"
     ],
-    "reporting_cadence": "[FILL IN: Weekly | Monthly | Campaign end]",
-    "tracking_notes": "[FILL IN: Any notes on how to track — UTM parameters, attribution model, etc.]"
+    "do_not_assume": [
+      "que pergunta sobre preço significa lead ruim",
+      "que pergunta sobre plano significa lead ruim",
+      "que agendamento confirmado significa comparecimento",
+      "que comparecimento significa receita",
+      "que associação significa causalidade",
+      "que boa performance isolada cria regra permanente"
+    ],
+    "privacy": "Usar apenas dados mínimos necessários e evitar informações identificáveis de pacientes.",
+    "precedence": "Segurança, ética, legislação e normas profissionais > evidência científica aplicável > Marketing Core > dados internos confiáveis > estratégia aprovada > Brand/Voice Guide > aprendizados aprovados > skills e frameworks externos."
   }
 }
