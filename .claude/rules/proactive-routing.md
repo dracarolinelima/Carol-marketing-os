@@ -152,6 +152,21 @@ conversation**.
 
 Popularity does not establish scientific truth.
 
+## Market Research is conditional, not a default step
+
+Do not invoke `MOS-Market Research` merely because content addresses women,
+patients, symptoms, or a medical topic.
+
+Invoke Market Research only when the decision actually requires external
+truth: competitor messaging, public search behavior, emerging trends, channel
+signals, publicly visible demand, or other market-level information that
+cannot be answered by internal data or scientific literature.
+
+If Scientific Research + available Audience Intelligence + Strategist are
+sufficient to make a reliable decision, omit Market Research.
+
+Minimum sufficient workflow applies.
+
 ---
 
 ## Scientific / Medical Evidence
