@@ -337,6 +337,6 @@ Em caso de conflito:
 - `brands/your-agency/voice.md` — guia detalhado de voz
 - `memory/marketing-os/brand-voice.md` — memória operacional de padrões de voz 
 revisados
-- `memory/marketing-os/marketing-core.md` — fonte estratégica central, quando 
+- `memory/carol-marketing-os/marketing-core.md` — fonte estratégica central, quando 
 aplicável
 - Carol Design System — fonte oficial para decisões visuais
