@@ -707,6 +707,28 @@ One meaningful idea per slide or visual unit.
 
 Each slide should create a reason for the next.
 
+This reason must come from the logic of the content, not from
+artificial devices.
+
+Legitimate ways to create progression:
+
+- the previous slide raised a question the next one answers;
+- the previous slide established a premise the next one develops;
+- the previous slide named a problem the next one begins to explain;
+- the previous slide completed one layer of the reasoning and the
+  next one adds the necessary layer.
+
+Do not create progression through:
+
+- withheld information that should have been on the current slide;
+- suspense or cliffhangers disconnected from the reasoning;
+- contrarian hooks;
+- dramatization;
+- empty promises of a reveal.
+
+The reader should want to continue because the content is building
+something. Not because information was deliberately held back.
+
 ### Resolution
 
 Deliver the promised understanding.
