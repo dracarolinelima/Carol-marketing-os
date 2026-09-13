@@ -854,6 +854,145 @@ exclusivity.
 
 Do not create a CTA just because the format expects one.
 
+### ONE COGNITIVE BEAT PER CARD
+
+"One primary idea per card" is not sufficient.
+
+Each card should require only one primary cognitive move from the reader.
+
+Examples of a single cognitive beat:
+
+- recognizing a symptom;
+- mentally answering a question;
+- understanding a relationship;
+- receiving a correction to a belief;
+- grasping a criterion;
+- absorbing a conclusion.
+
+If a card requires the reader to:
+
+- understand a justification;
+- process multiple relationships;
+- absorb a conclusion;
+- answer questions;
+- and interpret what to do with all of it;
+
+the card is overloaded, even if everything belongs to the same "idea".
+
+Do not use arbitrary word counts.
+
+Evaluate cognitive effort.
+
+A card should be comprehensible on a first visual pass, without requiring
+re-reading to capture its primary function.
+
+### RECOGNITION CONTENT SHOULD ALLOW RECOGNITION TO HAPPEN
+
+When the editorial function is RECONHECER, do not immediately turn the
+content into a lesson.
+
+Consider structures where each card creates a moment of identification,
+for example:
+
+- one question per card;
+- one concrete situation per card;
+- one symptom per card;
+- one perception the reader can test against her own experience.
+
+After the recognition sequence, the content may synthesize the clinical
+meaning.
+
+Do not turn "one question per card" into a mandatory formula.
+
+It is a structural option especially suited when the objective is
+recognition.
+
+### SCIENTIFIC RELEVANCE FILTER
+
+Not every scientifically correct piece of information needs to appear in
+the piece.
+
+Before including a mechanism, physiology detail, technical name, study
+reference or clinical detail, ask:
+
+"Does this information help the reader better understand the message
+necessary for the editorial objective of this piece?"
+
+If the answer is no, the detail belongs in the scientific base and not
+necessarily in the post.
+
+Authority is not demonstrated by showing everything the physician knows.
+
+It is also demonstrated by the ability to select what matters.
+
+Depth can be distributed across:
+
+- the carousel;
+- the caption;
+- subsequent content;
+- and the internal scientific base.
+
+Do not turn a RECONHECER piece into a mini-lesson simply because
+interesting evidence is available.
+
+### INSTAGRAM-FIRST OPENING
+
+The first card must work visually and sound human.
+
+Avoid openings formed by an artificial sequence of parallel fragments,
+such as:
+
+"Sintoma A.
+Sintoma B.
+Sintoma C.
+Alguma coisa mudou."
+
+This pattern frequently sounds like AI-produced copy.
+
+Also avoid:
+
+- excessively dramatic cadence;
+- pseudo-poetic phrases;
+- contrasts created only to sound clever;
+- symptom lists without a unifying idea;
+- sentences that seem written to perform as a hook.
+
+Prefer opening with:
+
+- a recognizable situation;
+- a question the patient could realistically ask;
+- a common clinical doubt;
+- a concrete perception;
+- or a simple statement that produces recognition.
+
+The first card should sound like something Dra. Caroline could naturally
+say to a patient.
+
+### VISUAL CONSUMPTION OVER COMPLETENESS
+
+A carousel does not need to contain every explanation necessary on the
+topic.
+
+The objective is to deliver enough information to fulfill its editorial
+function.
+
+If a card is technically excellent for:
+
+- a blog post;
+- a lesson;
+- a long video;
+- a detailed medical answer;
+
+but requires excessive effort on an Instagram screen, redistribute or
+remove that information.
+
+Do not sacrifice precision.
+
+Do not sacrifice depth.
+
+Sacrifice only information that is not necessary at that moment in the
+journey.
+
 ---
 
 ## STATIC POSTS
