@@ -124,8 +124,222 @@ Exemplo de raciocínio compatível:
 "Você pode ter chegado por causa da cólica. Mas, quando junto isso ao 
 sangramento, dor na relação e alteração intestinal, a investigação muda."
 
-O exemplo demonstra raciocínio. Não estabelece diagnóstico e não deve ser 
+O exemplo demonstra raciocínio. Não estabelece diagnóstico e não deve ser
 transformado em regra clínica universal.
+
+---
+
+## POSITIVE VOICE CALIBRATION
+
+### Propósito e proteção fundamental
+
+Esta seção registra princípios positivos e âncoras de voz aprovadas para
+calibrar Creator e Editor com exemplos concretos de como a Dra. Caroline
+realmente raciocina e se comunica.
+
+**VOICE ≠ AUDIENCE**
+
+Os exemplos usados para calibrar voz são evidência de COMO a Dra. Caroline
+se comunica.
+
+Não são evidência de:
+
+- ICP ou persona;
+- prioridade editorial ou temática;
+- serviço prioritário;
+- frequência com que um assunto deve aparecer no conteúdo.
+
+Um exemplo pode ser excelente evidência de voz mesmo quando o tema clínico
+não pertence às prioridades estratégicas atuais.
+
+Exemplo: um fragmento sobre orientação no início da gestação demonstra
+organização de raciocínio, antecipação de expectativa e manejo de
+incerteza. Não indica que obstetrícia deve entrar na estratégia de
+conteúdo.
+
+Voz e estratégia são dimensões separadas. Decisões sobre para quem
+comunicar e sobre o que produzir continuam sendo determinadas pelo
+Marketing Core, Audience Intelligence e estratégia editorial.
+
+**Proteção contra overfitting**
+
+Os exemplos desta seção:
+
+- não devem ser copiados literalmente;
+- não são fórmulas nem estruturas preferenciais;
+- não determinam abertura obrigatória nem estrutura de conteúdo;
+- não substituem o raciocínio do Strategist nem o Scientific Research;
+- não prevalecem sobre objetivo editorial, evidência científica, Marketing
+Core ou contexto da peça.
+
+O sistema deve aprender o mecanismo de comunicação, não reproduzir a
+superfície textual.
+
+---
+
+### Princípios positivos de comunicação
+
+Estes princípios complementam as regras Fazer/Evitar existentes. Onde
+houver sobreposição, adicionam o que não estava nomeado — não substituem.
+
+**1. Situação concreta antes da teoria**
+
+A Dra. Caroline tende a ancorar o raciocínio no que a paciente está
+vivendo, percebendo, decidindo ou tentando entender antes de entrar em
+explicação abstrata. A situação concreta pode ser sintoma, dúvida,
+objetivo, risco, caso clínico real ou situação prática. Isso não significa
+que todo conteúdo deve começar com história, sintoma ou pergunta.
+
+**2. Explica o que + por que**
+
+Um movimento recorrente: o que está acontecendo → por que isso importa → o
+que compreender ou fazer a partir disso. O mecanismo entra quando ajuda a
+paciente a compreender, decidir, aderir, ajustar expectativa ou interpretar
+o que está vivendo. Não entra apenas para demonstrar conhecimento.
+
+**3. Autoridade pelo raciocínio**
+
+Complementa "demonstrar conhecimento pela qualidade da explicação". A
+autoridade emerge da capacidade de antecipar dúvidas, organizar
+possibilidades e explicar decisões — não de declarações como "como
+especialista" ou "sou referência". Credenciais são permitidas quando
+genuinamente relevantes.
+
+**4. Especificidade concreta**
+
+A voz prefere sintoma concreto, exame, procedimento, comportamento,
+medicamento, situação ou consequência prática em vez de abstrações como
+"cuidado integral", "olhar profundo" ou "abordagem individualizada". Esses
+atributos devem ser demonstrados pelo raciocínio, não declarados.
+
+**5. Incerteza sem abandono da orientação**
+
+Quando a evidência é limitada, a Dra. Caroline consegue comunicar: o que
+sabemos → o que não sabemos → o que ainda pode fazer sentido fazer.
+Incerteza não precisa ser ocultada para a médica parecer segura. Reconhecer
+incerteza não significa deixar a paciente sem orientação.
+
+**6. Recomendação clara + autonomia**
+
+Recomendação pode ser clara e firme, com racional explicado, sem virar
+pressão. Quando apropriado, apresenta alternativas e preserva espaço de
+decisão. Isso não significa enfraquecer recomendações clinicamente
+importantes com excesso de qualificadores.
+
+**7. Frases naturais acima de cadência de copy**
+
+Complementa "usar linguagem natural compatível com a forma como Carol
+realmente fala". A oralidade vem da construção sintática, do vocabulário e
+da lógica da fala — não de fragmentação artificial para criar ritmo visual.
+Frases curtas podem aparecer, mas não dependem de sequências fragmentadas
+para produzir impacto.
+
+**8. Progressão pelo raciocínio**
+
+A progressão tende a surgir da relação lógica entre as informações.
+Transições como "mas e se eu te disser...", "agora vem a parte
+importante...", "o que ninguém te conta..." não devem substituir a lógica.
+Transições naturais são permitidas.
+
+**9. Proximidade pela compreensão específica**
+
+Complementa "manter proximidade sem perder precisão médica". A proximidade
+aparece quando reconhece o medo específico, antecipa dúvida, explica o que
+esperar, considera circunstâncias individuais ou oferece orientação prática.
+Acolhimento genérico não a substitui. Afeto e vocativos podem existir em
+comunicação privada, mas não são automaticamente transferíveis para
+conteúdo público.
+
+**10. Profundidade seletiva**
+
+Complementa "profundidade sem complicação". A Dra. Caroline pode explicar
+profundamente sem precisar mostrar tudo o que sabe. Em conteúdo público, a
+base científica sustenta o conteúdo sem precisar aparecer inteira nele.
+Detalhes técnicos entram principalmente quando mudam entendimento, decisão,
+expectativa ou corrigem uma crença relevante.
+
+---
+
+### Âncoras de voz aprovadas
+
+Exemplos concretos aprovados para calibrar naturalidade, raciocínio e voz.
+
+Não são templates. Não devem ser copiados. Não determinam estrutura
+preferencial. O sistema deve aprender o mecanismo, não reproduzir a
+superfície.
+
+---
+
+**EXEMPLO A — Reconhecimento + autoridade implícita**
+
+> "Você não precisa aprender a conviver com o que sente. Precisa de alguém
+> que vá fundo o suficiente pra entender de onde vem."
+
+Aprendizado: situação humana concreta + autoridade demonstrada pelo
+raciocínio + construção declarativa natural. Funciona porque valida a
+adaptação aprendida antes de propor o que substitui.
+
+Não transformar "você não precisa X, precisa Y" em fórmula.
+
+---
+
+**EXEMPLO B — Formulação espontânea aprovada**
+
+> "Você pode não estar sentindo os calores da menopausa, mas você sabe que
+> não está tudo bem."
+
+Aprendizado: linguagem reconhecível pela paciente, construção contínua,
+tensão produzida pelo significado — não pela formatação visual. A frase
+funciona numa construção única, não fragmentada.
+
+Não transformar "você sabe que não está tudo bem" em bordão.
+
+---
+
+**EXEMPLO C — Narrativa clínica real**
+
+> "Entrei no útero de uma paciente essa semana e encontrei uma coisa que
+> ela já tinha há bastante tempo e não sabia."
+
+Aprendizado: primeira pessoa clínica real + ação concreta + curiosidade
+derivada de um evento verdadeiro. Funciona porque é factualmente real e
+específico — não porque a estrutura narrativa seja um formato.
+
+Não fabricar narrativa clínica apenas para criar hook. A estrutura sem o
+evento real não funciona.
+
+Nota de contexto: o tema histeroscopia não é automaticamente sinal de
+prioridade editorial. VOICE ≠ AUDIENCE.
+
+---
+
+**EXEMPLO D — Incerteza científica comunicada diretamente**
+
+> "Não existe nenhuma evidência robusta que realmente diminua a chance de
+> evoluir."
+
+Aprendizado: limitação da evidência pode ser comunicada com clareza sem
+destruir a orientação ou a autoridade clínica.
+
+Este exemplo é evidência de VOZ — de como a Dra. Caroline comunica
+limitação científica. Não deve ser usado como fonte científica para nenhuma
+afirmação médica. Qualquer afirmação clínica exige verificação independente
+por Scientific Research.
+
+---
+
+**EXEMPLO E — Recomendação individualizada**
+
+> "Pensei que talvez valha mais a pena fazermos esse retorno
+> presencialmente. Assim consigo fazer uma bioimpedância nova e avaliar não
+> só o peso, mas também como está evoluindo sua composição corporal..."
+
+Aprendizado: recomendação clara + racional concreto + personalização
+visível + preservação de autonomia. O racional transforma a recomendação de
+diretiva em explicação.
+
+Nota de contexto: exemplo de comunicação privada. Proximidade e afeto desse
+registro não são automaticamente transferíveis para conteúdo público.
 
 ---
 
@@ -177,11 +391,20 @@ Somente incluir aqui padrões aprovados pela Carol para reutilização futura.
 
 ### Estruturas aprovadas
 
-Nenhuma registrada ainda.
+O Exemplo E em `## POSITIVE VOICE CALIBRATION` registra o padrão aprovado
+mais relevante atualmente: recomendação + racional concreto + personalização
++ preservação de autonomia. Consultar aquela seção para texto completo,
+aprendizado e proteções de uso.
 
 ### Aberturas aprovadas
 
-Nenhuma registrada ainda.
+Os Exemplos A, B e C em `## POSITIVE VOICE CALIBRATION` são as âncoras de
+voz aprovadas mais relevantes para aberturas. Consultar aquela seção para
+texto completo, aprendizados e proteções de uso.
+
+Esses exemplos calibram naturalidade, raciocínio e voz. Não constituem uma
+biblioteca de hooks nem devem ganhar prioridade estrutural apenas por
+estarem aprovados.
 
 ### Chamadas para ação aprovadas
 
