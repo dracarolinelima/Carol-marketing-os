@@ -968,6 +968,64 @@ Prefer opening with:
 The first card should sound like something Dra. Caroline could naturally
 say to a patient.
 
+### SCROLL-STOP STRENGTH
+
+The opening must not only be accurate, natural and aligned with the brand.
+
+It must create enough immediate relevance, recognition, curiosity, useful
+tension or perceived value to interrupt passive scrolling by the intended
+audience.
+
+Evaluate:
+
+- Does the first card immediately signal relevance to the intended reader?
+- Can she understand in one glance why this content may matter to her?
+- Is there a concrete reason to give the next few seconds of attention?
+- Does the opening create recognition, curiosity, useful tension or a
+  meaningful information gap?
+- Is it specific enough to feel personally relevant rather than generically
+  informative?
+- Would it still be interesting if the reader encountered it between
+  unrelated posts and was not actively searching for this topic?
+
+Control question:
+
+"If this appeared between unrelated posts in the feed, would the intended
+reader have a strong enough reason to stop?"
+
+If not, strengthen the opening.
+
+Strength must NOT come from:
+
+- fear;
+- sensationalism;
+- exaggerated claims;
+- artificial controversy;
+- manufactured contrarianism;
+- vague mystery;
+- withholding information that belongs in the opening;
+- clickbait;
+- formulaic hook language.
+
+Prefer strength created by:
+
+- immediate recognition;
+- specificity;
+- a clinically meaningful question;
+- a surprising but evidence-supported clarification;
+- a concrete problem the reader recognizes;
+- a useful information gap;
+- clear relevance to something she is experiencing or deciding.
+
+Do not optimize for stopping everyone.
+
+The objective is to stop the right reader.
+
+A narrower opening with strong relevance to the intended audience may be
+better than a broadly provocative opening.
+
+Do not turn these mechanisms into mandatory hook formulas.
+
 ### VISUAL CONSUMPTION OVER COMPLETENESS
 
 A carousel does not need to contain every explanation necessary on the
