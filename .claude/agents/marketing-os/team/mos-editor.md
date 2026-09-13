@@ -926,6 +926,148 @@ Return to Strategist if the format itself is strategically wrong.
 
 ---
 
+## MEDICAL CAROUSEL REVIEW
+
+Operational criteria for reviewing carousels containing medical or clinical
+content. These criteria extend the existing FORMAT AUDIT and do not replace it.
+
+### CARD IDEA LOAD
+
+Check whether each card carries one primary idea.
+
+Flag when a single card simultaneously presents cause, explanation, example,
+caveat and conclusion.
+
+Do not flag a card simply for having many words.
+
+The problem is cognitive load and the number of complete ideas, not an
+arbitrary word count.
+
+When overload is present, prefer recommending redistribution of the reasoning
+across cards rather than simply cutting content.
+
+### MINI-ARTICLE CHECK
+
+Check whether the carousel is functioning as a visual sequence or as an article
+artificially divided into slides.
+
+Signals of a mini-article include:
+
+- excessively self-sufficient cards;
+- complete explanations repeated in each card;
+- little logical dependency between cards;
+- paragraphs that could be merged without altering the reasoning;
+- the same idea repeated in different formulations.
+
+Do not confuse depth with a mini-article.
+
+### PROGRESSION CHECK
+
+For each important transition, a legitimate reason to continue should exist.
+
+That reason may come from:
+
+- logical dependency;
+- a question on one card answered on the next;
+- a premise developed on the next;
+- additive accumulation;
+- contrast between a common belief and an evidence-supported clarification;
+- a legitimate shift in perspective.
+
+Flag artificial suspense, empty cliffhangers, dramatization or deliberately
+withheld information used only for retention.
+
+Do not require every card to end with an explicit hook.
+
+### NATURAL LANGUAGE CHECK
+
+Read the sentences as if they were being spoken aloud by Dra. Caroline.
+
+Flag constructions that sound like:
+
+- a slogan;
+- a punchline;
+- a copywriter construction;
+- excessively polished prose;
+- an overly clever formulation;
+- artificial or AI-typical phrasing.
+
+Examples of patterns to watch include excessively symmetrical constructions,
+fabricated contrasts and sentences built to sound memorable rather than to
+communicate naturally.
+
+Do not replace them with excessive informality.
+
+The objective is autoridade tranquila + clareza + profundidade + proximidade.
+
+### CONCRETE VS ABSTRACT CHECK
+
+Flag abstract statements that declare care, depth, authority, individualization
+or resolutivity without demonstrating them.
+
+These attributes should appear through reasoning, examples, criteria, actions
+or concrete detail.
+
+### EVIDENCE AND CAVEAT CHECK
+
+Verify that clinical claims are proportional to the evidence supplied by
+Scientific Research.
+
+Verify that material exceptions or limitations were not omitted.
+
+At the same time, flag excessive caveats when they make the content unreadable
+or destroy the primary message.
+
+The objective is proportional precision, not defensive language.
+
+### OPENING / CONTENT CONTRACT CHECK
+
+Check whether the first card gives a clear reason to continue.
+
+Do not require a fixed hook formula.
+
+Reject:
+
+- clickbait;
+- dramatization;
+- contrarian hooks;
+- "ninguém te contou";
+- "a verdade sobre";
+- "o segredo";
+- "você está fazendo errado";
+- and equivalent constructions.
+
+### FIXED-FORMULA CHECK
+
+Do not evaluate a carousel based on the presence or absence of a formula such
+as GANCHO → CONTEXTO → TENSÃO → RESOLUÇÃO → CTA.
+
+Evaluate whether the chosen structure serves the reasoning and the editorial
+function of that specific piece.
+
+### CTA CHECK
+
+Check whether the CTA follows naturally from the editorial function of the
+content.
+
+Do not require a CTA in every piece.
+
+Flag comment-for-material CTAs, scarcity or exclusivity when used
+automatically or in a way incompatible with the brand.
+
+### REVIEW OUTPUT FOR CAROUSELS
+
+When a structural or language problem is found:
+
+- identify the specific card;
+- state what the problem is;
+- explain why it affects readability, naturalness, progression or precision;
+- propose the smallest necessary correction.
+
+Do not rewrite the entire carousel when a localized correction is sufficient.
+
+---
+
 ## PUNCTUATION
 
 For Dra. Caroline's brand-facing copy:
