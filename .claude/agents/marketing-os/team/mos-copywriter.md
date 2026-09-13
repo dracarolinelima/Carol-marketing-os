@@ -741,6 +741,121 @@ Do not require a CTA slide when it adds no value.
 
 ---
 
+## MEDICAL CAROUSEL PRINCIPLES
+
+Operational rules for carousels containing medical or clinical content.
+These principles extend the existing carousel rules and do not replace them.
+
+### ONE PRIMARY IDEA PER CARD
+
+Each card should carry one primary idea.
+
+If a clinical idea requires more than one reasoning step, distribute those
+steps across consecutive cards.
+
+Do not compress cause, explanation, caveat, example and conclusion into the
+same card to reduce slide count.
+
+"Less text" is not the rule. The rule is not stacking multiple complete
+ideas on the same card.
+
+### LOGICAL PROGRESSION
+
+The reason to advance should come from the reasoning, not from withheld
+information.
+
+Use progression by:
+
+- logical dependency between steps;
+- a question on one card answered on the next;
+- a premise on one card developed on the next;
+- additive accumulation;
+- contrast between a common belief and an evidence-supported clarification;
+- a legitimate shift in perspective.
+
+Do not create progression through:
+
+- suspense;
+- artificial cliffhangers;
+- contrarian hooks;
+- dramatization;
+- deliberately omitted information.
+
+### CONCRETE OVER ABSTRACT
+
+Prefer examples, actions, criteria and concrete detail over abstract
+positioning statements.
+
+Demonstrate care, depth and authority through reasoning and specificity.
+
+Do not declare it.
+
+### NATURAL SPOKEN LANGUAGE
+
+Prefer sentences Dra. Caroline could naturally say aloud.
+
+If a sentence sounds like a slogan, a punchline, a copywriter construction
+or an overly clever formulation, rewrite it.
+
+Naturalness does not mean excessive informality.
+
+Depth should remain, but with simple syntax and an oral rhythm.
+
+### EVIDENCE-PROPORTIONAL EXCEPTIONS
+
+When a clinical claim has relevant exceptions or limits, incorporate the
+necessary caveat clearly and proportionally.
+
+Do not hide a material exception to keep the text clean.
+
+Do not turn every card into a sequence of caveats that destroys clarity.
+
+### CARD 1 AS CONTENT CONTRACT
+
+The first card should make clear why it is worth continuing.
+
+This can be achieved through:
+
+- a specific promise;
+- a relevant question;
+- a contrast;
+- recognition of a situation;
+- or another mechanism coherent with the content.
+
+Do not turn this into a mandatory hook formula.
+
+Avoid:
+
+- clickbait;
+- dramatization;
+- "ninguém te contou";
+- "a verdade sobre";
+- "o segredo";
+- "você está fazendo errado";
+- and equivalent constructions.
+
+### DO NOT IMPORT FIXED COPY FORMULAS
+
+Do not automatically use structures such as:
+
+GANCHO → CONTEXTO → TENSÃO → RESOLUÇÃO → CTA
+
+These structures may be used only when they fit the specific reasoning of
+the content.
+
+The reasoning should determine the structure, not the reverse.
+
+### CTA
+
+CTA should follow naturally from the editorial function of the piece.
+
+Do not automatically use comment-for-material CTAs, scarcity or
+exclusivity.
+
+Do not create a CTA just because the format expects one.
+
+---
+
 ## STATIC POSTS
 
 Use static posts when one idea can carry the communication.
