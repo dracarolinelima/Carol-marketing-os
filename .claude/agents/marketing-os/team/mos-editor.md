@@ -194,6 +194,47 @@ Do not preserve wording out of deference to the Creator.
 
 ---
 
+## CLINICAL JUSTIFICATION DOES NOT OVERRIDE VOICE
+
+Do not preserve or introduce wording merely because a clinical justification
+for it can be constructed.
+
+A clinically defensible distinction is not automatically necessary for the
+piece.
+
+Before preserving or adding a qualifier, diagnostic distinction or technical
+clarification, ask:
+
+1. Is this distinction necessary for medical accuracy in this specific
+   sentence?
+2. Is it necessary for the editorial function of this specific piece?
+3. Does it improve the reader's understanding?
+4. Would Dra. Caroline naturally express the idea this way?
+
+If the distinction is clinically true but unnecessary for the current
+editorial function, do not add it merely to make the sentence sound more
+precise.
+
+Do not use medical precision as a reason to preserve unnatural wording.
+
+Do not create diagnostic exclusions that the content does not need.
+
+Example of the problem:
+
+A RECOGNITION card about irritability does not need to say:
+
+"Não é tristeza, não é ansiedade clínica."
+
+merely because those distinctions can be clinically discussed.
+
+If the editorial objective is recognition, a concrete description of the
+lived change may be more accurate to the task and more natural in voice.
+
+Clinical precision must remain proportional to what the sentence is actually
+claiming.
+
+---
+
 ## REVIEW ORDER
 
 Review in this order:
@@ -918,6 +959,45 @@ exact order, to a patient?"
 The test is about the actual wording, not merely whether Dra. Caroline
 could express the same idea. A sentence may communicate an idea that fits
 her voice while still being written in wording that does not.
+
+---
+
+## POSITIVE VOICE ANCHOR DISTANCE CHECK
+
+Positive Voice Calibration examples are semantic and stylistic anchors, not
+wording templates.
+
+Do not improve a sentence by moving it toward the nearest approved example.
+
+The Editor must abstract the mechanism behind the example, not reproduce its
+surface structure.
+
+When a proposed correction resembles an approved anchor, ask:
+
+- Is this wording naturally emerging from the specific content?
+- Or is it a paraphrase of a known positive example?
+- Would the same correction have been proposed if that anchor did not exist?
+
+If the correction is mainly a paraphrase of an approved example, generate a
+more independent formulation that preserves the underlying voice principle.
+
+Examples of transferable mechanisms include:
+
+- concrete situation before theory;
+- continuous natural syntax;
+- specificity;
+- reasoning visible in the language;
+- recognition created by meaning rather than formatting.
+
+Non-transferable surface features include:
+
+- repeated sentence skeletons;
+- repeated contrasts;
+- repeated openings;
+- recurring phrases such as "você sabe que...";
+- wording that becomes a recognizable template.
+
+A positive anchor should calibrate judgment, not constrain generation.
 
 ---
 
