@@ -1066,6 +1066,149 @@ When a structural or language problem is found:
 
 Do not rewrite the entire carousel when a localized correction is sufficient.
 
+### COGNITIVE BEAT CHECK
+
+"One primary idea per card" is not sufficient.
+
+Check whether each card requires only one primary cognitive move from the
+reader.
+
+Examples of a single cognitive beat:
+
+- recognizing a symptom;
+- mentally answering a question;
+- understanding a relationship;
+- receiving a correction to a belief;
+- grasping a criterion;
+- absorbing a conclusion.
+
+Flag a card when it simultaneously requires the reader to:
+
+- understand a justification;
+- process multiple relationships;
+- absorb a conclusion;
+- answer questions;
+- and interpret what to do with all of it.
+
+Even if everything belongs to the same macro idea, this may represent
+cognitive overload.
+
+Do not use an arbitrary word limit.
+
+Evaluate processing effort.
+
+Control question:
+"Is this card comprehensible on a first visual pass, without requiring
+re-reading to capture its primary function?"
+
+If not, recommend redistribution.
+
+### INSTAGRAM VS BLOG CHECK
+
+For each denser card, ask:
+
+"Does this content work better as an Instagram screen or as a paragraph in a
+blog post, lesson or long video?"
+
+If it works better as long-form text:
+
+- identify the excess;
+- preserve the central idea;
+- recommend distributing across cards, caption or subsequent content.
+
+Do not reject depth.
+
+Reject depth that is poorly distributed for the format.
+
+### SCIENTIFIC RELEVANCE CHECK
+
+Not every scientifically correct detail should remain in the public content.
+
+For mechanisms, physiology details, technical names, study references or
+clinical details, ask:
+
+"Does this detail improve the understanding necessary for the editorial
+objective of this piece?"
+
+If the answer is no:
+
+- flag it as scientifically valid but editorially unnecessary;
+- recommend keeping it in the scientific base, caption or subsequent content.
+
+Do not confuse authority with demonstrating the quantity of knowledge.
+
+Authority can appear through the selective judgment of what is relevant.
+
+### RECOGNITION FUNCTION CHECK
+
+When the editorial function is RECONHECER:
+
+- check whether the reader has space to identify with the content before
+  receiving long explanations;
+- consider as a positive signal structures with one question, situation,
+  symptom or perception per card;
+- flag when the content turns recognition into a mini-lesson too early.
+
+Do not require "one question per card".
+
+That is one possible resource, not a formula.
+
+Control question:
+"Is the reader able to recognize herself, or is she being required to study
+before that happens?"
+
+### OPENING AI-PATTERN CHECK
+
+Reinforce the OPENING / CONTENT CONTRACT CHECK to flag openings that sound
+like AI copy or fabricated hook writing.
+
+Signals:
+
+- an artificial sequence of parallel fragments;
+- a symptom list without a unifying idea;
+- pseudo-poetic cadence;
+- contrast constructed only to sound memorable;
+- short sentences in sequence that resemble hook-generator output;
+- an opening that seems written to perform rather than to sound like
+  something Dra. Caroline would actually say.
+
+Control question:
+"Would Dra. Caroline say this naturally to a patient?"
+
+If not, flag it.
+
+### EDITORIAL SUFFICIENCY CHECK
+
+Check whether the content has already delivered enough information to fulfill
+its editorial function.
+
+Do not require encyclopedic completeness.
+
+If the necessary message has already been delivered, additional details must
+be justified by their usefulness to the reader's journey.
+
+Control question:
+"If I remove this detail, does the reader understand the central message
+worse?"
+
+If not, the detail probably does not need to be in that card.
+
+### REVIEW OUTPUT FOR CAROUSEL COGNITIVE CHECKS
+
+When flagging a problem related to these criteria:
+
+- identify the card;
+- state whether the problem is:
+  - cognitive load;
+  - format mismatch;
+  - excess scientific detail;
+  - impaired recognition;
+  - artificial opening;
+  - information beyond what is necessary;
+- propose the smallest necessary correction.
+
+Do not rewrite the entire carousel when a localized correction is sufficient.
+
 ---
 
 ## PUNCTUATION
