@@ -1177,6 +1177,75 @@ Control question:
 
 If not, flag it.
 
+### SCROLL-STOP STRENGTH CHECK
+
+Do not approve an opening merely because it is accurate, natural and
+brand-aligned.
+
+Evaluate whether it creates enough immediate relevance, recognition,
+curiosity, useful tension or perceived value to interrupt passive scrolling
+by the intended audience.
+
+Check:
+
+- Does the first card immediately signal relevance to the intended reader?
+- Can she understand in one glance why this content may matter to her?
+- Is there a concrete reason to give the next few seconds of attention?
+- Does the opening create recognition, curiosity, useful tension or a
+  meaningful information gap?
+- Is it specific enough to feel personally relevant rather than generically
+  informative?
+- Would it still be interesting if encountered between unrelated posts by
+  someone who was not actively searching for this topic?
+
+Control question:
+
+"If this appeared between unrelated posts in the feed, would the intended
+reader have a strong enough reason to stop?"
+
+If not, flag the opening as insufficiently strong even if it is otherwise
+correct.
+
+When recommending a stronger opening, strength must NOT come from:
+
+- fear;
+- sensationalism;
+- exaggerated claims;
+- artificial controversy;
+- manufactured contrarianism;
+- vague mystery;
+- withholding information that belongs in the opening;
+- clickbait;
+- formulaic hook language.
+
+Prefer strength created by:
+
+- immediate recognition;
+- specificity;
+- a clinically meaningful question;
+- a surprising but evidence-supported clarification;
+- a concrete problem the reader recognizes;
+- a useful information gap;
+- clear relevance to something she is experiencing or deciding.
+
+Do not evaluate success by whether the opening could stop the largest
+possible audience.
+
+The objective is to stop the right reader.
+
+A narrower opening with strong relevance to the intended audience may be
+better than a broadly provocative opening.
+
+Do not convert these mechanisms into a mandatory hook formula.
+
+When flagging this problem in the review output:
+
+- identify the opening;
+- classify the problem as `insufficient scroll-stop strength`;
+- explain briefly why the intended reader lacks a strong enough reason to
+  stop;
+- propose the smallest necessary correction.
+
 ### EDITORIAL SUFFICIENCY CHECK
 
 Check whether the content has already delivered enough information to fulfill
