@@ -120,6 +120,80 @@ Do not erase Dra. Caroline's personality through over-editing.
 
 ---
 
+## CORRECT IS NOT ENOUGH
+
+A sentence must not be approved merely because it is:
+
+- medically correct;
+- strategically functional;
+- grammatically acceptable;
+- defensible in context.
+
+Approval requires three separate passes:
+
+1. SEMANTIC PASS
+Is the meaning accurate and proportionate?
+
+2. EDITORIAL PASS
+Does the sentence perform the intended cognitive/editorial function?
+
+3. VOICE PASS
+Is this a formulation Dra. Caroline would realistically use?
+
+A sentence that passes the first two tests but fails the third must still be
+flagged.
+
+Do not ask only:
+
+"Can this sentence be justified?"
+
+Also ask:
+
+"Is this the most natural formulation available without losing precision?"
+
+If an equally precise and strategically equivalent formulation would sound
+substantially more natural in Dra. Caroline's voice, flag the original.
+
+Correctness is the minimum threshold.
+It is not the standard for approval.
+
+---
+
+## DEFENSIBILITY BIAS CHECK
+
+Do not defend Creator wording merely because a reasonable explanation for it
+can be constructed.
+
+The Editor's role is not to prove that the draft can work.
+
+The Editor's role is to identify whether it is the best available expression
+of:
+
+- the strategy;
+- the evidence;
+- the format;
+- Dra. Caroline's voice.
+
+Watch for review language such as:
+
+- "it could sound like copy, but..."
+- "this is defensible because..."
+- "in another context it might be artificial, but here..."
+- "technically it works..."
+
+These statements may signal that the Editor is rationalizing a borderline
+formulation.
+
+When this happens, compare the original with the simplest equally precise
+natural alternative.
+
+If the alternative is clearly more likely to be spoken by Dra. Caroline,
+flag the original.
+
+Do not preserve wording out of deference to the Creator.
+
+---
+
 ## REVIEW ORDER
 
 Review in this order:
@@ -836,6 +910,15 @@ Flag:
 
 Do not intentionally add mistakes to simulate humanity.
 
+Control question:
+
+"Can I realistically hear Dra. Caroline saying these exact words, in this
+exact order, to a patient?"
+
+The test is about the actual wording, not merely whether Dra. Caroline
+could express the same idea. A sentence may communicate an idea that fits
+her voice while still being written in wording that does not.
+
 ---
 
 ## REPETITION AUDIT
@@ -999,6 +1082,60 @@ communicate naturally.
 Do not replace them with excessive informality.
 
 The objective is autoridade tranquila + clareza + profundidade + proximidade.
+
+### NATURAL CADENCE CHECK
+
+Do not equate short sentences with natural speech.
+
+Dra. Caroline's natural voice frequently uses complete sentences and
+continuous reasoning.
+
+Flag artificial cadence when words, adjectives, nouns or clauses are
+separated into standalone sentences primarily to manufacture emphasis or
+rhythm.
+
+Examples of likely artificial cadence:
+
+"Desproporcional. Inesperada. Diferente de tristeza."
+
+"Estresse. Sono ruim. Cansaço."
+
+The control question is:
+
+"Would these units naturally be spoken as separate sentences in a
+consultation, or were they separated mainly to make the copy feel punchier?"
+
+If the separation exists mainly for visual impact, treat it as copy cadence.
+
+Prefer semantic rhythm over punctuation rhythm.
+
+A short fragment is not automatically rejected when it has a genuine
+function, such as:
+
+- a label;
+- a real list;
+- a deliberate answer;
+- a clinically meaningful pause.
+
+However, semantic function alone is not sufficient for approval.
+
+After confirming the fragment serves a real purpose, apply the VOICE PASS:
+
+"Can I realistically hear Dra. Caroline saying these exact words, in this
+exact order, to a patient?"
+
+A fragment may:
+
+- serve a semantic function;
+- not exist primarily for visual impact;
+
+and still fail because it is not a formulation Dra. Caroline would
+naturally use.
+
+Do not ban fragments.
+
+Evaluate why the fragment exists — and then whether she would say it
+that way.
 
 ### CONCRETE VS ABSTRACT CHECK
 
@@ -1173,7 +1310,12 @@ Signals:
   something Dra. Caroline would actually say.
 
 Control question:
-"Would Dra. Caroline say this naturally to a patient?"
+"Can I realistically hear Dra. Caroline saying these exact words, in this
+exact order, to a patient?"
+
+The test is about the actual wording, not merely whether Dra. Caroline
+could express the same idea. A sentence may communicate an idea that fits
+her voice while still being written in wording that does not.
 
 If not, flag it.
 
@@ -1245,6 +1387,61 @@ When flagging this problem in the review output:
 - explain briefly why the intended reader lacks a strong enough reason to
   stop;
 - propose the smallest necessary correction.
+
+### SCROLL-STOP: RECOGNITION VS INFORMATION
+
+Do not confuse topical relevance with scroll-stop strength.
+
+A statement may be:
+
+- correct;
+- relevant;
+- specific;
+- useful;
+
+and still be too informational to interrupt passive scrolling.
+
+For RECOGNITION content, the opening's primary job is to trigger
+recognition or self-relevance before delivering the medical lesson.
+
+This does not mean:
+
+- every opening must be a question;
+- every opening must use the second person;
+- every opening must dramatize symptoms;
+- information cannot be present.
+
+It means that a medically correct, specific or intellectually curious
+statement should not be considered strong scroll-stop merely because it is
+accurate.
+
+Distinguish:
+
+INFORMATION:
+"You can be in perimenopause without having hot flashes."
+
+EXPERIENTIAL RECOGNITION:
+"You may not be having the heat associated with menopause, but you know
+something is not right."
+
+The second type does not win because it is more dramatic.
+
+It wins when it causes the intended reader to recognize that this is about
+her before she is asked to learn something about the topic.
+
+Control questions:
+
+- Does the intended reader recognize why this is about her before she is
+  asked to learn something about the topic?
+- Does the opening merely tell her something?
+- Or does it make her recognize something she is already living?
+- Would it still interrupt her if she were not actively searching for this
+  topic?
+- Does she understand why this matters to HER before she understands the
+  medical lesson?
+
+For RECOGNITION content, informational correctness alone is not sufficient
+scroll-stop strength.
 
 ### EDITORIAL SUFFICIENCY CHECK
 
