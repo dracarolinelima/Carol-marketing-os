@@ -140,6 +140,27 @@ Does the sentence perform the intended cognitive/editorial function?
 3. VOICE PASS
 Is this a formulation Dra. Caroline would realistically use?
 
+A sentence does not pass the VOICE PASS merely because it avoids obvious
+artificial patterns.
+
+Absence of fragments, slogans, symmetry, rhetorical hooks, jargon or
+excessive polish does not automatically make wording natural.
+
+After excluding artificial patterns, also ask:
+
+- Is the wording idiomatic?
+- Is it concrete enough?
+- Is this how Dra. Caroline would likely formulate the idea spontaneously?
+- Is any phrase technically understandable but oddly phrased?
+- Could the same idea be said more naturally without losing precision?
+
+The standard is not "this does not sound artificial."
+The standard is "this sounds naturally like Dra. Caroline."
+
+Do not rewrite merely to make the sentence prettier.
+Only intervene when an alternative is clearly more natural and equally
+precise.
+
 A sentence that passes the first two tests but fails the third must still be
 flagged.
 
@@ -1509,6 +1530,37 @@ The second type does not win because it is more dramatic.
 It wins when it causes the intended reader to recognize that this is about
 her before she is asked to learn something about the topic.
 
+Recognition alone is also not sufficient if it is so broad that the same
+opening could plausibly introduce many unrelated topics.
+
+Distinguish:
+
+GENERIC RECOGNITION:
+an opening that triggers a sense of self-relevance but connects to no
+specific clinical territory.
+
+SPECIFIC SELF-RELEVANCE:
+an opening that connects the lived experience to the actual clinical
+territory of the piece without prematurely delivering the lesson.
+
+Ask:
+
+- Could this same opening plausibly introduce several unrelated health or
+  life topics?
+- Does the intended reader receive enough contextual specificity to sense
+  that this content is unusually relevant to her?
+- Is there enough clinical territory in the opening to stop the right reader
+  without naming the entire lesson?
+- Does the opening create self-relevance AND topic relevance?
+
+Do not solve generic recognition by turning the opening back into an
+informational headline.
+
+Do not force diagnosis names, symptom lists or medical terminology into the
+opening.
+
+The goal is sufficient specificity, not maximum specificity.
+
 Control questions:
 
 - Does the intended reader recognize why this is about her before she is
@@ -1601,6 +1653,36 @@ Correct:
 - authority style;
 - positioning;
 - naturalness.
+
+### SEMANTIC RE-EVALUATION AFTER STYLE EDITS
+
+Any wording change made for naturalness, cadence, simplification, concision,
+voice or readability must be re-evaluated semantically before approval.
+
+A stylistic edit can silently alter:
+
+- causality;
+- scope;
+- frequency;
+- necessity;
+- diagnostic implication;
+- temporal sequence;
+- whether symptoms must co-occur.
+
+After any wording correction, ask:
+
+"Did this edit change the clinical meaning, scope, threshold or implication
+of the original claim?"
+
+If yes, the edit must be rejected or revised.
+
+Example of the risk:
+
+Changing "quando considerados juntos" to "quando aparecem juntos" may sound
+more natural but can imply that symptoms need to co-occur for the clinical
+statement to be true.
+
+Natural language improvements must not create new clinical criteria.
 
 ### LEVEL 4 — MEDICAL EDIT
 
