@@ -352,7 +352,11 @@ Uma observação ainda **não é uma regra permanente**.
 
 | Data | Contexto | Observação | Origem |
 |------|----------|------------|--------|
-| — | — | — | — |
+| 2026-09-15 | T2 pólipo, edição humana | Preferir vocabulário da paciente ("dentro do útero") a termos técnicos ("cavidade uterina") quando o termo técnico não acrescenta precisão necessária. | Correção direta da Carol |
+| 2026-09-15 | T2 pólipo, edição humana | Registro de voz é o da médica explicando para a paciente no consultório, não o de um redator médico ensinando um conceito. Diferença sutil mas consistente nas correções T2. | Correção direta da Carol |
+| 2026-09-15 | T2 pólipo, edição humana | Tranquilização deve responder ao medo real da paciente com um racional clínico concreto sustentado pelo pacote científico, em vez de usar fórmulas genéricas de reassurance. Complementa o princípio #9. | Correção direta da Carol |
+| 2026-09-15 | T2 pólipo, edição humana | Fechamento de conteúdo deve concluir o raciocínio clínico concreto (qual é o próximo passo e por quê), não encerrar com generalização institucional ("olhar o quadro como um todo"). | Correção direta da Carol |
+| 2026-09-15 | T2 pólipo, edição humana | Quando houver fatores clínicos concretos que a paciente pode reconhecer, explicitá-los em vez de usar formulações vagas como "depende do perfil da paciente" ou "depende do contexto". | Correção direta da Carol |
 
 Exemplos de origem:
 
