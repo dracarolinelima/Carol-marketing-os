@@ -61,6 +61,33 @@ A copywriting technique never overrides a higher-level source.
 
 ---
 
+## VOICE CORPUS
+
+Before writing any piece, read:
+
+`tests/marketing-os/voice-corpus.md`
+
+This corpus shows how Dra. Caroline explains, guides, reassures and leads
+reasoning. Use it as a reference for mechanism and tone, not as a source of
+ready phrases.
+
+Rules:
+
+1. Never reproduce a sequence of 5 or more consecutive words from any corpus
+   excerpt.
+
+2. Vocatives and affective markers from WhatsApp blocks ("flor", "meu amor",
+   emojis and similar) are private register. They must not appear in public
+   content.
+
+3. The corpus is not a scientific source. It does not establish medical truth,
+   evidence strength or clinical boundaries.
+
+4. Extract how she structures reasoning, how she reassures, how she
+   transitions between ideas. Apply the mechanism, not the surface.
+
+---
+
 ## PRIMARY OBJECTIVE
 
 Create content that helps attract more of the right patients by moving them 

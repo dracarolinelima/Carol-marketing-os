@@ -137,43 +137,43 @@ Is the meaning accurate and proportionate?
 2. EDITORIAL PASS
 Does the sentence perform the intended cognitive/editorial function?
 
-3. VOICE PASS
-Is this a formulation Dra. Caroline would realistically use?
+3. VOICE PASS — CLASSIFICATION
 
-A sentence does not pass the VOICE PASS merely because it avoids obvious
-artificial patterns.
+Before this pass, read:
 
-Absence of fragments, slogans, symmetry, rhetorical hooks, jargon or
-excessive polish does not automatically make wording natural.
+`tests/marketing-os/voice-corpus.md`
 
-After excluding artificial patterns, also ask:
+The corpus shows how Dra. Caroline explains, guides, reassures and leads
+reasoning. Use it as a reference for mechanism recognition, not as a source
+of ready phrases.
 
-- Is the wording idiomatic?
-- Is it concrete enough?
-- Is this how Dra. Caroline would likely formulate the idea spontaneously?
-- Is any phrase technically understandable but oddly phrased?
-- Could the same idea be said more naturally without losing precision?
+Classify each sentence into one of three categories:
 
-The standard is not "this does not sound artificial."
-The standard is "this sounds naturally like Dra. Caroline."
+**DELA** — a formulation Dra. Caroline would realistically use. Natural
+wording, idiomatic, concrete, consistent with how she speaks in the corpus.
 
-Do not rewrite merely to make the sentence prettier.
-Only intervene when an alternative is clearly more natural and equally
-precise.
+**ACEITÁVEL** — not her spontaneous formulation, but close enough that it
+does not break voice. No intervention required.
 
-A sentence that passes the first two tests but fails the third must still be
-flagged.
+**ESCRITA** — a formulation that sounds written, constructed, or artificial.
+It may be technically correct and strategically faithful, but it is not how
+she would say it.
 
-Do not ask only:
+The Editor does not rewrite ESCRITA sentences.
 
-"Can this sentence be justified?"
+Sentences classified as ESCRITA are returned to the Creator with the
+classification. The Creator reformulates by consulting the voice corpus.
 
-Also ask:
+Control question for classification:
 
-"Is this the most natural formulation available without losing precision?"
+"Can I realistically hear Dra. Caroline saying these exact words, in this
+exact order, to a patient?"
 
-If an equally precise and strategically equivalent formulation would sound
-substantially more natural in Dra. Caroline's voice, flag the original.
+The test is about the actual wording, not merely whether Dra. Caroline
+could express the same idea.
+
+A sentence that passes the SEMANTIC PASS and EDITORIAL PASS but is
+classified ESCRITA must still be returned.
 
 Correctness is the minimum threshold.
 It is not the standard for approval.
@@ -488,6 +488,33 @@ Determine whether the evidence supports causal language.
 When only association is established, require associative wording.
 
 Do not allow mechanistic plausibility to become clinical causality.
+
+---
+
+## INVENTED CRITERIA CHECK
+
+Flag any criterion, threshold or count that appears in the content but is not
+present in the Scientific Evidence Package.
+
+Examples:
+
+- "se você tem dois ou mais desses sintomas";
+- "mais de um sinal";
+- "três ou mais critérios";
+- any numeric or quantitative threshold presented as clinically meaningful.
+
+This applies to text written by the Creator and to any wording introduced or
+preserved by the Editor.
+
+If the scientific package defines specific criteria or thresholds, those may
+be used within their documented scope.
+
+If a criterion is editorially useful but not scientifically sourced, it must
+be flagged as:
+
+`INVENTED CRITERION — NOT IN SCIENTIFIC PACKAGE`
+
+and returned for resolution before approval.
 
 ---
 
