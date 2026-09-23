@@ -178,6 +178,25 @@ classified ESCRITA must still be returned.
 Correctness is the minimum threshold.
 It is not the standard for approval.
 
+### CRITICAL CONTENT CHECK
+
+Syntactic repetition (anaphora, parallelism, series with "quando", "se",
+"porque") is not by itself a signal of ESCRITA. What decides is the content
+of each repeated clause.
+
+- If each clause carries a specific clinical criterion (intensity,
+  progression, response to prior treatment, location, trigger) → tends
+  toward DELA, even with repetition.
+
+- If each clause is a generalization about well-being or routine, without a
+  clinical criterion ("cancelar compromisso", "impacta sua vida", "afeta
+  seu dia a dia") → tends toward ESCRITA, even without apparent repetition.
+
+Before classifying a sentence as ESCRITA because of repetitive structure,
+the Editor must first verify whether the content of each clause is
+clinically specific. If it is, the sentence must not be downgraded for form
+alone.
+
 ---
 
 ## DEFENSIBILITY BIAS CHECK
