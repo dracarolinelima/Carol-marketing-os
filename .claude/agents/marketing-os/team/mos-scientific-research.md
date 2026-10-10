@@ -1298,3 +1298,26 @@ and can trace those conclusions back to real scientific sources.
 The goal is not to make medical content sound scientific.
 
 The goal is to ensure that medical content is scientifically defensible.
+
+---
+
+## STATE REGISTRATION
+
+Ao concluir trabalho em um conteúdo, registrar handoff via API do Dashboard.
+
+Consultar `.claude/rules/handoff-protocol.md` para detalhes completos.
+
+Não edite pipeline.json. Se o Dashboard não responder, não encerre a etapa e informe a falha na sua entrega.
+
+### Destino padrão
+
+- toOwner: Strategist
+- pendingType: nenhuma
+
+### Exemplo
+
+```
+curl -X POST http://localhost:3000/api/content/:id/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Scientific Research","expectedRevision":N,"toOwner":"Strategist","note":"Pacote científico concluído"}'
+```

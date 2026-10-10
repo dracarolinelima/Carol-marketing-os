@@ -1,10 +1,15 @@
 # Carol Marketing OS - Autonomy Configuration
 # Version: 1.0
 # Status: Human-supervised deployment
+# Updated 2026-10-07: explicit decision of Dra. Caroline (see level_changes).
+# Supervision now happens by later human review plus the permanent human gates.
 #
 # LEVELS
 # C = Draft / Recommend + Wait for human approval
-# B = Execute low-risk internal decision + report
+#     (current use: permanent human gates and escalations only)
+# B = Execute internal decision within MOS rules + register handoff + report;
+#     human reviews afterward, without approving each transition
+#     (revised 2026-10-07; previous wording: Execute low-risk internal decision + report)
 # A = Autonomous execution within explicitly approved boundaries
 #
 # IMPORTANT:
@@ -29,47 +34,47 @@ decision_levels:
 
   route_internal_audience_research:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_external_market_research:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_scientific_research:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_strategy:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_creation:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_editorial_review:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_visual_direction:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   route_performance_analysis:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: A
 
   select_minimum_sufficient_workflow:
     owner: mos-orchestrator
-    level: C
+    level: B
     max_level: B
 
   # ----------------------------------------------------------
@@ -81,87 +86,88 @@ decision_levels:
 
   analyze_internal_audience_data:
     owner: mos-audience-intelligence
-    level: C
+    level: B
     max_level: B
 
   produce_audience_findings:
     owner: mos-audience-intelligence
-    level: C
+    level: B
     max_level: B
 
   analyze_external_market:
     owner: mos-market-research
-    level: C
+    level: B
     max_level: B
 
   produce_market_research:
     owner: mos-market-research
-    level: C
+    level: B
     max_level: B
 
   retrieve_scientific_evidence:
     owner: mos-scientific-research
-    level: C
+    level: B
     max_level: B
 
   summarize_scientific_evidence:
     owner: mos-scientific-research
-    level: C
+    level: B
     max_level: B
 
   classify_evidence_strength:
     owner: mos-scientific-research
-    level: C
+    level: B
     max_level: B
 
   analyze_marketing_performance:
     owner: mos-performance-analyst
-    level: C
+    level: B
     max_level: B
 
   classify_performance_finding:
     owner: mos-performance-analyst
-    level: C
+    level: B
     max_level: B
 
   recommend_performance_test:
     owner: mos-performance-analyst
-    level: C
+    level: B
     max_level: B
 
   # ----------------------------------------------------------
   # STRATEGY
-  # Strategy remains supervised during the current phase.
+  # Since 2026-10-07 strategy decisions run at level B (execute and report).
+  # Changes to the Marketing Core and core positioning remain permanent human gates.
   # ----------------------------------------------------------
 
   create_content_strategy:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   create_creative_brief:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   select_content_function:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   select_journey_stage:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   recommend_content_format:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   recommend_cta_logic:
     owner: mos-strategist
-    level: C
+    level: B
     max_level: B
 
   # ----------------------------------------------------------
@@ -172,12 +178,12 @@ decision_levels:
 
   produce_content_draft:
     owner: mos-copywriter
-    level: C
+    level: B
     max_level: B
 
   revise_content_from_feedback:
     owner: mos-copywriter
-    level: C
+    level: B
     max_level: B
 
   # ----------------------------------------------------------
@@ -189,22 +195,22 @@ decision_levels:
 
   perform_editorial_review:
     owner: mos-editor
-    level: C
+    level: B
     max_level: B
 
   correct_brand_style_issue:
     owner: mos-editor
-    level: C
+    level: B
     max_level: B
 
   flag_medical_claim:
     owner: mos-editor
-    level: C
+    level: B
     max_level: B
 
   request_scientific_reverification:
     owner: mos-editor
-    level: C
+    level: B
     max_level: B
 
   # ----------------------------------------------------------
@@ -213,17 +219,17 @@ decision_levels:
 
   produce_visual_direction:
     owner: mos-art-director
-    level: C
+    level: B
     max_level: B
 
   apply_approved_design_system:
     owner: mos-art-director
-    level: C
+    level: B
     max_level: B
 
   recommend_template:
     owner: mos-art-director
-    level: C
+    level: B
     max_level: B
 
   # ==========================================================
@@ -351,6 +357,9 @@ graduation_rules:
     automatic_graduation: false
     human_confirmation_required: true
     evaluate_each_decision_type_separately: true
+    # An explicit human decision may set a level directly, without the numerical
+    # thresholds below. Recorded in level_changes (first use: 2026-10-07).
+    explicit_human_decision_may_set_level: true
 
   c_to_b:
     min_reviewed_decisions: 20
@@ -433,6 +442,14 @@ boundaries:
     budget_change_requires_human: true
     campaign_launch_requires_human: true
 
+  # Added 2026-10-07. Agents stop and escalate to Dra. Caroline in these cases
+  # (see also mos-orchestrator FAILURE CONDITIONS and the Strategist handoff exception).
+  escalation_to_human:
+    strategic_decision_outside_existing_rules: true
+    exception_to_an_existing_rule: true
+    conflict_between_sources_not_resolved_by_hierarchy: true
+    permanent_human_gates_remain_in_force: true
+
   privacy:
     minimize_patient_data: true
     prefer_anonymized_data: true
@@ -449,6 +466,15 @@ level_changes:
     from: null
     to: C
     reason: "Carol Marketing OS human-supervised deployment"
+
+  - date: 2026-10-07
+    decision_type: all_agent_decision_types_with_owner_other_than_human
+    scope: "34 decision types (routing, research and analysis, strategy, creation, quality control, visual direction)"
+    from: C
+    to: B
+    unchanged: "15 permanent human gates remain at level C and never graduate"
+    reason: "Explicit decision of Dra. Caroline: agents run the normal chain and register handoffs without approval at each transition; she reviews afterward. Graduation thresholds not applied (tracking had not started)."
+    approved_by: Dra. Caroline Lima
 
 # ============================================================
 # UPDATE INSTRUCTIONS

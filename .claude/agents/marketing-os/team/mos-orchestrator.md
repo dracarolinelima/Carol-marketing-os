@@ -560,6 +560,8 @@ Do not silently transform hypotheses into facts.
 Structured files or schemas should be used when they materially improve 
 reliability and repeatability.
 
+Register each handoff in the Dashboard as described in .claude/rules/handoff-protocol.md.
+
 ---
 
 ## HUMAN APPROVAL GATES
@@ -675,7 +677,8 @@ Stop or escalate instead of continuing when:
 - the proposed output contradicts the Marketing Core;
 - attribution is being claimed without adequate evidence;
 - an agent is being asked to operate outside its role;
-- a human approval gate would be bypassed.
+- a human approval gate would be bypassed;
+- a stage is closed without its handoff being registered (see .claude/rules/handoff-protocol.md).
 
 Stopping is preferable to fabricating certainty.
 
@@ -783,3 +786,42 @@ The goal is not maximum agent activity.
 
 The goal is coordinated intelligence that produces better decisions and 
 better business outcomes.
+
+---
+
+## STATE REGISTRATION
+
+O Orchestrator deve registrar estado no Dashboard via API.
+
+Consultar `.claude/rules/handoff-protocol.md` para detalhes completos.
+
+Não edite pipeline.json. Se o Dashboard não responder, não encerre a etapa e informe a falha na sua entrega.
+
+### Abertura de fluxo
+
+Se o conteúdo está em backlog, movê-lo antes para selecionado via PATCH. Em seguida, registrar o handoff para o primeiro agente da cadeia declarando status em-desenvolvimento.
+
+### HANDOFF REGISTRATION CHECK (gate de cinco pontos)
+
+Antes de encerrar qualquer etapa de uma cadeia, verificar:
+(a) a revision do conteúdo aumentou em relação ao valor antes da etapa;
+(b) a última entrada do histórico com type handoff foi registrada pelo agente que trabalhou;
+(c) toOwner da entrada corresponde ao handoff editorial entregue (próximo agente ou Caroline);
+(d) se o destino é Caroline, pendingType e nota são coerentes, com nextAction preenchido quando pendingType for execucao;
+(e) artifact está presente na entrada quando o agente produziu um artefato.
+
+Se qualquer ponto falhar, a etapa permanece aberta. O Orchestrator corrige registrando o handoff correto antes de prosseguir.
+
+Etapa encerrada sem handoff registrado: o Orchestrator não avança. Registra o handoff pendente ou solicita ao agente que o faça.
+
+### Transições de status permitidas
+
+- selecionado para em-desenvolvimento
+
+### Exemplo
+
+```
+curl -X POST http://localhost:3000/api/content/1.1/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Orchestrator","expectedRevision":2,"toOwner":"Scientific Research","status":"em-desenvolvimento","note":"Iniciando fluxo de conteúdo"}'
+```

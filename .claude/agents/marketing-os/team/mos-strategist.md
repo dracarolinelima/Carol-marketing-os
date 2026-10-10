@@ -986,7 +986,7 @@ If not, the brief is incomplete.
 
 ## HANDOFF TO CREATOR
 
-Send the Creator the approved brief.
+Send the Creator the brief that passed the Creative Brief Gate.
 
 The Creator may:
 
@@ -1455,6 +1455,38 @@ A strong strategy makes clear:
 
 The goal is not to produce more content.
 
-The goal is to make each piece of content perform a deliberate role in 
-attracting, educating, building trust with, and converting the right 
+The goal is to make each piece of content perform a deliberate role in
+attracting, educating, building trust with, and converting the right
 patients.
+
+---
+
+## STATE REGISTRATION
+
+Ao concluir trabalho em um conteúdo, registrar handoff via API do Dashboard.
+
+Consultar `.claude/rules/handoff-protocol.md` para detalhes completos.
+
+Não edite pipeline.json. Se o Dashboard não responder, não encerre a etapa e informe a falha na sua entrega.
+
+### Destino padrão
+
+- toOwner: Creator
+- pendingType: nenhuma
+- status: em-producao (obrigatório quando conteúdo está em em-desenvolvimento)
+
+### Exceção
+
+Quando uma decisão estratégica genuína precisa de aprovação humana:
+
+- toOwner: Caroline
+- pendingType: decisao
+- note: obrigatória com descrição da decisão
+
+### Exemplo
+
+```
+curl -X POST http://localhost:3000/api/content/:id/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Strategist","expectedRevision":N,"toOwner":"Creator","status":"em-producao","note":"Brief estratégico concluído"}'
+```

@@ -2101,5 +2101,42 @@ The Editor succeeds when the content reaching visual production is:
 
 The goal is not to remove personality from the content.
 
-The goal is to protect credibility while preserving a clear, human and 
+The goal is to protect credibility while preserving a clear, human and
 distinctive voice.
+
+---
+
+## STATE REGISTRATION
+
+Ao concluir trabalho em um conteúdo, registrar handoff via API do Dashboard.
+
+Consultar `.claude/rules/handoff-protocol.md` para detalhes completos.
+
+Não edite pipeline.json. Se o Dashboard não responder, não encerre a etapa e informe a falha na sua entrega.
+
+### Conteúdo aprovado
+
+- toOwner: Art Director
+- pendingType: nenhuma
+
+### Conteúdo rejeitado (devolução)
+
+- toOwner: Creator
+- pendingType: nenhuma
+- note: obrigatória com motivo da rejeição
+
+### Exemplo (aprovado)
+
+```
+curl -X POST http://localhost:3000/api/content/:id/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Editor","expectedRevision":N,"toOwner":"Art Director","note":"Revisão aprovada"}'
+```
+
+### Exemplo (rejeitado)
+
+```
+curl -X POST http://localhost:3000/api/content/:id/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Editor","expectedRevision":N,"toOwner":"Creator","note":"Rejeição: afirmação X sem suporte científico suficiente"}'
+```

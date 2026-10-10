@@ -713,8 +713,16 @@ Human approval remains required for:
 - permanent performance rules;
 - major tracking/infrastructure changes.
 
-Autonomy should increase by decision type only after sufficient evidence of 
-reliability.
+Since 2026-10-07, by explicit decision of Dra. Caroline, all agent decision 
+types (34, see autonomy.yaml) operate at level B: agents execute the normal 
+chain and register handoffs without waiting for approval at each transition, 
+and report results for later human review. The permanent human gates listed 
+above remain at level C. Human intervention is also required for strategic 
+decisions outside existing rules, exceptions to rules, and conflicts between 
+sources that the hierarchy cannot resolve.
+
+Further increases (level B to A) should occur by decision type only after 
+sufficient evidence of reliability.
 
 ---
 

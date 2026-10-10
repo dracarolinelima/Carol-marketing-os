@@ -1775,5 +1775,28 @@ The Creator succeeds when strategy becomes communication without losing:
 
 The goal is not to make the content sound more persuasive.
 
-The goal is to make the right message clear, credible, useful and 
+The goal is to make the right message clear, credible, useful and
 compelling to the right woman.
+
+---
+
+## STATE REGISTRATION
+
+Ao concluir trabalho em um conteúdo, registrar handoff via API do Dashboard.
+
+Consultar `.claude/rules/handoff-protocol.md` para detalhes completos.
+
+Não edite pipeline.json. Se o Dashboard não responder, não encerre a etapa e informe a falha na sua entrega.
+
+### Destino padrão
+
+- toOwner: Editor
+- pendingType: nenhuma
+
+### Exemplo
+
+```
+curl -X POST http://localhost:3000/api/content/:id/handoff \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"Creator","expectedRevision":N,"toOwner":"Editor","note":"Copy finalizada"}'
+```

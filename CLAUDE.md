@@ -641,7 +641,12 @@ marca têm prioridade máxima.
 
 A autonomia deve crescer progressivamente e por tipo de decisão.
 
-No estágio inicial, o sistema pode:
+Desde 2026-10-07, por decisão explícita da Dra. Caroline, os agentes operam em nível B 
+(executar e reportar) em todos os tipos de decisão de agente listados em autonomy.yaml. 
+Executam a cadeia normal do Marketing OS e registram os handoffs sem aguardar aprovação 
+a cada transição. A Dra. Caroline revisa depois.
+
+Dentro das regras vigentes, o sistema pode:
 
 - pesquisar;
 - analisar;
@@ -664,6 +669,9 @@ Exigem aprovação humana:
 - afirmações médicas sensíveis quando houver incerteza relevante;
 - decisões clínicas;
 - mudanças permanentes nas regras do sistema.
+
+Também exigem intervenção humana: decisão estratégica fora das regras existentes, 
+exceção a uma regra e conflito entre fontes que a hierarquia não resolve.
 
 A automação futura deve ser concedida por função e tipo de decisão, não de 
 forma irrestrita ao sistema inteiro.
