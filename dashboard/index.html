@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Editorial — Dra. Caroline Lima</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div>
+      <h1>Pipeline Editorial</h1>
+      <div class="header-meta">Dra. Caroline Lima — Marketing OS</div>
+    </div>
+    <button class="btn-new" id="btnNew">+ Novo conteúdo</button>
+  </header>
+
+  <main class="board" id="board"></main>
+
+  <!-- Detail modal -->
+  <div class="modal-overlay" id="detailOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="detailTitle"></h2>
+        <button class="modal-close" id="detailClose">&times;</button>
+      </div>
+      <div class="modal-body" id="detailBody"></div>
+    </div>
+  </div>
+
+  <!-- New content modal -->
+  <div class="modal-overlay" id="newOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Novo conteúdo</h2>
+        <button class="modal-close" id="newClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="newForm">
+          <div class="form-group">
+            <label for="newTitle">Título *</label>
+            <input type="text" id="newTitle" required placeholder="Ex: Perimenopausa e alterações de humor">
+          </div>
+          <div class="form-group">
+            <label for="newTerritory">Território</label>
+            <select id="newTerritory">
+              <option value="">— Selecionar —</option>
+              <option value="A">A — Dor/endometriose/adenomiose</option>
+              <option value="B">B — Perimenopausa/menopausa</option>
+              <option value="C">C — Histeroscopia/pólipos</option>
+              <option value="D">D — Fertilidade</option>
+              <option value="E">E — Contracepção</option>
+              <option value="F">F — SOP/metabolismo</option>
+              <option value="TRANS">Transversal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="newType">Tipo</label>
+            <select id="newType">
+              <option value="">— Selecionar —</option>
+              <option value="bloco">Bloco</option>
+              <option value="always-on">Always-on</option>
+              <option value="transversal">Transversal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="newNote">Observação / ideia</label>
+            <textarea id="newNote" placeholder="Opcional"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="newCancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Criar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -56,3 +56,15 @@ token.json
 
 # Claude Code MCP temp files
 .mcp_temp/
+
+# Pipeline data — mutável a cada handoff, não versionar
+dashboard/data/
+
+# Imagens geradas pelo renderer — regeneráveis
+generated_imgs/
+
+# Backups manuais de segurança — redundantes com git history
+backup-pre-autonomia-*/
+
+# Snapshots de auditoria externa — redundantes com repo
+claude-fable-audit/
