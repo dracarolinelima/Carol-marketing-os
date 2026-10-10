@@ -1,0 +1,13 @@
+{
+  "name": "carol-marketing-os-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pipeline editorial dashboard — Dra. Caroline Lima Marketing OS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

@@ -1,0 +1,18 @@
+/* Marketing OS Dashboard v2 — extracted from Artifact inline styles */
+*{box-sizing:border-box}
+body{margin:0;background:#110C13;color:#F2EDF0;font-family:'Montserrat',system-ui,sans-serif;font-size:13px;line-height:1.45}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #A68CF0;outline-offset:2px}
+
+/* hover classes */
+.nav:hover{background:rgba(255,255,255,.05)}
+.row:hover{background:rgba(255,255,255,.05)}
+.lnk:hover{color:#F2EDF0}
+.btn2:hover{background:rgba(255,255,255,.1)}
+.btn1:hover{background:#7B5FDD}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
