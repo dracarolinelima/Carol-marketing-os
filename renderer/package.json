@@ -1,0 +1,9 @@
+{
+  "name": "carol-card-renderer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic SVG-to-PNG card renderer for Dra. Caroline Lima Marketing OS",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
