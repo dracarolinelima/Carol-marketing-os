@@ -681,6 +681,329 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // ============ POST /api/content/:id/publish ============
+  const publishMatch = matchRoute(pathname, '/api/content/:id/publish');
+  if (publishMatch && req.method === 'POST') {
+    try {
+      const body = await parseBody(req);
+      const pipeline = readPipeline();
+      const item = pipeline.contents.find(c => c.id === publishMatch.id);
+      if (!item) { sendJSON(res, 404, { error: true, message: 'Conteudo nao encontrado.' }); return; }
+
+      // Only Caroline
+      if (body.agent !== 'Caroline') {
+        sendJSON(res, 403, { error: true, message: 'Somente Caroline pode registrar publicacao.' }); return;
+      }
+      if (typeof body.expectedRevision !== 'number') {
+        sendJSON(res, 400, { error: true, message: 'expectedRevision e obrigatorio.' }); return;
+      }
+      if (body.expectedRevision !== item.revision) {
+        sendJSON(res, 409, {
+          error: true, message: 'Conflito de revision.',
+          revision: item.revision, status: item.status,
+          currentOwner: item.currentOwner, pendingType: item.pendingType,
+        }); return;
+      }
+      if (!body.publishDate || !/^\d{4}-\d{2}-\d{2}$/.test(body.publishDate)) {
+        sendJSON(res, 400, { error: true, message: 'publishDate e obrigatoria (formato YYYY-MM-DD).' }); return;
+      }
+      if (!body.postUrl || typeof body.postUrl !== 'string') {
+        sendJSON(res, 400, { error: true, message: 'postUrl e obrigatoria.' }); return;
+      }
+      // Basic URL validation
+      if (!/^https?:\/\/.+/.test(body.postUrl)) {
+        sendJSON(res, 400, { error: true, message: 'postUrl deve ser uma URL valida (https://...).' }); return;
+      }
+
+      // Must be pronto or publicado to publish (or close pending)
+      if (item.currentOwner !== null || item.pendingType !== 'nenhuma') {
+        sendJSON(res, 422, {
+          error: true, code: 'PENDENCIA_ABERTA',
+          message: 'Conteudo tem pendencia aberta. Resolva antes de publicar.',
+          currentOwner: item.currentOwner, pendingType: item.pendingType,
+        }); return;
+      }
+
+      const oldStatus = item.status;
+      item.status = 'publicado';
+      item.publishDate = body.publishDate;
+      item.postUrl = body.postUrl;
+      if (body.format) item.format = body.format;
+      item.platform = body.platform || 'instagram';
+
+      // Initialize metrics structure if needed
+      if (!item.metrics || typeof item.metrics !== 'object' || Array.isArray(item.metrics)) {
+        item.metrics = {};
+      }
+      if (!item.metrics.snapshots) item.metrics.snapshots = [];
+      if (!item.metrics.evidence) item.metrics.evidence = [];
+
+      // Coherence check (C8: publicado requires null owner + nenhuma)
+      const cErr = checkCoherence(item);
+      if (cErr) { sendJSON(res, 422, { error: true, ...cErr }); return; }
+
+      item.revision++;
+      item.lastUpdate = new Date().toISOString();
+      item.lastAgent = 'Caroline';
+
+      item.history.push({
+        type: 'publication',
+        timestamp: item.lastUpdate,
+        agent: 'Caroline',
+        statusFrom: oldStatus,
+        statusTo: 'publicado',
+        publishDate: body.publishDate,
+        postUrl: body.postUrl,
+        format: body.format || null,
+        platform: item.platform,
+        note: body.note || null,
+        revision: item.revision,
+      });
+
+      writePipelineAtomic(pipeline);
+      sendJSON(res, 200, item);
+    } catch (e) {
+      sendJSON(res, 400, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ POST /api/content/:id/metrics ============
+  const metricsPostMatch = matchRoute(pathname, '/api/content/:id/metrics');
+  if (metricsPostMatch && req.method === 'POST') {
+    try {
+      const body = await parseBody(req);
+      const pipeline = readPipeline();
+      const item = pipeline.contents.find(c => c.id === metricsPostMatch.id);
+      if (!item) { sendJSON(res, 404, { error: true, message: 'Conteudo nao encontrado.' }); return; }
+
+      if (body.agent !== 'Caroline' && body.agent !== 'Performance Analyst') {
+        sendJSON(res, 403, { error: true, message: 'Somente Caroline ou Performance Analyst podem registrar metricas.' }); return;
+      }
+      if (typeof body.expectedRevision !== 'number') {
+        sendJSON(res, 400, { error: true, message: 'expectedRevision e obrigatorio.' }); return;
+      }
+      if (body.expectedRevision !== item.revision) {
+        sendJSON(res, 409, {
+          error: true, message: 'Conflito de revision.',
+          revision: item.revision,
+        }); return;
+      }
+
+      // Must be publicado to receive metrics
+      if (item.status !== 'publicado') {
+        sendJSON(res, 422, { error: true, code: 'STATUS_INVALID', message: 'Metricas so podem ser registradas em conteudo publicado.' }); return;
+      }
+
+      // Initialize metrics structure if needed
+      if (!item.metrics || typeof item.metrics !== 'object' || Array.isArray(item.metrics)) {
+        item.metrics = {};
+      }
+      if (!item.metrics.snapshots) item.metrics.snapshots = [];
+      if (!item.metrics.evidence) item.metrics.evidence = [];
+
+      // Process snapshot
+      if (body.snapshot) {
+        const s = body.snapshot;
+        if (!s.date || !/^\d{4}-\d{2}-\d{2}$/.test(s.date)) {
+          sendJSON(res, 400, { error: true, message: 'snapshot.date e obrigatoria (YYYY-MM-DD).' }); return;
+        }
+        const validSources = ['manual', 'api', 'import'];
+        if (!s.source || !validSources.includes(s.source)) {
+          sendJSON(res, 400, { error: true, message: 'snapshot.source e obrigatoria (manual, api, import).' }); return;
+        }
+        const validMetricFields = ['reach', 'views', 'likes', 'comments', 'shares', 'saves', 'profileVisits', 'follows'];
+        for (const f of validMetricFields) {
+          if (f in s && s[f] !== null && (typeof s[f] !== 'number' || s[f] < 0)) {
+            sendJSON(res, 400, { error: true, message: `snapshot.${f} deve ser um numero >= 0 ou null.` }); return;
+          }
+        }
+        const snapshot = {
+          date: s.date,
+          source: s.source,
+          reach: s.reach ?? null,
+          views: s.views ?? null,
+          likes: s.likes ?? null,
+          comments: s.comments ?? null,
+          shares: s.shares ?? null,
+          saves: s.saves ?? null,
+          profileVisits: s.profileVisits ?? null,
+          follows: s.follows ?? null,
+          note: s.note || null,
+          recordedAt: new Date().toISOString(),
+        };
+        item.metrics.snapshots.push(snapshot);
+      }
+
+      // Process evidence
+      if (body.evidence) {
+        const e = body.evidence;
+        if (!e.date || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) {
+          sendJSON(res, 400, { error: true, message: 'evidence.date e obrigatoria (YYYY-MM-DD).' }); return;
+        }
+        const validTypes = ['insight-screenshot', 'report', 'export'];
+        if (!e.type || !validTypes.includes(e.type)) {
+          sendJSON(res, 400, { error: true, message: 'evidence.type e obrigatorio (insight-screenshot, report, export).' }); return;
+        }
+        if (!e.path || typeof e.path !== 'string') {
+          sendJSON(res, 400, { error: true, message: 'evidence.path e obrigatorio.' }); return;
+        }
+        // Validate file exists on disk
+        const artErr = validateArtifact(e.path);
+        if (artErr) {
+          sendJSON(res, 422, { error: true, code: 'EVIDENCE_INVALID', message: artErr }); return;
+        }
+        item.metrics.evidence.push({
+          date: e.date,
+          type: e.type,
+          path: e.path,
+          note: e.note || null,
+          recordedAt: new Date().toISOString(),
+        });
+      }
+
+      // Must have at least one of snapshot or evidence
+      if (!body.snapshot && !body.evidence) {
+        sendJSON(res, 400, { error: true, message: 'Envie snapshot, evidence ou ambos.' }); return;
+      }
+
+      item.revision++;
+      item.lastUpdate = new Date().toISOString();
+      item.lastAgent = body.agent;
+
+      item.history.push({
+        type: 'metrics',
+        timestamp: item.lastUpdate,
+        agent: body.agent,
+        hasSnapshot: !!body.snapshot,
+        hasEvidence: !!body.evidence,
+        note: body.note || null,
+        revision: item.revision,
+      });
+
+      writePipelineAtomic(pipeline);
+      sendJSON(res, 200, item);
+    } catch (e) {
+      sendJSON(res, 400, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ GET /api/content/:id/metrics ============
+  const metricsGetMatch = matchRoute(pathname, '/api/content/:id/metrics');
+  if (metricsGetMatch && req.method === 'GET') {
+    try {
+      const pipeline = readPipeline();
+      const item = pipeline.contents.find(c => c.id === metricsGetMatch.id);
+      if (!item) { sendJSON(res, 404, { error: true, message: 'Conteudo nao encontrado.' }); return; }
+      const metrics = item.metrics && typeof item.metrics === 'object' && !Array.isArray(item.metrics)
+        ? item.metrics
+        : { snapshots: [], evidence: [] };
+      sendJSON(res, 200, {
+        id: item.id,
+        title: item.title,
+        status: item.status,
+        publishDate: item.publishDate,
+        postUrl: item.postUrl,
+        platform: item.platform || null,
+        metrics,
+      });
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ POST /api/content/:id/evidence-upload ============
+  const uploadMatch = matchRoute(pathname, '/api/content/:id/evidence-upload');
+  if (uploadMatch && req.method === 'POST') {
+    try {
+      const pipeline = readPipeline();
+      const item = pipeline.contents.find(c => c.id === uploadMatch.id);
+      if (!item) { sendJSON(res, 404, { error: true, message: 'Conteudo nao encontrado.' }); return; }
+      if (item.status !== 'publicado') {
+        sendJSON(res, 422, { error: true, message: 'Evidencia so pode ser anexada a conteudo publicado.' }); return;
+      }
+
+      // Whitelist content-type
+      const ct = req.headers['content-type'] || '';
+      const ALLOWED_TYPES = {
+        'image/png': '.png', 'image/jpeg': '.jpg', 'image/jpg': '.jpg',
+        'image/webp': '.webp', 'application/pdf': '.pdf',
+      };
+      const ctKey = ct.split(';')[0].trim().toLowerCase();
+      if (!ALLOWED_TYPES[ctKey]) {
+        sendJSON(res, 400, { error: true, message: 'Content-Type nao permitido. Aceitos: PNG, JPG, WebP, PDF.' }); return;
+      }
+      const ext = ALLOWED_TYPES[ctKey];
+
+      // Read body with streaming size limit
+      const MAX_SIZE = 10 * 1024 * 1024;
+      const chunks = [];
+      let totalSize = 0;
+      let aborted = false;
+      for await (const chunk of req) {
+        totalSize += chunk.length;
+        if (totalSize > MAX_SIZE) { aborted = true; break; }
+        chunks.push(chunk);
+      }
+      if (aborted) {
+        sendJSON(res, 400, { error: true, message: 'Arquivo excede 10MB.' }); return;
+      }
+      const buffer = Buffer.concat(chunks);
+
+      if (buffer.length === 0) {
+        sendJSON(res, 400, { error: true, message: 'Arquivo vazio.' }); return;
+      }
+
+      // Validate magic bytes match declared type
+      const MAGIC = {
+        '.png':  [0x89, 0x50, 0x4E, 0x47],
+        '.jpg':  [0xFF, 0xD8, 0xFF],
+        '.webp': null, // check RIFF....WEBP
+        '.pdf':  [0x25, 0x50, 0x44, 0x46],
+      };
+      let magicOk = false;
+      if (ext === '.webp') {
+        magicOk = buffer.length >= 12
+          && buffer[0]===0x52 && buffer[1]===0x49 && buffer[2]===0x46 && buffer[3]===0x46
+          && buffer[8]===0x57 && buffer[9]===0x45 && buffer[10]===0x42 && buffer[11]===0x50;
+      } else {
+        const expected = MAGIC[ext];
+        if (expected) {
+          magicOk = buffer.length >= expected.length && expected.every((b, i) => buffer[i] === b);
+        }
+      }
+      if (!magicOk) {
+        sendJSON(res, 400, { error: true, message: 'Conteudo do arquivo nao corresponde ao tipo declarado (' + ctKey + ').' }); return;
+      }
+
+      // Generate unique filename (prevent overwrite)
+      const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      const safeId = uploadMatch.id.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const evidenceDir = path.join(PROJECT_ROOT, 'tests', 'marketing-os', 'evidence');
+      if (!fs.existsSync(evidenceDir)) fs.mkdirSync(evidenceDir, { recursive: true });
+
+      let filename = `${safeId}-${ts}${ext}`;
+      let filePath = path.join(evidenceDir, filename);
+      // If file already exists (rapid successive uploads), append counter
+      let counter = 1;
+      while (fs.existsSync(filePath)) {
+        filename = `${safeId}-${ts}-${counter}${ext}`;
+        filePath = path.join(evidenceDir, filename);
+        counter++;
+      }
+
+      fs.writeFileSync(filePath, buffer);
+
+      const relativePath = 'tests/marketing-os/evidence/' + filename;
+      sendJSON(res, 201, { path: relativePath, size: buffer.length, filename });
+    } catch (e) {
+      sendJSON(res, 400, { error: true, message: e.message });
+    }
+    return;
+  }
+
   // ============ Snapshot API (read-only, for Dashboard v2) ============
   if (pathname === '/api/snapshot' && req.method === 'GET') {
     try {

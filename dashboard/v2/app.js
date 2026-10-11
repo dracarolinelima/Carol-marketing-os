@@ -111,6 +111,9 @@
         segment:rs.segment||null, coreMessage:rs.coreMessage||null, format:rs.format||null,
         caption:rs.caption===true?'Sim':(rs.caption===false?'Não':null)
       } : null,
+      postUrl: c.postUrl || o.postUrl || null,
+      platform: c.platform || null,
+      metricsData: c.metrics || {},
       proposal: (!hasBrief && (hp || rs.format || rs.editorialFunction)) ? {
         source: hp?hp.source||null:null,
         journey: hp?hp.journeyStage||null:null,
@@ -139,6 +142,9 @@
           nextAction: c.nextAction || null, revision: c.revision,
           block: c.block || null, publishDate: c.publishDate || null
         },
+        postUrl: c.postUrl || null,
+        platform: c.platform || null,
+        metrics: c.metrics || {},
         references: {
           approvedCopy: c.approvedCopy || null, visualBrief: c.visualBrief || null,
           scientificPackage: null, brief: null
@@ -295,6 +301,57 @@
         pkg:null, strategy:null, proposal:null, createdLocal:true
       }])});
       return id;
+    }
+
+    // =====================================================================
+    // API CALLS (real persistence, not local simulation)
+    // =====================================================================
+    async apiPublish(id, data) {
+      try {
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}/publish`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro: ' + (result.message || res.status)); return null; }
+        this.toast('Publicação registrada com sucesso.');
+        await this.refreshData();
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
+    }
+
+    async apiMetrics(id, data) {
+      try {
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}/metrics`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro: ' + (result.message || res.status)); return null; }
+        this.toast('Métricas registradas.');
+        await this.refreshData();
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
+    }
+
+    async apiUploadEvidence(id, file) {
+      try {
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}/evidence-upload`, {
+          method: 'POST', headers: {'Content-Type': file.type || 'image/png'},
+          body: file
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro no upload: ' + (result.message || res.status)); return null; }
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
+    }
+
+    async apiGetMetrics(id) {
+      try {
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}/metrics`);
+        if (!res.ok) return null;
+        return await res.json();
+      } catch(e) { return null; }
     }
 
     toast(msg) {
@@ -1204,12 +1261,20 @@
       const pubSec = div({background:'#171119',border:'1px solid rgba(255,255,255,.07)',borderRadius:'12px',padding:'16px 14px',display:'flex',flexDirection:'column',gap:'6px'});
       pubSec.appendChild(div({padding:'0 6px 6px',fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#78D0A5'},'Publicados'));
       pubRecs.forEach(c => {
+        const md = c.metricsData || {};
+        const snaps = md.snapshots || [];
+        const lastSnap = snaps.length ? snaps[snaps.length - 1] : null;
+        const perfLabel = lastSnap
+          ? ['reach','views','likes','comments','shares','saves'].filter(f=>lastSnap[f]!=null).map(f=>f+': '+lastSnap[f].toLocaleString('pt-BR')).join(' · ') || 'Sem valores'
+          : 'Sem dados de performance';
+        const perfColor = lastSnap ? '#A59BA6' : '#6F6573';
         pubSec.appendChild(btn('row',{boxSizing:'border-box',width:'100%',padding:'10px 6px',border:'0',borderRadius:'8px',background:'transparent',color:'#F2EDF0',textAlign:'left',display:'flex',flexWrap:'wrap',gap:'4px 14px',alignItems:'baseline'},
           {onClick:()=>this.setState({detail:c.id})},
           span({fontSize:'13.5px',fontWeight:'500'},c.title),
           span({fontSize:'12px',color:'#78D0A5'},c.publishDate?short(c.publishDate):'sem data'),
           span({fontSize:'12px',color:'#8A808C'},c.strategy?'Com brief':'Registro retroativo, sem brief'),
-          span({marginLeft:'auto',fontSize:'12px',color:'#A59BA6'},'Sem dados de performance')
+          span({marginLeft:'auto',fontSize:'12px',color:perfColor},perfLabel),
+          c.postUrl ? h('a',{href:c.postUrl,target:'_blank',rel:'noopener',style:{fontSize:'11px',color:'#78D0A5'},onClick:e=>e.stopPropagation()},'Ver post ↗') : null
         ));
       });
       pubSec.appendChild(div({padding:'4px 6px 0',fontSize:'11.5px',color:'#8A808C'},
@@ -1340,6 +1405,124 @@
       if (sel.refs.copy) refRows.push({k:'Copy aprovada',v:'Associada'});
       if (sel.refs.visual) refRows.push({k:'Brief visual',v:'Associado'});
       panel.appendChild(renderSection('Referências', refRows));
+
+      // ---- PUBLICATION FORM (only for pronto or unpublished content without pending) ----
+      if (sel.status !== 'publicado' && sel.status !== 'backlog') {
+        const pubForm = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
+        pubForm.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#78D0A5'},'Registrar publicação'));
+        const pubDate = h('input',{type:'date',id:'pub-date-'+sel.id,value:sel.publishDate||toISO(new Date()),style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px',colorScheme:'dark'}});
+        const pubFormat = h('input',{type:'text',id:'pub-format-'+sel.id,value:sel.strategy&&sel.strategy.format||'',placeholder:'Ex: Carrossel 6 cards',style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px'}});
+        const pubUrl = h('input',{type:'url',id:'pub-url-'+sel.id,placeholder:'https://www.instagram.com/p/...',style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px'}});
+        pubForm.appendChild(div({display:'flex',flexDirection:'column',gap:'4px'}, span({fontSize:'11px',color:'#8A808C'},'Data de publicação'), pubDate));
+        pubForm.appendChild(div({display:'flex',flexDirection:'column',gap:'4px'}, span({fontSize:'11px',color:'#8A808C'},'Formato'), pubFormat));
+        pubForm.appendChild(div({display:'flex',flexDirection:'column',gap:'4px'}, span({fontSize:'11px',color:'#8A808C'},'URL do Instagram'), pubUrl));
+        pubForm.appendChild(btn('btn1',{alignSelf:'flex-start',minHeight:'34px',padding:'0 14px',border:'0',borderRadius:'6px',background:'#5FBF8F',color:'#110C13',fontSize:'12.5px',fontWeight:'600'},
+          {onClick:async()=>{
+            const url = pubUrl.value.trim(); const date = pubDate.value; const fmt = pubFormat.value.trim();
+            if (!url || !date) { this.toast('Preencha data e URL.'); return; }
+            // Fetch fresh revision before submitting
+            const fresh = await (await fetch(`/api/content/${encodeURIComponent(sel.id)}`)).json();
+            if (!fresh || fresh.error) { this.toast('Erro ao verificar revisão atual.'); return; }
+            await this.apiPublish(sel.id, {agent:'Caroline', expectedRevision:fresh.revision, publishDate:date, postUrl:url, format:fmt||null, platform:'instagram'});
+            this.setState({detail:sel.id});
+          }},'Marcar como publicado'));
+        pubForm.appendChild(div({fontSize:'11px',lineHeight:'1.5',color:'#8A808C'},'Grava no pipeline real. Muda o status para Publicado.'));
+        panel.appendChild(pubForm);
+      }
+
+      // ---- METRICS FORM (only for publicado) ----
+      if (sel.status === 'publicado') {
+        // Show existing metrics
+        const md = sel.metricsData || {};
+        const snaps = md.snapshots || [];
+        const evids = md.evidence || [];
+
+        if (snaps.length || evids.length) {
+          const existSec = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
+          existSec.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#78D0A5'},'Performance registrada'));
+          snaps.forEach((s,i) => {
+            const vals = ['reach','views','likes','comments','shares','saves','profileVisits','follows']
+              .filter(f=>s[f]!=null).map(f=>f+': '+s[f].toLocaleString('pt-BR')).join(' · ');
+            existSec.appendChild(div({padding:'6px 8px',borderRadius:'6px',background:'rgba(255,255,255,.03)',display:'flex',flexDirection:'column',gap:'2px'},
+              span({fontSize:'11.5px',fontWeight:'500',color:'#E4DCE6'},'Snapshot '+(i+1)+' — '+short(s.date)+' ('+s.source+')'),
+              span({fontSize:'11.5px',color:'#A59BA6'},vals || 'Sem valores numéricos'),
+              s.note ? span({fontSize:'11px',color:'#8A808C'},s.note) : null
+            ));
+          });
+          evids.forEach(e => {
+            existSec.appendChild(div({padding:'6px 8px',borderRadius:'6px',background:'rgba(255,255,255,.03)',display:'flex',flexDirection:'column',gap:'2px'},
+              span({fontSize:'11.5px',fontWeight:'500',color:'#E4DCE6'},'Evidência — '+short(e.date)+' ('+e.type+')'),
+              span({fontSize:'11px',color:'#8A808C'},e.path),
+              e.note ? span({fontSize:'11px',color:'#8A808C'},e.note) : null
+            ));
+          });
+          panel.appendChild(existSec);
+        }
+
+        // Add metrics form
+        const metForm = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
+        metForm.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Adicionar métricas'));
+        const mDate = h('input',{type:'date',value:toISO(new Date()),style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px',colorScheme:'dark'}});
+        metForm.appendChild(div({display:'flex',flexDirection:'column',gap:'4px'}, span({fontSize:'11px',color:'#8A808C'},'Data da coleta'), mDate));
+
+        const metricFields = ['reach','views','likes','comments','shares','saves','profileVisits','follows'];
+        const metricLabels = {reach:'Alcance',views:'Visualizações',likes:'Curtidas',comments:'Comentários',shares:'Compartilhamentos',saves:'Salvamentos',profileVisits:'Visitas ao perfil',follows:'Seguidores novos'};
+        const metricInputs = {};
+        const metGrid = div({display:'grid',gridTemplateColumns:'1fr 1fr',gap:'6px'});
+        metricFields.forEach(f => {
+          const inp = h('input',{type:'number',min:'0',placeholder:'—',style:{height:'30px',width:'100%',boxSizing:'border-box',padding:'0 8px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'5px',background:'#1D1620',color:'#F2EDF0',fontSize:'12px'}});
+          metricInputs[f] = inp;
+          metGrid.appendChild(div({display:'flex',flexDirection:'column',gap:'2px'}, span({fontSize:'10.5px',color:'#8A808C'},metricLabels[f]), inp));
+        });
+        metForm.appendChild(metGrid);
+        const mNote = h('input',{type:'text',placeholder:'Nota (opcional)',style:{height:'30px',boxSizing:'border-box',padding:'0 8px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'5px',background:'#1D1620',color:'#F2EDF0',fontSize:'12px'}});
+        metForm.appendChild(mNote);
+        metForm.appendChild(btn('btn1',{alignSelf:'flex-start',minHeight:'34px',padding:'0 14px',border:'0',borderRadius:'6px',background:'#6F52D1',color:'#FFFFFF',fontSize:'12.5px',fontWeight:'600'},
+          {onClick:async()=>{
+            const snapshot = {date:mDate.value, source:'manual'};
+            metricFields.forEach(f => { const v=metricInputs[f].value; snapshot[f] = v===''?null:parseInt(v,10); });
+            if (mNote.value.trim()) snapshot.note = mNote.value.trim();
+            const hasAny = metricFields.some(f=>snapshot[f]!==null);
+            if (!hasAny) { this.toast('Preencha pelo menos uma métrica.'); return; }
+            // Fetch fresh revision before submitting
+            const fresh = await (await fetch(`/api/content/${encodeURIComponent(sel.id)}`)).json();
+            if (!fresh || fresh.error) { this.toast('Erro ao verificar revisão atual.'); return; }
+            await this.apiMetrics(sel.id, {agent:'Caroline', expectedRevision:fresh.revision, snapshot});
+            this.setState({detail:sel.id});
+          }},'Registrar métricas'));
+        panel.appendChild(metForm);
+
+        // Evidence upload
+        const evForm = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
+        evForm.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Anexar evidência'));
+        const fileInput = h('input',{type:'file',accept:'image/png,image/jpeg,image/webp,application/pdf',style:{fontSize:'12px',color:'#A59BA6'}});
+        const evNote = h('input',{type:'text',placeholder:'Nota (ex: Insights 48h)',style:{height:'30px',boxSizing:'border-box',padding:'0 8px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'5px',background:'#1D1620',color:'#F2EDF0',fontSize:'12px'}});
+        evForm.appendChild(fileInput);
+        evForm.appendChild(evNote);
+        evForm.appendChild(btn('btn1',{alignSelf:'flex-start',minHeight:'34px',padding:'0 14px',border:'0',borderRadius:'6px',background:'#6F52D1',color:'#FFFFFF',fontSize:'12.5px',fontWeight:'600'},
+          {onClick:async()=>{
+            const file = fileInput.files && fileInput.files[0];
+            if (!file) { this.toast('Selecione um arquivo.'); return; }
+            const uploadResult = await this.apiUploadEvidence(sel.id, file);
+            if (!uploadResult) return;
+            // Re-fetch current revision to avoid 409 after prior operations
+            const fresh = await (await fetch(`/api/content/${encodeURIComponent(sel.id)}`)).json();
+            if (!fresh || fresh.error) { this.toast('Erro ao verificar revisão atual.'); return; }
+            const metResult = await this.apiMetrics(sel.id, {agent:'Caroline', expectedRevision:fresh.revision, evidence:{date:toISO(new Date()), type:'insight-screenshot', path:uploadResult.path, note:evNote.value.trim()||null}});
+            if (!metResult) { this.toast('Upload salvo mas não vinculado. Arquivo: ' + uploadResult.path); }
+            this.setState({detail:sel.id});
+          }},'Enviar evidência'));
+        evForm.appendChild(div({fontSize:'11px',lineHeight:'1.5',color:'#8A808C'},'Aceita PNG, JPG, WebP ou PDF até 10 MB. Salvo em tests/marketing-os/evidence/.'));
+        panel.appendChild(evForm);
+
+        // Post URL
+        if (sel.postUrl) {
+          panel.appendChild(div({padding:'8px 14px',borderRadius:'8px',background:'rgba(95,191,143,.08)',display:'flex',flexDirection:'column',gap:'2px'},
+            span({fontSize:'11px',color:'#78D0A5'},'Publicado em '+(sel.publishDate?short(sel.publishDate):'')),
+            h('a',{href:sel.postUrl,target:'_blank',rel:'noopener',style:{fontSize:'12px',color:'#78D0A5',wordBreak:'break-all'}},sel.postUrl)
+          ));
+        }
+      }
 
       // Action buttons
       panel.appendChild(div({display:'flex',flexWrap:'wrap',gap:'8px'},
