@@ -1,0 +1,393 @@
+{
+  "generatedAt": "2026-11-12T03:30:00.000Z",
+  "generatedBy": "Claude (papel Strategist, sessão Claude Code Desktop)",
+  "analysisType": "situational",
+  "executionMethod": "Aplicacao manual das instrucoes de mos-strategist.md dentro da sessao principal do Claude Code Desktop. Nao existe subagente 'Strategist' registrado com frontmatter nesta versao do sistema (ver PROJECT-OVERVIEW.md) — os arquivos .claude/agents/marketing-os/team/mos-*.md sao lidos como instrucao, nao invocados como agente separavel. Leitura direta de pipeline.json, marketing-core.md, editorial-architecture-v2.md, pacote cientifico P2 e tests/marketing-os/campaigns/agenda-novembro-2026.md. Datas e URLs de publicacao de 1.3 e OR-2026 reconciliadas nesta mesma sessao via consulta real ao Metricool (FATO OBSERVADO, nao inferido).",
+  "sourceRevisions": {
+    "marketingCore": "memory/carol-marketing-os/marketing-core.md v1.0",
+    "editorialArchitecture": "memory/carol-marketing-os/editorial-architecture-v2.md (aprovada 2026-09-30)",
+    "pipelineLastUpdated": "2026-11-12T03:21:00.000Z",
+    "scientificPackages": {
+      "T1": "frozen",
+      "T2": "frozen",
+      "P1": "frozen",
+      "P2": "RASCUNHO — aprovacao humana pendente (nao congelado), conforme tests/marketing-os/scientific-packages/P2-transicao-menopausica.md",
+      "P3": "RASCUNHO — produzido autonomamente em 12/11/2026 pelo Scientific Research, aguarda aprovacao humana (nao congelado)",
+      "P4": "pendente — nao iniciado",
+      "P5": "pendente — nao iniciado",
+      "P6": "pendente — nao iniciado"
+    }
+  },
+  "pipelineSummary": {
+    "total": 19,
+    "byStatus": {
+      "publicado": 3,
+      "revisao": 1,
+      "backlog": 14,
+      "arquivado": 1
+    },
+    "pendingApproval": [
+      {
+        "id": "N-261008-161731",
+        "title": "Perimenopausa: o que muda antes da menopausa",
+        "pendingType": "aprovacao",
+        "revision": 10
+      }
+    ]
+  },
+  "publicationReconciliation": [
+    {
+      "item": "1.1",
+      "title": "Perimenopausa sem fogacho",
+      "publishDate": "2026-10-09",
+      "postUrl": "https://www.instagram.com/p/DeSjNY5FlWj/",
+      "status": "ja reconciliado anteriormente (12/10/2026)"
+    },
+    {
+      "item": "1.3",
+      "title": "Polipo endometrial e histeroscopia",
+      "correspondenceConfirmed": true,
+      "confirmedAt": "2026-11-12",
+      "publishDate": "2026-09-20",
+      "postUrl": "https://www.instagram.com/p/DdgwAGnF2RX/",
+      "platform": "instagram",
+      "method": "FATO OBSERVADO: consulta direta ao Metricool (getAnalyticsDataByMetrics, metricas IGPO01/02/03/06) nesta sessao. Legenda do post no Instagram conferida palavra por palavra contra tests/marketing-os/published/1.3-polipo-histeroscopia.md — identica. Campo registrado via PATCH /api/content/1.3, revision 3 -> 4."
+    },
+    {
+      "item": "OR-2026",
+      "title": "Outubro Rosa 2026",
+      "correspondenceConfirmed": true,
+      "confirmedAt": "2026-11-12",
+      "publishDate": "2026-10-01",
+      "postUrl": "https://www.instagram.com/p/Dd9aIRvFhkl/",
+      "platform": "instagram",
+      "method": "FATO OBSERVADO: consulta direta ao Metricool. Timestamp do post (2026-10-01 17:07) compativel com publishDate ja registrado. Campo registrado via PATCH /api/content/OR-2026, revision 2 -> 3."
+    }
+  ],
+  "activeBlock": {
+    "id": "B1",
+    "name": "Bloco 1 — Perimenopausa / Transicao Menopausica",
+    "territory": "B",
+    "status": "em-producao",
+    "rationale": "Segmento B e segunda prioridade no Marketing Core. DESCOBERTA (1.1) publicada em 09/10/2026 — a audiencia ja tem contexto de reconhecimento. Continuidade editorial para ENTENDER.",
+    "journeyProgression": "RECONHECER -> ENTENDER -> CONFIAR -> PROCURAR",
+    "publishedContext": "1.1 (Perimenopausa sem fogacho) publicado em 09/10/2026 no Instagram (https://www.instagram.com/p/DeSjNY5FlWj/). DESCOBERTA do Bloco 1 esta na audiencia. O proximo conteudo entra no ENTENDER como continuacao direta.",
+    "contents": [
+      {
+        "id": "1.1",
+        "title": "Perimenopausa sem fogacho",
+        "function": "DESCOBERTA",
+        "journeyStage": "RECONHECER",
+        "status": "publicado",
+        "publishDate": "2026-10-09",
+        "postUrl": "https://www.instagram.com/p/DeSjNY5FlWj/",
+        "scientificPackage": "T1 (frozen)",
+        "note": "Publicado. Entrada do Bloco 1. Contexto de reconhecimento ja oferecido a audiencia. Nao ha presuncao de alcance, compreensao ou conversao — metricas ainda nao coletadas no pipeline."
+      },
+      {
+        "id": "N-261008-161731",
+        "title": "Perimenopausa: o que muda antes da menopausa",
+        "function": "COMPREENSAO",
+        "journeyStage": "ENTENDER",
+        "status": "revisao (aprovacao pendente de Caroline)",
+        "position": 2,
+        "note": "Progressao apos DESCOBERTA publicada. Copy e direcao visual concluidas. P2 sustenta os claims mas aguarda aprovacao para congelamento — publicacao desta peca depende de P2 congelado.",
+        "scientificPackage": "P2 (rascunho — aguarda aprovacao)",
+        "humanDecisionRequired": "Aprovar copy e visual. Aprovar P2 para congelamento antes da publicacao."
+      }
+    ],
+    "nextNeeded": {
+      "function": "AUTORIDADE/RESOLUTIVIDADE",
+      "journeyStage": "CONFIAR",
+      "objective": "Demonstrar expertise clinica e resolutividade no manejo da perimenopausa. A paciente que ja reconheceu (DESCOBERTA) e entendeu (COMPREENSAO) precisa ver evidencia de que o atendimento resolve de forma individualizada.",
+      "description": "Bloco 1 precisa de pelo menos um conteudo de AUTORIDADE/RESOLUTIVIDADE para completar a progressao ate CONFIAR.",
+      "candidates": [
+        {
+          "id": "2.2",
+          "title": "Marcador isolado nao explica o quadro da perimenopausa",
+          "function": "AUTORIDADE/RESOLUTIVIDADE",
+          "journeyStage": "CONFIAR",
+          "format": "Reel",
+          "blocker": "P2 (Transicao menopausica) — rascunho, aguarda aprovacao humana",
+          "note": "Candidato existente no backlog. Depende de P2 congelado."
+        }
+      ],
+      "dependency": "P2 deve ser aprovado e congelado antes de produzir 2.2.",
+      "alternativa": "Se P2 demorar, o Strategist pode avaliar se existe um angulo de AUTORIDADE que use apenas T1 (frozen) para nao bloquear o bloco inteiramente. Isso nao e automatico — exige analise editorial."
+    },
+    "furtherProgression": {
+      "function": "FIT/CONVERSAO",
+      "journeyStage": "PROCURAR",
+      "description": "Apos CONFIAR, o bloco precisa de pelo menos uma peca que reduza incerteza sobre o atendimento e aproxime a decisao de procura. Pode ser 3.1 (Avaliacao clinica da perimenopausa na pratica) ou conteudo transversal 4.4 (primeira consulta). 3.1 depende de P2. 4.4 nao depende de pacote cientifico mas funciona melhor quando ja existe contexto acumulado.",
+      "candidates": [
+        {
+          "id": "3.1",
+          "title": "Avaliacao clinica da perimenopausa na pratica",
+          "function": "PREFERENCIA/VALOR",
+          "journeyStage": "PROCURAR",
+          "blocker": "P2",
+          "note": "Depende de P2 congelado."
+        },
+        {
+          "id": "4.4",
+          "title": "Como funciona a primeira consulta focada em investigacao",
+          "function": "FIT/CONVERSAO",
+          "journeyStage": "PROCURAR",
+          "blocker": null,
+          "note": "Transversal. Nao depende de pacote cientifico. Pode entrar quando contexto do bloco estiver acumulado."
+        }
+      ]
+    }
+  },
+  "alwaysOn": {
+    "line": "Histeroscopia",
+    "territory": "C",
+    "cadence": "~1 por semana, variavel conforme equilibrio editorial",
+    "rationale": "Audiencia recente engajada, diferenciacao profissional real, proximidade com intencao de procedimento, ticket relevante, confianca transferida para outros segmentos (Marketing Core §17).",
+    "publishedContext": [
+      {
+        "id": "1.3",
+        "title": "Polipo endometrial e histeroscopia",
+        "function": "COMPREENSAO",
+        "journeyStage": "ENTENDER -> CONFIAR",
+        "status": "publicado",
+        "publishDate": "2026-09-20",
+        "postUrl": "https://www.instagram.com/p/DdgwAGnF2RX/",
+        "scientificPackage": "T2 (frozen)",
+        "note": "Publicado e reconciliado nesta sessao (data e URL confirmadas via Metricool). A legenda real inclui tambem CTA da Agenda Especial de Polipectomia (palavra-chave POLIPO), nao presente na copy aprovada registrada — ver observacao abaixo.",
+        "contextoCriadoParaAudiencia": "A audiencia ja foi exposta a COMPREENSAO de polipo endometrial. O proximo conteudo pode avancar para AUTORIDADE/RESOLUTIVIDADE sem repetir a explicacao basica.",
+        "observacaoDivergencia": "ASSOCIACAO, nao fato verificado por que: a legenda publicada real (confirmada no Instagram) contem um bloco comercial sobre a Agenda Especial de Polipectomia de 25/09/2026 que nao aparece no arquivo tests/marketing-os/published/1.3-polipo-histeroscopia.md registrado no sistema. Pode indicar que a legenda final foi editada manualmente por Caroline apos a aprovacao registrada, ou que o arquivo publicado nao capturou a versao integral. Nao foi corrigido automaticamente — sinalizado para revisao humana."
+      }
+    ],
+    "inReview": [],
+    "archived": [
+      {
+        "id": "N-261008-154937",
+        "title": "Polipo endometrial: quando acompanhar e quando tratar",
+        "status": "arquivado em 2026-10-13",
+        "rejectionReason": "Caroline: 'post nao aprovado, nao acho valido discutir quando se acompanha os polipos. Prefiro falar sobre ser cirurgico.' Nota final: pauta rejeitada por inadequacao editorial — nao desenvolver o tema acompanhamento versus tratamento de polipo como conteudo planejado generico.",
+        "learning": "Registrado em mos-strategist.md (secao EDITORIAL LEARNINGS): nao usar 'acompanhar vs tratar' como framework generico de decisao para polipos. Caroline valoriza investigacao individualizada — risco de malignidade existe mesmo que baixo. Tambem houve problema de sequenciamento (conduta logo apos compreensao no mesmo territorio, sem tempo de absorcao). Se o tema retornar, enfatizar avaliacao individualizada e o papel da histeroscopia (diagnostica ou cirurgica conforme o caso), nao watchful waiting generico."
+      }
+    ],
+    "backlog": [
+      {
+        "id": "2.3",
+        "title": "Histeroscopia: o que esperar e como se preparar",
+        "function": "FIT/REDUCAO DE INCERTEZA",
+        "journeyStage": "PROCURAR",
+        "blocker": "P3 (Histeroscopia pratica) — pendente, nao iniciado",
+        "priority": "ALTA — proximo conteudo always-on natural apos 1.3, mas bloqueado por P3",
+        "objective": "Reduzir medo e objecoes praticas sobre o procedimento. A paciente que ja entendeu (1.3) precisa saber o que esperar para decidir procurar."
+      },
+      {
+        "id": "4.2",
+        "title": "Possibilidades da histeroscopia na pratica",
+        "function": "PREFERENCIA/VALOR",
+        "journeyStage": "PROCURAR",
+        "blocker": "P3 (Histeroscopia pratica) — pendente",
+        "priority": "MEDIA — requer P3 e progressao anterior"
+      }
+    ],
+    "nextNeeded": {
+      "description": "Com N-261008-154937 arquivado, a linha always-on nao tem conteudo em producao. O proximo passo logico apos COMPREENSAO (1.3) seria AUTORIDADE/RESOLUTIVIDADE, mas o angulo anterior (conduta acompanhar vs tratar) foi rejeitado. Um novo angulo de AUTORIDADE precisa ser desenvolvido respeitando o aprendizado registrado (individualizacao, nao generico).",
+      "dependency": "P3 — Histeroscopia pratica (segunda prioridade cientifica) para os conteudos de reducao de incerteza (2.3, 4.2). Para um novo angulo de AUTORIDADE que respeite o aprendizado da rejeicao, T2 (frozen) ja sustenta — nao depende de P3.",
+      "agentAction": "Strategist pode preparar um novo brief de AUTORIDADE/RESOLUTIVIDADE para a linha always-on usando apenas T2 (frozen), com framing individualizado (nao 'acompanhar vs tratar' generico). Scientific Research pode iniciar P3 em paralelo, trabalho independente.",
+      "note_update_12nov": "P3 produzido (rascunho) nesta sessao. 2.3 e 4.2 tiveram scientificPackageStatus atualizado para \"produced\". Falta aprovacao humana para congelar P3."
+    }
+  },
+  "transversal": {
+    "published": [
+      {
+        "id": "OR-2026",
+        "title": "Outubro Rosa 2026",
+        "publishDate": "2026-10-01",
+        "postUrl": "https://www.instagram.com/p/Dd9aIRvFhkl/",
+        "note": "Reconciliado nesta sessao."
+      }
+    ],
+    "backlog": [
+      {
+        "id": "4.4",
+        "title": "Como funciona a primeira consulta focada em investigacao",
+        "function": "FIT/CONVERSAO",
+        "journeyStage": "PROCURAR",
+        "blocker": null,
+        "priority": "MEDIA — util como peca de aproximacao quando ja existe contexto acumulado. Nao usar em excesso sem contexto previo.",
+        "note": "Nao depende de pacote cientifico. Pode entrar no calendario quando o Bloco 1 acumular contexto suficiente."
+      }
+    ],
+    "observacao": "Campanha 'Agenda de Novembro' (tests/marketing-os/campaigns/agenda-novembro-2026.md) e comercial/transversal, aguardando aprovacao de Caroline — ver pendingHumanDecisions."
+  },
+  "scientificPriorities": [
+    {
+      "package": "P2",
+      "name": "Transicao menopausica",
+      "status": "RASCUNHO — aprovacao humana pendente (nao congelado)",
+      "priority": "IMEDIATA",
+      "blocks": [
+        "2.2 (B1 AUTORIDADE/RESOLUTIVIDADE)",
+        "3.1 (avaliacao clinica perimenopausa)",
+        "N-261008-161731 (producao concluida — P2 sustenta claims mas nao esta congelado, bloqueia publicacao)"
+      ],
+      "humanAction": "Aprovar P2 para congelamento. Artefato: tests/marketing-os/scientific-packages/P2-transicao-menopausica.md",
+      "agentAction": "Nenhuma acao de agente pendente para P2. O pacote esta pronto para revisao humana."
+    },
+    {
+      "package": "P3",
+      "name": "Histeroscopia pratica",
+      "status": "RASCUNHO — produzido em 12/11/2026, aguarda aprovacao humana (nao congelado)",
+      "priority": "SEGUNDA",
+      "blocks": [
+        "2.3 (always-on FIT/REDUCAO DE INCERTEZA)",
+        "4.2 (always-on PREFERENCIA/VALOR)"
+      ],
+      "humanAction": "Revisar e aprovar P3 para congelamento. Artefato: tests/marketing-os/scientific-packages/P3-histeroscopia-pratica.md (8 referencias verificadas via PubMed).",
+      "agentAction": "Nenhuma acao de agente pendente para P3. Pronto para revisao humana. Creator pode preparar brief/rascunho de 2.3 ou 4.2 usando P3 como rascunho, mas producao final e publicacao aguardam congelamento."
+    }
+  ],
+  "weeklyDistribution": {
+    "cadence": "3 posts/semana (hipotese operacional, nao regra permanente — ver marketing-core §21 e editorial-architecture-v2 §5)",
+    "currentWeekSuggestion": {
+      "note": "Nenhum conteudo em producao ativa no momento alem de N-261008-161731 (aguardando aprovacao de Caroline). Antes de nova producao, recomenda-se resolver os gargalos de aprovacao (P2, N-261008-161731) e decidir a campanha de novembro, que pode consumir a cadencia das proximas semanas."
+    }
+  },
+  "whatDependsOnCaroline": [
+    {
+      "priority": "ALTA",
+      "item": "P2",
+      "decision": "Aprovar pacote P2 (Transicao menopausica) para congelamento",
+      "context": "Rascunho pronto, aguardando revisao humana. N-261008-161731 usa P2 para claims. 2.2 e 3.1 tambem dependem.",
+      "effect": "Desbloqueia producao de 2.2 (AUTORIDADE) e 3.1 (PREFERENCIA/VALOR) no Bloco 1 e a publicacao de N-261008-161731."
+    },
+    {
+      "priority": "ALTA",
+      "item": "N-261008-161731",
+      "decision": "Aprovar copy e visual do conteudo Bloco 1 COMPREENSAO",
+      "context": "Copy e direcao visual concluidas. P2 sustenta mas nao esta congelado. Publicacao depende de P2 congelado.",
+      "effect": "Avanca o Bloco 1 para ENTENDER."
+    },
+    {
+      "priority": "ALTA",
+      "item": "Campanha Agenda de Novembro",
+      "decision": "Decidir as 6 pendencias listadas em tests/marketing-os/campaigns/agenda-novembro-2026.md secao 4: horarios presenciais/online disponiveis (12/11 ao recesso), politica de pagamento antecipado e remarcacao, confirmacao de questionario/secretaria/local/ManyChat POLIPO + nova palavra-chave AGENDA, resultado da agenda de setembro e vaga em novembro, aprovar lista da frente B, validar numero 'mais de 600 histeroscopias cirurgicas' no Reel 2.",
+      "context": "Campanha comercial aguardando aprovacao, registrada em 11/11/2026 (DECISIONS.md D13)."
+    },
+    {
+      "priority": "MEDIA",
+      "item": "1.3 — divergencia de legenda",
+      "decision": "Confirmar se a legenda publicada real (com CTA da Agenda Especial de Polipectomia) deve substituir o arquivo tests/marketing-os/published/1.3-polipo-histeroscopia.md como registro oficial",
+      "context": "Ver nota 'observacaoDivergencia' em alwaysOn.publishedContext. Nao alterado automaticamente."
+    },
+    {
+      "priority": "MEDIA",
+      "item": "P3",
+      "decision": "Revisar e aprovar o pacote P3 (Histeroscopia na pratica) para congelamento",
+      "context": "Produzido autonomamente nesta sessao via busca real no PubMed (8 referencias verificadas). Artefato: tests/marketing-os/scientific-packages/P3-histeroscopia-pratica.md.",
+      "effect": "Desbloqueia producao e publicacao de 2.3 e 4.2 na linha always-on de histeroscopia."
+    }
+  ],
+  "whatAgentsCanDoAutonomously": [
+    {
+      "action": "Iniciar producao de P3 (Histeroscopia pratica)",
+      "agent": "Orchestrator -> Scientific Research",
+      "justification": "Segunda prioridade cientifica. Trabalho de pesquisa independente de qualquer aprovacao pendente. Desbloqueia proximos conteudos always-on (2.3, 4.2).",
+      "dependency": "Nenhuma"
+    },
+    {
+      "action": "Preparar novo brief de AUTORIDADE/RESOLUTIVIDADE para a linha always-on de histeroscopia, com framing individualizado (nao 'acompanhar vs tratar')",
+      "agent": "Strategist",
+      "justification": "T2 (frozen) sustenta. Respeita o aprendizado registrado da rejeicao de N-261008-154937. Nao depende de P2 nem P3.",
+      "dependency": "Nenhuma"
+    },
+    {
+      "action": "Avaliar se existe angulo de AUTORIDADE para Bloco 1 usando apenas T1 (frozen)",
+      "agent": "Strategist",
+      "justification": "Se P2 demorar para ser aprovado, o bloco nao precisa ficar inteiramente parado.",
+      "dependency": "Nenhuma. Analise estrategica, nao producao."
+    }
+  ],
+  "nextStrategicWorkByTrack": {
+    "bloco1_perimenopausa": {
+      "contextPublished": "1.1 (Perimenopausa sem fogacho) publicado em 09/10/2026. DESCOBERTA (RECONHECER) esta na audiencia.",
+      "inProgress": [
+        {
+          "id": "N-261008-161731",
+          "role": "COMPREENSAO (ENTENDER) — segundo conteudo do bloco.",
+          "status": "Aprovacao pendente de Caroline. Publicacao depende de P2 congelado."
+        }
+      ],
+      "nextEditorialNeed": {
+        "function": "AUTORIDADE/RESOLUTIVIDADE",
+        "journeyStage": "CONFIAR",
+        "candidateExisting": "2.2 — backlog, depende de P2",
+        "dependency": "P2 congelado para 2.2."
+      },
+      "progressionTowardsProcurar": "DESCOBERTA (publicado) -> COMPREENSAO (em revisao) -> AUTORIDADE (depende de P2) -> FIT/CONVERSAO (3.1 depende de P2, ou 4.4 transversal sem dependencia)."
+    },
+    "alwaysOn_histeroscopia": {
+      "contextPublished": "1.3 (Polipo endometrial e histeroscopia) publicado 20/09/2026 — COMPREENSAO.",
+      "inProgress": [],
+      "nextEditorialNeed": {
+        "function": "AUTORIDADE/RESOLUTIVIDADE (novo angulo, respeitando rejeicao anterior) ou FIT/REDUCAO DE INCERTEZA (depende de P3)",
+        "journeyStage": "CONFIAR / PROCURAR",
+        "note": "O angulo anterior de AUTORIDADE (N-261008-154937) foi arquivado. Linha always-on esta sem conteudo em producao no momento."
+      },
+      "progressionTowardsProcurar": "COMPREENSAO (publicado: 1.3) -> AUTORIDADE (precisa de novo angulo) -> FIT/REDUCAO DE INCERTEZA (depende de P3) -> PREFERENCIA/VALOR (4.2, depende de P3)."
+    }
+  },
+  "pendingHumanDecisions": [
+    {
+      "priority": "ALTA",
+      "item": "P2",
+      "decision": "Aprovar pacote P2 para congelamento"
+    },
+    {
+      "priority": "ALTA",
+      "item": "N-261008-161731",
+      "decision": "Aprovar copy e visual"
+    },
+    {
+      "priority": "ALTA",
+      "item": "Campanha Novembro",
+      "decision": "Resolver as 6 pendencias da secao 4 do agenda-novembro-2026.md"
+    },
+    {
+      "priority": "MEDIA",
+      "item": "1.3 legenda",
+      "decision": "Confirmar qual versao da legenda e o registro oficial"
+    }
+  ],
+  "nextActions": [
+    {
+      "order": 1,
+      "action": "Caroline aprova P2 para congelamento",
+      "agent": "Caroline"
+    },
+    {
+      "order": 2,
+      "action": "Caroline revisa e aprova N-261008-161731 (B1 COMPREENSAO)",
+      "agent": "Caroline"
+    },
+    {
+      "order": 3,
+      "action": "Caroline decide as pendencias da campanha de novembro",
+      "agent": "Caroline"
+    },
+    {
+      "order": 5,
+      "action": "Orchestrator inicia producao de P3 via Scientific Research",
+      "agent": "Orchestrator -> Scientific Research"
+    },
+    {
+      "order": 6,
+      "action": "Strategist prepara novo brief de AUTORIDADE para a linha always-on, respeitando o aprendizado da rejeicao",
+      "agent": "Strategist"
+    },
+    {
+      "order": 7,
+      "action": "Caroline revisa e aprova P3 para congelamento",
+      "agent": "Caroline"
+    }
+  ],
+  "strategicRationale": "O Bloco 1 (Perimenopausa) tem DESCOBERTA publicada (1.1) e COMPREENSAO pronta para aprovacao (N-261008-161731), bloqueada pela falta de congelamento de P2. A linha always-on de histeroscopia tem COMPREENSAO publicada (1.3, reconciliada nesta sessao) mas perdeu seu proximo passo planejado: o angulo de AUTORIDADE (N-261008-154937) foi rejeitado por Caroline em 13/10 por framing inadequado ('acompanhar vs tratar' generico). A linha precisa de um novo brief de AUTORIDADE que use T2 (ja congelado) com framing individualizado, sem depender de P3. O gargalo principal continua sendo aprovacao humana (P2, N-261008-161731) e, nesta sessao, tambem a decisao sobre a campanha de novembro. Trabalho que pode avancar sem espera: producao de P3 e um novo brief de AUTORIDADE para histeroscopia."
+}

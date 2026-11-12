@@ -57,8 +57,16 @@ token.json
 # Claude Code MCP temp files
 .mcp_temp/
 
-# Pipeline data — mutável a cada handoff, não versionar
-dashboard/data/
+# Pipeline data: pipeline.json, strategy.json, tasks.json e copy/ SAO
+# versionados desde 12/11/2026 (D3) — e' a unica forma real de backup/
+# historico ate existir uma solucao dedicada. So ignorar o que e'
+# gerado automaticamente como copia de seguranca (o servidor ja grava
+# .backup.json a cada escrita) ou os snapshots manuais pontuais.
+dashboard/data/*.backup.json
+dashboard/data/*.bak.json
+dashboard/data/*.bak-*
+dashboard/data/*pre-handoff.json
+dashboard/data/backups/
 
 # Imagens geradas pelo renderer — regeneráveis
 generated_imgs/
