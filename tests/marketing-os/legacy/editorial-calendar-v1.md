@@ -1,5 +1,11 @@
 # CALENDÁRIO EDITORIAL — CICLO 1 (v1 congelada)
 
+> **HISTÓRICO — movido para `legacy/` em 12/11/2026.** Substituído como fonte de
+> estrutura editorial por `memory/carol-marketing-os/editorial-architecture-v2.md`
+> (aprovado 2026-09-30). A cadência de 4 posts/semana abaixo está superada pela
+> cadência vigente de 3 posts/semana. Este arquivo permanece apenas como backlog
+> de temas (ver editorial-architecture-v2.md §6), não como calendário ativo.
+
 **Status:** Arquitetura congelada
 **Data de congelamento:** 2026-09-16
 **Ciclo:** Primeiro ciclo mensal

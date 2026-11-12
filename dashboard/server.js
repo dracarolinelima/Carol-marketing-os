@@ -1089,12 +1089,22 @@ const server = http.createServer(async (req, res) => {
     serveStatic(res, path.join(__dirname, 'index.html'));
     return;
   }
-  const safePath = path.join(__dirname, pathname.replace(/\.\./g, ''));
-  serveStatic(res, safePath);
+  // Only these two static assets are needed at the dashboard root.
+  // Do not fall back to a generic file server: dashboard/ also contains
+  // data/, server.js, copy-store.js and other files that must never be
+  // reachable over HTTP.
+  const ROOT_STATIC_ALLOWLIST = new Set(['/app.js', '/style.css']);
+  if (ROOT_STATIC_ALLOWLIST.has(pathname)) {
+    serveStatic(res, path.join(__dirname, pathname));
+    return;
+  }
+  sendJSON(res, 404, { error: true, message: 'Not found.' });
 });
 
 // Run migration and start
 migrate();
-server.listen(PORT, () => {
+// Bind to localhost only: this server has no authentication, so it must
+// never be reachable from other devices on the network.
+server.listen(PORT, '127.0.0.1', () => {
   console.log(`Dashboard running at http://localhost:${PORT}`);
 });

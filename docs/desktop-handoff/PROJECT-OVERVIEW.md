@@ -96,7 +96,7 @@ Classes: **ESSENCIAL** (ativo e essencial) · **EVOLUIR** (ativo, precisa evolui
 | `briefs/`, `drafts/`, `baseline/`, `visual-briefs/` | HISTÓRICO / ESSENCIAL | Rastreabilidade das produções |
 | `campaigns/agenda-especial-polipectomia.md` | HISTÓRICO | Campanha de setembro sem resultado registrado |
 | `campaigns/agenda-novembro-2026.md` | EVOLUIR | Proposta aguardando aprovação; não está no Git |
-| `editorial-calendar-v1.md` | DUPLICADO | Calendário congelado em 16/09 (4 posts/semana), conflita com a cadência vigente de 3/semana |
+| `legacy/editorial-calendar-v1.md` | HISTÓRICO | Movido para `legacy/` em 12/11/2026. Calendário congelado em 16/09 (4 posts/semana), conflitava com a cadência vigente de 3/semana |
 | `entrega-aprendizado-editorial-2026-10-13.md`, `premortem-editorial-learnings.md` | ESSENCIAL | Origem dos aprendizados editoriais; não estão no Git |
 | `external-audit/` | HISTÓRICO | Contextos para auditorias externas |
 | `frozen-baseline-briefs.md`, `evidence/` (vazia) | HISTÓRICO | — |

@@ -61,24 +61,32 @@ atende às necessidades dela.
 
 ## 3. Problemas conhecidos (VERIFICADO)
 
-1. **1.040 linhas de trabalho não commitadas** em 6 arquivos (agentes Copywriter,
-   Editor, Strategist; `server.js`; `v2/app.js`; `v2/index.html`) e **13 itens não
-   rastreados**, incluindo `copy-store.js`, `v2/copy-editor.js`, 3 testes, as
-   fontes do renderizador e os aprendizados editoriais. Ver `git status`.
+1. ~~**1.040 linhas de trabalho não commitadas**~~ Resolvido em 12/11/2026:
+   commit `04892b1` em `carol-v1` (agentes Copywriter, Editor, Strategist;
+   `server.js`; `v2/app.js`; `v2/index.html`; `copy-store.js`;
+   `v2/copy-editor.js`; 3 testes; fontes do renderizador; aprendizados
+   editoriais; `docs/desktop-handoff/`).
 2. **`dashboard/data/` está no `.gitignore`.** Histórico de aprovações e
-   publicações protegido apenas por arquivos `.bak` manuais (último em 26/10/2026).
-3. **Servidor sem autenticação e sem restrição de host** (`server.js:1098`). A rota
-   genérica (`server.js:1094`) serve qualquer arquivo de `dashboard/`, inclusive
-   `data/pipeline.json`, para qualquer aparelho na mesma rede.
-4. **O remote `origin` aponta para o template público**
-   `https://github.com/ericosiu/marketing-os-starter.git`. Um `git push` tentaria
-   enviar conteúdo da marca para o repositório de outra pessoa.
-5. **Inconsistências de dados:** 1.3 aparece como publicado sem `publishDate`;
-   `strategy.json` (12/10) desatualizado em relação ao pipeline.
-6. **Três calendários:** `tests/marketing-os/editorial-calendar-v1.md` (4
-   posts/semana), seção de calendário em `strategy.json` e tela v2. A cadência
-   vigente é 3 posts/semana (`editorial-architecture-v2.md`, seção 5; memória de
-   16/09/2026).
+   publicações protegido por backups manuais e, desde 12/11/2026, por
+   snapshots timestamped em `dashboard/data/backups/`. Versionamento
+   definitivo ainda pendente (D3).
+3. ~~**Servidor sem autenticação e sem restrição de host**~~ Parcialmente
+   resolvido em 12/11/2026: `server.js` agora escuta só em `127.0.0.1` e a
+   rota genérica de arquivos foi fechada (allowlist de `/app.js` e
+   `/style.css` apenas). Segue sem autenticação — não expor fora do
+   computador sem resolver isso.
+4. **O remote `origin` apontava para o template público**
+   `ericosiu/marketing-os-starter.git`. Resolvido em 12/11/2026: trocado para
+   `https://github.com/dracarolinelima/Carol-marketing-os.git` (repositório
+   privado próprio). Push ainda pendente de autenticação da Dra. Caroline no Mac.
+5. ~~**Inconsistências de dados:**~~ Resolvido em 12/11/2026: 1.3 e OR-2026
+   reconciliados com `publishDate`/`postUrl` reais, confirmados via Metricool.
+   `strategy.json` regenerado (ver `sourceRevisions` no próprio arquivo).
+6. ~~**Três calendários:**~~ Resolvido em 12/11/2026: `editorial-calendar-v1.md`
+   movido para `tests/marketing-os/legacy/editorial-calendar-v1.md`, com nota de
+   histórico. Restam dois: a seção de calendário em `strategy.json` e a tela v2.
+   A cadência vigente é 3 posts/semana (`editorial-architecture-v2.md`, seção 5;
+   memória de 16/09/2026).
 7. **`v2/app.js` monolítico** (155 KB, 2.150 linhas).
 8. **Agentes não são subagentes registrados:** os arquivos `mos-*.md` não têm
    frontmatter; funcionam como instruções lidas pelo Claude, não como agentes

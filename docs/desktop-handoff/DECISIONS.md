@@ -8,7 +8,8 @@ recomendações dos agentes.
 | Data | Decisão | Fonte |
 |---|---|---|
 | 2026-09-16 | Cadência inicial de 3 posts de feed por semana; hipótese operacional, não regra permanente | Memória `project_publication_cadence.md`; [editorial-architecture-v2.md](../../memory/carol-marketing-os/editorial-architecture-v2.md), seção 5 |
-| 2026-09-16 | Calendário editorial ciclo 1 congelado (4 posts/semana). Superado pela cadência de 3/semana | [editorial-calendar-v1.md](../../tests/marketing-os/editorial-calendar-v1.md) |
+| 2026-09-16 | Calendário editorial ciclo 1 congelado (4 posts/semana). Superado pela cadência de 3/semana | [editorial-calendar-v1.md](../../tests/marketing-os/legacy/editorial-calendar-v1.md) |
+| 2026-11-12 | Fase 0 executada: commit do trabalho pendente, remote privado configurado (push pendente), snapshot de `dashboard/data/`, servidor restrito a localhost, `strategy.json` regenerado, 1.3/OR-2026 reconciliados via Metricool, `editorial-calendar-v1.md` movido para `legacy/` | Sessão Claude Code Desktop |
 | 2026-09-30 | Arquitetura editorial v2 aprovada (blocos temáticos, histeroscopia always-on) | editorial-architecture-v2.md |
 | 2026-09 | "Agenda Especial de Polipectomia" em vez de "Pólipo Day"; "recuperação rápida" autorizada como experiência clínica, não claim científico | [agenda-especial-polipectomia.md](../../tests/marketing-os/campaigns/agenda-especial-polipectomia.md) |
 | 2026-10-07 | Agentes em autonomia nível B (executar e reportar); gates humanos permanentes mantidos | [CLAUDE.md](../../CLAUDE.md), seção 15; [autonomy.yaml](../../.claude/agents/marketing-os/autonomy.yaml) |

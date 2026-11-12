@@ -12,20 +12,33 @@ funcionando até a nova interface atingir paridade.
 
 ## Fase 0: Proteção e fundação (1 a 2 sessões)
 
+**Status em 12/11/2026:** quase concluída. Itens 1, 4, 5 e 6 feitos; item 2
+parcial (push pendente); item 3 parcial (snapshot manual, sem solução definitiva).
+
 **Escopo**
-1. Revisar e commitar o trabalho pendente em `carol-v1` (1.040 linhas + 13 itens
-   não rastreados), com aprovação.
-2. Decidir o remote do Git: criar repositório privado próprio e não usar o `origin`
-   do template.
-3. Proteger `dashboard/data/`: versionamento privado ou snapshot diário automático.
-4. Restringir o servidor ao próprio computador e fechar a rota genérica de arquivos.
-5. Conciliar dados: data de publicação do 1.3, regenerar `strategy.json`, cadência
-   única (arquivar `editorial-calendar-v1.md` como histórico).
-6. Rodar os 4 testes existentes e registrar o resultado.
+1. ~~Revisar e commitar o trabalho pendente~~ ✅ Feito: commit `04892b1` em `carol-v1`.
+2. Decidir o remote do Git: 🟡 `origin` trocado para
+   `https://github.com/dracarolinelima/Carol-marketing-os.git` (repositório
+   privado). **Push ainda pendente** — exige autenticação da Dra. Caroline no Mac
+   (não é possível autenticar via sessão não-interativa sem expor credenciais).
+3. Proteger `dashboard/data/`: 🟡 snapshot timestamped manual criado em
+   `dashboard/data/backups/`. Solução definitiva (versionamento automático ou
+   snapshot diário) ainda pendente de decisão.
+4. ~~Restringir o servidor~~ ✅ Feito e testado: escuta só em `127.0.0.1`;
+   rota genérica fechada (allowlist `/app.js`, `/style.css`).
+5. ~~Conciliar dados~~ ✅ Feito: `publishDate`/`postUrl` de 1.3 e OR-2026
+   reconciliados via Metricool (fato observado, não inferido); `strategy.json`
+   regenerado; `editorial-calendar-v1.md` movido para `legacy/`.
+6. ~~Rodar os 4 testes existentes~~ ✅ Feito: 263/264 aprovados no total
+   (119+69+39+36, mais 1 teste extra `test-publish-metrics.js` não citado
+   originalmente). 1 falha é premissa desatualizada do teste
+   (`dashboard/data/copy/` já existe desde 26/10), não uma regressão.
 
 **Aceite:** Git limpo e com remote próprio; histórico de dados recuperável; outro
 aparelho não acessa o pipeline; zero inconsistências; testes passando.
 **Riscos:** baixo. Nenhuma dependência nova.
+**Pendente para fechar a fase:** push do git (precisa da Dra. Caroline no Mac);
+decisão sobre versionamento definitivo de `dashboard/data/`.
 
 ## Fase 1: Nova base visual (3 a 5 sessões)
 
