@@ -1,0 +1,40 @@
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.schedule-date {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--terracota);
+  width: 60px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.schedule-date-empty {
+  color: var(--aubergine-50);
+  font-family: var(--font-support);
+}
+
+.schedule-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.schedule-body strong {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aubergine);
+}

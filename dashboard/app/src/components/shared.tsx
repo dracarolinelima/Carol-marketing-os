@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 import './shared.css'
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
@@ -10,8 +10,17 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
   )
 }
 
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={'card ' + className}>{children}</div>
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode
+  className?: string
+}
+
+export function Card({ children, className = '', ...rest }: CardProps) {
+  return (
+    <div className={'card ' + className} {...rest}>
+      {children}
+    </div>
+  )
 }
 
 export function LoadingState() {

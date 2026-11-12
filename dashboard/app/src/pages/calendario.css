@@ -1,45 +1,147 @@
-.timeline {
+.calendar-notice {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 400;
+  background: var(--dourado-20);
+  border-left: 2px solid var(--dourado);
+  padding: 8px 14px;
+  margin-bottom: var(--space-sm);
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.calendar-nav strong {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+  min-width: 200px;
+  text-align: center;
+}
+
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--dourado-20);
+  border: 1px solid var(--dourado-20);
+}
+
+.calendar-weekday {
+  background: var(--surface-light-warm);
+  font-family: var(--font-support);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 8px 0;
+  color: var(--aubergine-50);
+}
+
+.calendar-cell {
+  background: var(--surface-light);
+  min-height: 92px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell-outside {
+  background: var(--surface-light-warm);
+  opacity: 0.4;
+}
+
+.calendar-cell-today {
+  background: var(--branco-quebrado);
+  box-shadow: inset 0 0 0 2px var(--terracota);
+}
+
+.calendar-daynum {
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--aubergine-50);
+}
+
+.calendar-cell-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow-y: auto;
+}
+
+.calendar-chip {
+  font-family: var(--font-support);
+  font-size: 10.5px;
+  font-weight: 400;
+  background: var(--aubergine);
+  color: var(--branco-quebrado);
+  padding: 3px 6px;
+  border-radius: var(--radius-button);
+  cursor: grab;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-sidebar h2 {
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--terracota);
+  margin: 0 0 4px;
+}
+
+.calendar-sidebar-hint {
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--aubergine-50);
+  margin: 0 0 var(--space-sm);
+}
+
+.unscheduled-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
 }
 
-.timeline-item {
+.unscheduled-card {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--space-md);
-  flex-direction: row;
-  padding: var(--space-sm) var(--space-md);
+  gap: 8px;
+  cursor: grab;
+  padding: 10px 12px;
 }
 
-.timeline-date {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--terracota);
-  width: 64px;
-  flex-shrink: 0;
-  text-transform: capitalize;
-}
-
-.timeline-date-week {
+.unscheduled-card strong {
   font-family: var(--font-support);
   font-size: 12px;
   font-weight: 500;
-  width: auto;
-  min-width: 90px;
-}
-
-.timeline-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.timeline-body strong {
-  font-family: var(--font-support);
-  font-size: 14px;
-  font-weight: 500;
   color: var(--aubergine);
+}
+
+@media (max-width: 900px) {
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+  .calendar-cell {
+    min-height: 60px;
+  }
 }

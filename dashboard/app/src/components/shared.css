@@ -88,3 +88,18 @@
 .status-pronto { background: var(--status-publicado); }
 .status-publicado { background: var(--status-publicado); }
 .status-arquivado { background: var(--status-arquivado); }
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--aubergine-50);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: var(--terracota);
+}

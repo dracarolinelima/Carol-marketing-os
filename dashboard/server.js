@@ -13,6 +13,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 
 const SNAPSHOT_PATH = path.join(__dirname, 'data', 'dashboard-snapshot.json');
 const STRATEGY_PATH = path.join(__dirname, 'data', 'strategy.json');
+const TASKS_PATH = path.join(__dirname, 'data', 'tasks.json');
 const V2_DIR = path.join(__dirname, 'v2');
 const APP_DIST_DIR = path.join(__dirname, 'app', 'dist');
 const COPY_DIR = process.env.COPY_DIR ? path.resolve(process.env.COPY_DIR) : path.join(__dirname, 'data', 'copy');
@@ -84,6 +85,25 @@ function isDevolution(fromOwner, toOwner) {
 
 function readPipeline() {
   return JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8'));
+}
+
+const TASK_PRIORITIES = ['alta', 'media', 'baixa'];
+const TASK_STATUSES = ['aberta', 'concluida'];
+const MAX_TASK_TITLE = 300;
+const MAX_TASK_NOTES = 2000;
+
+function readTasks() {
+  if (!fs.existsSync(TASKS_PATH)) return [];
+  return JSON.parse(fs.readFileSync(TASKS_PATH, 'utf-8'));
+}
+
+function writeTasksAtomic(tasks) {
+  if (fs.existsSync(TASKS_PATH)) {
+    fs.copyFileSync(TASKS_PATH, TASKS_PATH.replace(/\.json$/, '.backup.json'));
+  }
+  const tmpPath = TASKS_PATH + '.tmp.' + process.pid;
+  fs.writeFileSync(tmpPath, JSON.stringify(tasks, null, 2), 'utf-8');
+  fs.renameSync(tmpPath, TASKS_PATH);
 }
 
 function writePipelineAtomic(data) {
@@ -1064,6 +1084,125 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+
+  // ============ Tasks API (GET/POST /api/tasks, PATCH/DELETE /api/tasks/:id) ============
+  // Entidade leve, fora do protocolo de handoff (C1-C8 nao se aplicam aqui).
+  // Ver PRODUCT-VISION.md modulo 2: mesmo armazenamento JSON, sem ferramenta externa.
+  if (pathname === '/api/tasks' && req.method === 'GET') {
+    try {
+      sendJSON(res, 200, { tasks: readTasks() });
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  if (pathname === '/api/tasks' && req.method === 'POST') {
+    try {
+      const body = await parseBody(req);
+      if (!body.title || typeof body.title !== 'string' || !body.title.trim()) {
+        sendJSON(res, 400, { error: true, message: 'title obrigatorio.' }); return;
+      }
+      if (body.title.length > MAX_TASK_TITLE) {
+        sendJSON(res, 400, { error: true, message: `title excede ${MAX_TASK_TITLE} caracteres.` }); return;
+      }
+      if (body.priority && !TASK_PRIORITIES.includes(body.priority)) {
+        sendJSON(res, 400, { error: true, message: 'priority invalida.' }); return;
+      }
+      if (body.notes && body.notes.length > MAX_TASK_NOTES) {
+        sendJSON(res, 400, { error: true, message: `notes excede ${MAX_TASK_NOTES} caracteres.` }); return;
+      }
+      if (body.linkedContentId) {
+        const pipeline = readPipeline();
+        if (!pipeline.contents.find(c => c.id === body.linkedContentId)) {
+          sendJSON(res, 422, { error: true, message: 'linkedContentId nao existe no pipeline.' }); return;
+        }
+      }
+      const tasks = readTasks();
+      const now = new Date().toISOString();
+      const task = {
+        id: 'T-' + Date.now().toString(36).toUpperCase(),
+        title: body.title.trim(),
+        status: 'aberta',
+        priority: body.priority || null,
+        dueDate: body.dueDate || null,
+        assignee: body.assignee || 'Caroline',
+        linkedContentId: body.linkedContentId || null,
+        notes: body.notes || null,
+        createdAt: now,
+        updatedAt: now,
+      };
+      tasks.push(task);
+      writeTasksAtomic(tasks);
+      sendJSON(res, 201, task);
+    } catch (e) {
+      sendJSON(res, 400, { error: true, message: 'JSON invalido: ' + e.message });
+    }
+    return;
+  }
+
+  { const m = matchRoute(pathname, '/api/tasks/:id');
+  if (m && req.method === 'PATCH') {
+    try {
+      const body = await parseBody(req);
+      const tasks = readTasks();
+      const idx = tasks.findIndex(t => t.id === m.id);
+      if (idx === -1) { sendJSON(res, 404, { error: true, message: 'Tarefa nao encontrada.' }); return; }
+      const task = tasks[idx];
+      if (body.title !== undefined) {
+        if (!body.title || typeof body.title !== 'string' || !body.title.trim() || body.title.length > MAX_TASK_TITLE) {
+          sendJSON(res, 400, { error: true, message: 'title invalido.' }); return;
+        }
+        task.title = body.title.trim();
+      }
+      if (body.status !== undefined) {
+        if (!TASK_STATUSES.includes(body.status)) { sendJSON(res, 400, { error: true, message: 'status invalido.' }); return; }
+        task.status = body.status;
+      }
+      if (body.priority !== undefined) {
+        if (body.priority !== null && !TASK_PRIORITIES.includes(body.priority)) {
+          sendJSON(res, 400, { error: true, message: 'priority invalida.' }); return;
+        }
+        task.priority = body.priority;
+      }
+      if (body.dueDate !== undefined) task.dueDate = body.dueDate;
+      if (body.assignee !== undefined) task.assignee = body.assignee;
+      if (body.notes !== undefined) {
+        if (body.notes && body.notes.length > MAX_TASK_NOTES) {
+          sendJSON(res, 400, { error: true, message: `notes excede ${MAX_TASK_NOTES} caracteres.` }); return;
+        }
+        task.notes = body.notes;
+      }
+      if (body.linkedContentId !== undefined) {
+        if (body.linkedContentId) {
+          const pipeline = readPipeline();
+          if (!pipeline.contents.find(c => c.id === body.linkedContentId)) {
+            sendJSON(res, 422, { error: true, message: 'linkedContentId nao existe no pipeline.' }); return;
+          }
+        }
+        task.linkedContentId = body.linkedContentId;
+      }
+      task.updatedAt = new Date().toISOString();
+      writeTasksAtomic(tasks);
+      sendJSON(res, 200, task);
+    } catch (e) {
+      sendJSON(res, 400, { error: true, message: 'JSON invalido: ' + e.message });
+    }
+    return;
+  }
+  if (m && req.method === 'DELETE') {
+    try {
+      const tasks = readTasks();
+      const idx = tasks.findIndex(t => t.id === m.id);
+      if (idx === -1) { sendJSON(res, 404, { error: true, message: 'Tarefa nao encontrada.' }); return; }
+      tasks.splice(idx, 1);
+      writeTasksAtomic(tasks);
+      sendJSON(res, 200, { deleted: true });
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
+    }
+    return;
+  } }
 
   // ============ Snapshot API (read-only, for Dashboard v2) ============
   if (pathname === '/api/snapshot' && req.method === 'GET') {

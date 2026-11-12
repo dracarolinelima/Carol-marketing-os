@@ -1,0 +1,113 @@
+.task-form-card {
+  margin-bottom: var(--space-lg);
+}
+
+.task-form {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.task-form input[type='text'] {
+  flex: 1;
+  min-width: 200px;
+}
+
+.task-form input,
+.task-form select {
+  font-family: var(--font-support);
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--dourado-40);
+  border-radius: var(--radius-button);
+  background: var(--surface-light);
+  color: var(--text-on-light);
+}
+
+.task-form button {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: var(--radius-button);
+  border: none;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
+  cursor: pointer;
+}
+
+.task-form button:hover {
+  background: var(--cta-bg-hover);
+}
+
+.task-form button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-direction: row;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.task-item input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--terracota);
+}
+
+.task-overdue {
+  border-left: 3px solid var(--terracota);
+}
+
+.task-done strong {
+  text-decoration: line-through;
+  color: var(--aubergine-50);
+}
+
+.task-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-body strong {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.task-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--aubergine-50);
+}
+
+.priority-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.priority-alta { background: rgba(160, 96, 74, 0.15); color: var(--terracota); }
+.priority-media { background: var(--dourado-20); color: var(--dourado); }
+.priority-baixa { background: var(--aubergine-08); color: var(--aubergine-50); }
+
