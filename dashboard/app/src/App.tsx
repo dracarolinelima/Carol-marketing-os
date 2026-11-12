@@ -9,6 +9,7 @@ import Tarefas from './pages/Tarefas'
 import Programar from './pages/Programar'
 import PreviaFeed from './pages/PreviaFeed'
 import Estudio from './pages/Estudio'
+import Estrategia from './pages/Estrategia'
 import Analise from './pages/Analise'
 import ConteudoDetalhe from './pages/ConteudoDetalhe'
 
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="tarefas" element={<Tarefas />} />
         <Route path="calendario" element={<Calendario />} />
         <Route path="pautas" element={<BancoDePautas />} />
+        <Route path="estrategia" element={<Estrategia />} />
         <Route path="producao" element={<Producao />} />
         <Route path="estudio" element={<Estudio />} />
         <Route path="aprovacao" element={<Aprovacao />} />

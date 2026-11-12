@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { getContent } from '../api/client'
-import { getCopy, type CopyView } from '../api/copyClient'
+import { getCopy, saveCopyDraft, type CopyCard, type CopyView } from '../api/copyClient'
 import {
   approveAngleToCreator,
   approveToReady,
@@ -186,26 +186,7 @@ export default function ConteudoDetalhe() {
       )}
 
       {copy && copy.content.cards.length > 0 && (
-        <section className="detail-section">
-          <h2>Copy {copy.editable ? '' : '(publicada, somente leitura)'}</h2>
-          <div className="detail-copy-cards">
-            {copy.content.cards.map((c) => (
-              <Card key={c.num} className="detail-copy-card">
-                <span className="detail-copy-num">Card {c.num}{c.label ? ` — ${c.label}` : ''}</span>
-                <p>{c.text}</p>
-              </Card>
-            ))}
-          </div>
-          {copy.content.caption && (
-            <Card className="detail-copy-card">
-              <span className="detail-copy-num">Legenda</span>
-              <p>{copy.content.caption}</p>
-            </Card>
-          )}
-          <Link to={`/app/estudio?id=${item.id}`} className="detail-studio-link">
-            Abrir no Estúdio de arte →
-          </Link>
-        </section>
+        <CopyEditor copy={copy} contentId={item.id} onSaved={load} />
       )}
 
       <section className="detail-section">
@@ -319,6 +300,115 @@ function EditBasicFields({ item, onSaved }: { item: ContentItem; onSaved: () => 
           Salvar
         </button>
       </Card>
+    </section>
+  )
+}
+
+function CopyEditor({
+  copy,
+  contentId,
+  onSaved,
+}: {
+  copy: CopyView
+  contentId: string
+  onSaved: () => void
+}) {
+  const [cards, setCards] = useState<CopyCard[]>(copy.content.cards)
+  const [caption, setCaption] = useState(copy.content.caption)
+  const [revision, setRevision] = useState(copy.revision)
+  const [dirty, setDirty] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [saveMsg, setSaveMsg] = useState<string | null>(null)
+  const [saveError, setSaveError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setCards(copy.content.cards)
+    setCaption(copy.content.caption)
+    setRevision(copy.revision)
+    setDirty(false)
+  }, [copy])
+
+  function updateCardText(num: number, text: string) {
+    setCards((prev) => prev.map((c) => (c.num === num ? { ...c, text } : c)))
+    setDirty(true)
+  }
+
+  async function save() {
+    setSaving(true)
+    setSaveError(null)
+    try {
+      const result = await saveCopyDraft(contentId, revision, { cards, caption, cta: copy.content.cta })
+      setRevision(result.revision)
+      setDirty(false)
+      setSaveMsg('Rascunho salvo.')
+      onSaved()
+      setTimeout(() => setSaveMsg(null), 4000)
+    } catch (e) {
+      const msg = String((e as Error).message || e)
+      if (/409|revis/i.test(msg)) {
+        setSaveError('Alguém mudou essa copy nesse meio tempo. Recarregue a página antes de salvar de novo.')
+      } else {
+        setSaveError(msg)
+      }
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <section className="detail-section">
+      <h2>Copy {copy.editable ? '' : '(publicada, somente leitura)'}</h2>
+
+      {saveMsg && <div className="detail-flash">{saveMsg}</div>}
+      {saveError && <div className="detail-error">{saveError}</div>}
+
+      <div className="detail-copy-cards">
+        {cards.map((c) => (
+          <Card key={c.num} className="detail-copy-card">
+            <span className="detail-copy-num">
+              Card {c.num}
+              {c.label ? ` — ${c.label}` : ''}
+            </span>
+            {copy.editable ? (
+              <textarea
+                className="detail-copy-textarea"
+                value={c.text}
+                onChange={(e) => updateCardText(c.num, e.target.value)}
+                rows={4}
+              />
+            ) : (
+              <p>{c.text}</p>
+            )}
+          </Card>
+        ))}
+      </div>
+
+      <Card className="detail-copy-card">
+        <span className="detail-copy-num">Legenda</span>
+        {copy.editable ? (
+          <textarea
+            className="detail-copy-textarea"
+            value={caption}
+            onChange={(e) => {
+              setCaption(e.target.value)
+              setDirty(true)
+            }}
+            rows={5}
+          />
+        ) : (
+          <p>{caption}</p>
+        )}
+      </Card>
+
+      {copy.editable && (
+        <button className="detail-primary-btn" disabled={saving || !dirty} onClick={save}>
+          Salvar rascunho
+        </button>
+      )}
+
+      <Link to={`/app/estudio?id=${contentId}`} className="detail-studio-link">
+        Abrir no Estúdio de arte →
+      </Link>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 {
   "contentId": "N-261008-161731",
   "schema": "copy-store-v1",
-  "revision": 1,
+  "revision": 3,
   "source": {
     "path": "tests/marketing-os/drafts/B1-COMP-perimenopausa-creator.md",
     "hash": "85d4dfa5135064e8ecf63273a320c44162587ed47e7a8b1b64667a2bb9547e8e"
@@ -57,6 +57,94 @@
       "author": "Creator",
       "savedAt": "2026-10-26T23:26:23.078Z",
       "note": "v4: Card 1 reescrito (sem repetição de T1), Card 3 reescrito (prosa fluida), tom de consultório reforçado.",
+      "content": {
+        "cards": [
+          {
+            "num": 1,
+            "label": "CAPA",
+            "text": "Muita mulher chega no consultório dizendo: \"eu não sei explicar, mas não me sinto mais a mesma.\""
+          },
+          {
+            "num": 2,
+            "label": null,
+            "text": "Isso tem nome. Se chama perimenopausa.\n\nÉ uma fase de transição que pode durar anos. E durante esse tempo, os hormônios não caem de uma vez. Eles sobem e descem, de forma irregular."
+          },
+          {
+            "num": 3,
+            "label": null,
+            "text": "Na prática, isso pode aparecer de formas bem diferentes: o ciclo fica imprevisível, o sono muda, o humor oscila, a concentração não rende como antes.\n\nE muitas vezes essas queixas aparecem juntas, sem uma explicação óbvia."
+          },
+          {
+            "num": 4,
+            "label": null,
+            "text": "E cada mulher vive isso de um jeito.\n\nDuas pacientes na mesma fase podem ter experiências completamente diferentes. Isso é esperado."
+          },
+          {
+            "num": 5,
+            "label": null,
+            "text": "Não existe um exame isolado que defina tudo.\n\nA avaliação é clínica: leva em conta os ciclos, os sintomas, a idade e o contexto de cada mulher."
+          },
+          {
+            "num": 6,
+            "label": null,
+            "text": "Se você percebe essas mudanças e quer entender o que está acontecendo, vale ter essa conversa com quem pode avaliar o quadro completo.\n\nVocê não precisa ter todas as respostas antes de procurar."
+          }
+        ],
+        "caption": "A perimenopausa não começa com um evento. É uma fase de transição em que os hormônios reprodutivos sobem e descem de forma irregular, ao longo de anos.\n\nDurante esse tempo, alterações no ciclo, no sono, no humor, na concentração e até dores articulares são queixas frequentes. Cada mulher vive isso de forma diferente, e essa variabilidade é esperada.\n\nNão existe exame que, sozinho, confirme a perimenopausa. A avaliação depende da história clínica, dos sintomas e do contexto de cada mulher.\n\nSe você se reconhece nessas mudanças, o primeiro passo é entender o que está acontecendo. E isso começa com uma conversa.",
+        "cta": null
+      },
+      "contentHash": "5081cd16135fadc6bb5c1927114c25869f6b570f14f5de5428b97fb5e0d8f475"
+    },
+    {
+      "version": 2,
+      "kind": "rascunho",
+      "author": "Caroline",
+      "savedAt": "2026-11-12T18:43:46.063Z",
+      "note": "Reescrito pela Dra. Caroline via Central de Comando.",
+      "content": {
+        "cards": [
+          {
+            "num": 1,
+            "label": "CAPA",
+            "text": "Teste de edição de copy via Central de Comando."
+          },
+          {
+            "num": 2,
+            "label": null,
+            "text": "Isso tem nome. Se chama perimenopausa.\n\nÉ uma fase de transição que pode durar anos. E durante esse tempo, os hormônios não caem de uma vez. Eles sobem e descem, de forma irregular."
+          },
+          {
+            "num": 3,
+            "label": null,
+            "text": "Na prática, isso pode aparecer de formas bem diferentes: o ciclo fica imprevisível, o sono muda, o humor oscila, a concentração não rende como antes.\n\nE muitas vezes essas queixas aparecem juntas, sem uma explicação óbvia."
+          },
+          {
+            "num": 4,
+            "label": null,
+            "text": "E cada mulher vive isso de um jeito.\n\nDuas pacientes na mesma fase podem ter experiências completamente diferentes. Isso é esperado."
+          },
+          {
+            "num": 5,
+            "label": null,
+            "text": "Não existe um exame isolado que defina tudo.\n\nA avaliação é clínica: leva em conta os ciclos, os sintomas, a idade e o contexto de cada mulher."
+          },
+          {
+            "num": 6,
+            "label": null,
+            "text": "Se você percebe essas mudanças e quer entender o que está acontecendo, vale ter essa conversa com quem pode avaliar o quadro completo.\n\nVocê não precisa ter todas as respostas antes de procurar."
+          }
+        ],
+        "caption": "A perimenopausa não começa com um evento. É uma fase de transição em que os hormônios reprodutivos sobem e descem de forma irregular, ao longo de anos.\n\nDurante esse tempo, alterações no ciclo, no sono, no humor, na concentração e até dores articulares são queixas frequentes. Cada mulher vive isso de forma diferente, e essa variabilidade é esperada.\n\nNão existe exame que, sozinho, confirme a perimenopausa. A avaliação depende da história clínica, dos sintomas e do contexto de cada mulher.\n\nSe você se reconhece nessas mudanças, o primeiro passo é entender o que está acontecendo. E isso começa com uma conversa.",
+        "cta": null
+      },
+      "contentHash": "f6385d3bfc4f717bb8a587a6412b671365c42e90923e5fce03e2bb9fc54aaf3a"
+    },
+    {
+      "version": 3,
+      "kind": "rascunho",
+      "author": "Caroline",
+      "savedAt": "2026-11-12T18:44:19.411Z",
+      "note": "Revertendo teste de QA da edicao de copy.",
       "content": {
         "cards": [
           {
