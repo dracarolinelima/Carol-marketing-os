@@ -2,8 +2,28 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const crypto = require('crypto');
+
+// Minimal .env loader (no dependency): KEY=VALUE lines, '#' comments ignored.
+// Does not overwrite variables already set in the real environment.
+(function loadEnvFile() {
+  const envPath = path.join(__dirname, '.env');
+  if (!fs.existsSync(envPath)) return;
+  for (const line of fs.readFileSync(envPath, 'utf-8').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    const value = trimmed.slice(eq + 1).trim();
+    if (!(key in process.env)) process.env[key] = value;
+  }
+})();
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
+const AUTH_USER = process.env.DASHBOARD_USER || null;
+const AUTH_PASSWORD = process.env.DASHBOARD_PASSWORD || null;
+const AUTH_ENABLED = !!(AUTH_USER && AUTH_PASSWORD);
 const DATA_PATH = process.env.PIPELINE_PATH
   ? path.resolve(process.env.PIPELINE_PATH)
   : path.join(__dirname, 'data', 'pipeline.json');
@@ -256,7 +276,49 @@ const copyStore = require('./copy-store').createCopyStore({
   readPipeline, parseBody, sendJSON, PROJECT_ROOT, ALL_AGENTS, SERVICES, COPY_DIR,
 });
 
+function timingSafeStringEqual(a, b) {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) {
+    // Still run a comparison of equal length to avoid an early-exit timing
+    // signal on length alone.
+    crypto.timingSafeEqual(bufA, bufA);
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+// HTTP Basic Auth, required on every request when DASHBOARD_USER and
+// DASHBOARD_PASSWORD are set (see dashboard/.env). This is what makes it
+// safe to bind beyond localhost — without it, anyone on the network could
+// read dashboard/data/pipeline.json and the rest of the API.
+function checkAuth(req) {
+  if (!AUTH_ENABLED) return true;
+  const header = req.headers['authorization'];
+  if (!header || !header.startsWith('Basic ')) return false;
+  let decoded;
+  try {
+    decoded = Buffer.from(header.slice(6), 'base64').toString('utf-8');
+  } catch {
+    return false;
+  }
+  const sep = decoded.indexOf(':');
+  if (sep === -1) return false;
+  const user = decoded.slice(0, sep);
+  const pass = decoded.slice(sep + 1);
+  return timingSafeStringEqual(user, AUTH_USER) && timingSafeStringEqual(pass, AUTH_PASSWORD);
+}
+
 const server = http.createServer(async (req, res) => {
+  if (!checkAuth(req)) {
+    res.writeHead(401, {
+      'WWW-Authenticate': 'Basic realm="Central de Comando", charset="UTF-8"',
+      'Content-Type': 'text/plain; charset=utf-8',
+    });
+    res.end('Autenticacao necessaria.');
+    return;
+  }
+
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = url.pathname;
 
@@ -1267,10 +1329,30 @@ const server = http.createServer(async (req, res) => {
   sendJSON(res, 404, { error: true, message: 'Not found.' });
 });
 
+function lanIp() {
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name] || []) {
+      if (net.family === 'IPv4' && !net.internal) return net.address;
+    }
+  }
+  return null;
+}
+
 // Run migration and start
 migrate();
-// Bind to localhost only: this server has no authentication, so it must
-// never be reachable from other devices on the network.
-server.listen(PORT, '127.0.0.1', () => {
+// Bind to every interface only when DASHBOARD_USER/DASHBOARD_PASSWORD are
+// set (see dashboard/.env) — that is what makes it safe for other devices
+// on the same network (e.g. an iPhone) to reach it. With no auth configured,
+// stay on localhost only, matching the previous, more restrictive default.
+const BIND_HOST = AUTH_ENABLED ? '0.0.0.0' : '127.0.0.1';
+server.listen(PORT, BIND_HOST, () => {
   console.log(`Dashboard running at http://localhost:${PORT}`);
+  if (AUTH_ENABLED) {
+    const ip = lanIp();
+    console.log(`Autenticacao ativa (usuario: ${AUTH_USER}).`);
+    if (ip) console.log(`Acessivel na rede local em: http://${ip}:${PORT}/app`);
+  } else {
+    console.log('Sem DASHBOARD_USER/DASHBOARD_PASSWORD em dashboard/.env: servidor restrito a este computador.');
+  }
 });
