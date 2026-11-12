@@ -22,6 +22,24 @@
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/app/fonts/Montserrat_600SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/app/fonts/CormorantGaramond_600SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/app/fonts/PlayfairDisplay_800ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
 
 :root {
   /* Base colors — Design System da marca (mos-art-director.md) */

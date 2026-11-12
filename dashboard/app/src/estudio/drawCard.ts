@@ -1,32 +1,47 @@
-// Renderizador de cards do carrossel — canvas 2D, fiel ao Design System
-// (mos-art-director.md): paleta de 7 cores, Cormorant Garamond + Montserrat,
-// espaçamento generoso, radius 0 em blocos editoriais.
+// Renderizador de cards do carrossel — canvas 2D.
 //
-// Desenho e exportação usam exatamente a mesma função: o que aparece na
-// prévia é, pixel a pixel, o que vira PNG.
+// Segue design-dra-caroline (skill da Dra. Caroline, 12/11/2026): paleta,
+// tipografia, hierarquia abertura+destaque, traço dourado, rodapé de
+// assinatura. Única divergência deliberada: formato 1080×1440 (3:4, "o
+// formato novo do Instagram", confirmado por ela) em vez do 1080×1350 (4:5)
+// que o documento da skill descreve como padrão — ela confirmou 3:4 nesta
+// sessão.
+//
+// Fundo aubergine (sem foto) é o modo coberto aqui. Fotos (geradas por ela
+// no ChatGPT) são a próxima etapa: upload + composição, ainda não
+// implementado.
+//
+// Desenho e exportação usam a mesma função: a prévia na tela é, pixel a
+// pixel, o PNG exportado.
 
 export const CANVAS_W = 1080
 export const CANVAS_H = 1440
-const MARGIN_X = 96
-const SAFE_TOP = 140
-const SAFE_BOTTOM = 140
+
+// Margens de segurança da skill (80-90px laterais, 100px topo/base) — usamos
+// o valor superior da faixa.
+const MARGIN_X = 90
+const MARGIN_TOP = 100
+const MARGIN_BOTTOM = 100
 
 const COLORS = {
-  aubergine: '#4A1C3C',
-  bordo: '#3D1228',
-  terracota: '#A0604A',
-  bege: '#F5EFE6',
-  brancoQuebrado: '#FAF7F2',
-  dourado: '#B08D57',
+  aubergine: '#301826',
+  aubergineEscuro: '#2A0F1F',
+  tintaAubergine: '#450C19',
+  offWhite: '#F5ECEA',
+  dourado: '#B98E5C',
+  douradoClaro: '#CEAF81',
 }
 
 export type CardVariant = 'capa' | 'corpo' | 'fechamento'
+export type HeadlineFont = 'playfair' | 'cormorant'
 
 export interface CardData {
   num: number
   total: number
-  text: string
+  lead: string
+  headline: string
   variant: CardVariant
+  headlineFont: HeadlineFont
 }
 
 function wrapParagraph(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
@@ -46,39 +61,69 @@ function wrapParagraph(ctx: CanvasRenderingContext2D, text: string, maxWidth: nu
   return lines
 }
 
-function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
-  const paragraphs = text.split(/\n\s*\n/)
-  const out: string[] = []
-  paragraphs.forEach((p, i) => {
-    if (i > 0) out.push('') // marcador de parágrafo (linha em branco)
-    out.push(...wrapParagraph(ctx, p.replace(/\n/g, ' '), maxWidth))
-  })
-  return out
-}
-
-function fitFontSize(
+function fitBlock(
   ctx: CanvasRenderingContext2D,
   text: string,
-  fontWeight: number,
-  fontFamily: string,
+  fontSpec: (size: number) => string,
   maxWidth: number,
-  maxHeight: number,
   startSize: number,
   minSize: number,
   lineHeightRatio: number,
-): { size: number; lines: string[]; lineHeight: number } {
+): { size: number; lines: string[]; lineHeight: number; height: number } {
   for (let size = startSize; size >= minSize; size -= 2) {
-    ctx.font = `${fontWeight} ${size}px "${fontFamily}"`
-    const lines = wrapText(ctx, text, maxWidth)
+    ctx.font = fontSpec(size)
+    const lines = wrapParagraph(ctx, text, maxWidth)
     const lineHeight = size * lineHeightRatio
-    const blankCount = lines.filter((l) => l === '').length
-    const totalHeight = (lines.length - blankCount) * lineHeight + blankCount * (lineHeight * 0.6)
-    if (totalHeight <= maxHeight || size === minSize) {
-      return { size, lines, lineHeight }
-    }
+    const height = lines.length * lineHeight
+    if (size === minSize) return { size, lines, lineHeight, height }
+    // Deixa o chamador decidir se cabe; aqui so paramos de encolher
+    // quando o bloco bate no minimo ou quando o chamador aceitar.
+    if (height <= startSize * lineHeightRatio * 6) return { size, lines, lineHeight, height }
   }
-  ctx.font = `${fontWeight} ${minSize}px "${fontFamily}"`
-  return { size: minSize, lines: wrapText(ctx, text, maxWidth), lineHeight: minSize * lineHeightRatio }
+  ctx.font = fontSpec(minSize)
+  const lines = wrapParagraph(ctx, text, maxWidth)
+  const lineHeight = minSize * lineHeightRatio
+  return { size: minSize, lines, lineHeight, height: lines.length * lineHeight }
+}
+
+function drawFooter(ctx: CanvasRenderingContext2D, fg: string) {
+  // Rodape padrao da marca, escala .82 a partir do topo-esquerda,
+  // y=1200 em 1350 de altura -> proporcional em 1440: ~1280.
+  const x = MARGIN_X
+  const topY = 1280
+  const scale = 0.82
+
+  ctx.save()
+  ctx.translate(x, topY)
+  ctx.scale(scale, scale)
+
+  ctx.textBaseline = 'alphabetic'
+  ctx.fillStyle = fg
+  ctx.font = '500 28px "Cormorant Garamond"'
+  // letter-spacing manual: desenha caractere a caractere
+  drawTrackedText(ctx, 'DRA. CAROLINE LIMA', 0, 28, 6)
+
+  ctx.strokeStyle = fg
+  ctx.globalAlpha = 0.5
+  ctx.lineWidth = 1
+  ctx.beginPath()
+  ctx.moveTo(0, 38)
+  ctx.lineTo(420, 38)
+  ctx.stroke()
+  ctx.globalAlpha = 1
+
+  ctx.font = '600 12px "Montserrat"'
+  drawTrackedText(ctx, 'GINECOLOGIA · SAÚDE DA MULHER', 0, 58, 4.6)
+
+  ctx.restore()
+}
+
+function drawTrackedText(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, tracking: number) {
+  let cursor = x
+  for (const ch of text) {
+    ctx.fillText(ch, cursor, y)
+    cursor += ctx.measureText(ch).width + tracking
+  }
 }
 
 export function drawCard(canvas: HTMLCanvasElement, data: CardData) {
@@ -88,65 +133,101 @@ export function drawCard(canvas: HTMLCanvasElement, data: CardData) {
   if (!ctx) return
 
   const isDark = data.variant === 'capa' || data.variant === 'fechamento'
-  const bg = isDark ? COLORS.aubergine : COLORS.bege
-  const fg = isDark ? COLORS.brancoQuebrado : COLORS.aubergine
+  const bg = isDark ? COLORS.aubergine : COLORS.offWhite
+  const fg = isDark ? COLORS.offWhite : COLORS.tintaAubergine
 
   ctx.fillStyle = bg
   ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
 
-  // Index tag
-  ctx.font = '500 22px "Montserrat"'
-  ctx.fillStyle = isDark ? 'rgba(250,247,242,0.55)' : COLORS.dourado
-  ctx.textBaseline = 'alphabetic'
-  const tag = `${String(data.num).padStart(2, '0')} / ${String(data.total).padStart(2, '0')}`
-  ctx.fillText(tag.toUpperCase(), MARGIN_X, 80)
-
-  // Thin rule under tag
-  ctx.strokeStyle = isDark ? 'rgba(176,141,87,0.4)' : COLORS.dourado
-  ctx.lineWidth = 1
-  ctx.beginPath()
-  ctx.moveTo(MARGIN_X, 100)
-  ctx.lineTo(MARGIN_X + 48, 100)
-  ctx.stroke()
-
   const maxWidth = CANVAS_W - MARGIN_X * 2
-  const maxHeight = CANVAS_H - SAFE_TOP - SAFE_BOTTOM
+  const headlineFamily = data.headlineFont === 'cormorant' ? 'Cormorant Garamond' : 'Playfair Display'
+  const headlineWeight = data.headlineFont === 'cormorant' ? 600 : 800
 
-  const fontFamily = isDark ? 'Cormorant Garamond' : 'Montserrat'
-  const fontWeight = isDark ? 500 : 400
-  const startSize = isDark ? 76 : 46
-  const minSize = isDark ? 44 : 30
-  const lineHeightRatio = isDark ? 1.12 : 1.42
+  // --- Abertura (lead), Montserrat 400, 32-42px ---
+  let leadBlock: ReturnType<typeof fitBlock> | null = null
+  if (data.lead.trim()) {
+    leadBlock = fitBlock(
+      ctx,
+      data.lead,
+      (size) => `400 ${size}px "Montserrat"`,
+      maxWidth,
+      38,
+      28,
+      1.34,
+    )
+  }
 
-  const { lines, size, lineHeight } = fitFontSize(
+  // --- Destaque (headline), Playfair ExtraBold 800 (ou Cormorant 600) ---
+  const headlineBlock = fitBlock(
     ctx,
-    data.text,
-    fontWeight,
-    fontFamily,
+    data.headline,
+    (size) => `${headlineWeight} ${size}px "${headlineFamily}"`,
     maxWidth,
-    maxHeight,
-    startSize,
-    minSize,
-    lineHeightRatio,
+    data.headlineFont === 'cormorant' ? 90 : 100,
+    data.headlineFont === 'cormorant' ? 56 : 56,
+    data.headlineFont === 'cormorant' ? 1.1 : 1.03,
   )
 
-  ctx.font = `${fontWeight} ${size}px "${fontFamily}"`
+  const ruleGap = 30
+  const ruleHeight = 3
+  const ruleWidth = 100
+
+  const totalHeight =
+    (leadBlock ? leadBlock.height + ruleGap + ruleHeight + ruleGap : 0) + headlineBlock.height
+  const availableHeight = CANVAS_H - MARGIN_TOP - MARGIN_BOTTOM - 120 // reserva para o rodape
+  let y = MARGIN_TOP + Math.max(0, (availableHeight - totalHeight) / 2)
+
+  ctx.textBaseline = 'alphabetic'
   ctx.fillStyle = fg
 
-  const blankCount = lines.filter((l) => l === '').length
-  const totalHeight = (lines.length - blankCount) * lineHeight + blankCount * (lineHeight * 0.6)
-  let y = SAFE_TOP + (maxHeight - totalHeight) / 2 + lineHeight * 0.8
-
-  for (const line of lines) {
-    if (line === '') {
-      y += lineHeight * 0.6
-      continue
+  if (leadBlock) {
+    ctx.font = `400 ${leadBlock.size}px "Montserrat"`
+    for (const line of leadBlock.lines) {
+      y += leadBlock.lineHeight
+      ctx.fillText(line, MARGIN_X, y)
     }
-    ctx.fillText(line, MARGIN_X, y)
-    y += lineHeight
+    y += ruleGap
+    ctx.fillStyle = COLORS.dourado
+    ctx.fillRect(MARGIN_X, y, ruleWidth, ruleHeight)
+    y += ruleHeight + ruleGap
+    ctx.fillStyle = fg
   }
+
+  ctx.font = `${headlineWeight} ${headlineBlock.size}px "${headlineFamily}"`
+  for (const line of headlineBlock.lines) {
+    y += headlineBlock.lineHeight
+    ctx.fillText(line, MARGIN_X, y)
+  }
+
+  drawFooter(ctx, fg)
+
+  // Index tag discreto (nao faz parte da skill, mas ajuda a navegar no
+  // editor — minusculo, opacidade baixa, canto superior direito).
+  ctx.font = '500 18px "Montserrat"'
+  ctx.fillStyle = fg
+  ctx.globalAlpha = 0.35
+  const tag = `${String(data.num).padStart(2, '0')}/${String(data.total).padStart(2, '0')}`
+  const tagWidth = ctx.measureText(tag).width
+  ctx.fillText(tag, CANVAS_W - MARGIN_X - tagWidth, 60)
+  ctx.globalAlpha = 1
 }
 
 export function canvasToPngBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
   return new Promise((resolve) => canvas.toBlob((b) => resolve(b), 'image/png'))
+}
+
+// Separa um texto de card em abertura (lead) + destaque (headline), de
+// forma heuristica: a primeira frase vira abertura se houver mais de uma
+// frase; o resto vira destaque. Ponto de partida editavel — a divisao real
+// (quais palavras sao destaque) e uma decisao editorial, nao automatica.
+export function splitLeadHeadline(text: string): { lead: string; headline: string } {
+  const clean = text.trim()
+  const sentenceEnd = clean.search(/[.!?]\s+/)
+  if (sentenceEnd === -1 || sentenceEnd > clean.length * 0.6) {
+    return { lead: '', headline: clean }
+  }
+  const lead = clean.slice(0, sentenceEnd + 1).trim()
+  const headline = clean.slice(sentenceEnd + 1).trim()
+  if (!headline) return { lead: '', headline: clean }
+  return { lead, headline }
 }

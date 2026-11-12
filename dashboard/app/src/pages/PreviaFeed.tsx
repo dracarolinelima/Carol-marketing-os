@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { usePipeline } from '../api/usePipeline'
 import { getCopy } from '../api/copyClient'
 import { ErrorState, LoadingState, PageHeader } from '../components/shared'
-import { drawCard } from '../estudio/drawCard'
+import { drawCard, splitLeadHeadline } from '../estudio/drawCard'
 import type { ContentItem } from '../api/types'
 import './previaFeed.css'
 
@@ -40,7 +40,8 @@ export default function PreviaFeed() {
       const canvas = canvasRefs.current[c.id]
       const text = coverTexts[c.id]
       if (canvas && text) {
-        drawCard(canvas, { num: 1, total: 1, text, variant: 'capa' })
+        const { lead, headline } = splitLeadHeadline(text)
+        drawCard(canvas, { num: 1, total: 1, lead, headline, variant: 'capa', headlineFont: 'playfair' })
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

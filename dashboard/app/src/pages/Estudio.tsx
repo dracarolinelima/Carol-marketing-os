@@ -4,7 +4,14 @@ import { Download } from 'lucide-react'
 import { usePipeline } from '../api/usePipeline'
 import { getCopy, type CopyCard } from '../api/copyClient'
 import { Card, ErrorState, LoadingState, PageHeader } from '../components/shared'
-import { canvasToPngBlob, drawCard, type CardData, type CardVariant } from '../estudio/drawCard'
+import {
+  canvasToPngBlob,
+  drawCard,
+  splitLeadHeadline,
+  type CardData,
+  type CardVariant,
+  type HeadlineFont,
+} from '../estudio/drawCard'
 import './estudio.css'
 
 function variantFor(index: number, total: number): CardVariant {
@@ -38,12 +45,18 @@ export default function Estudio() {
           : [{ num: 1, label: null, text: '(sem cards na copy — edite aqui)' }]
         const total = sourceCards.length
         setCards(
-          sourceCards.map((c, i) => ({
-            num: c.num,
-            total,
-            text: c.text,
-            variant: variantFor(i, total),
-          })),
+          sourceCards.map((c, i) => {
+            const { lead, headline } = splitLeadHeadline(c.text)
+            const variant = variantFor(i, total)
+            return {
+              num: c.num,
+              total,
+              lead,
+              headline,
+              variant,
+              headlineFont: variant === 'corpo' ? 'cormorant' : 'playfair',
+            }
+          }),
         )
       })
       .catch((e) => setCopyError(String(e.message || e)))
@@ -76,17 +89,10 @@ export default function Estudio() {
     URL.revokeObjectURL(url)
   }
 
-  function updateText(i: number, text: string) {
+  function patchCard(i: number, patch: Partial<CardData>) {
     if (!cards) return
     const next = cards.slice()
-    next[i] = { ...next[i], text }
-    setCards(next)
-  }
-
-  function updateVariant(i: number, variant: CardVariant) {
-    if (!cards) return
-    const next = cards.slice()
-    next[i] = { ...next[i], variant }
+    next[i] = { ...next[i], ...patch }
     setCards(next)
   }
 
@@ -99,7 +105,7 @@ export default function Estudio() {
     <div>
       <PageHeader
         title="Estúdio de arte"
-        subtitle="Editor próprio: gera os cards a partir da copy aprovada. Texto e fundo claro/escuro são editáveis agora — tipografia, cores específicas e imagens ainda não (próxima etapa)."
+        subtitle="Segue design-dra-caroline: paleta, Playfair Display + Montserrat, abertura + destaque, traço dourado, rodapé de assinatura. 1080×1440 (3:4). Fundo aubergine sem foto por enquanto — upload de foto do ChatGPT é a próxima etapa."
       />
 
       <Card className="studio-picker">
@@ -143,22 +149,48 @@ export default function Estudio() {
           {editIndex !== null && cards[editIndex] && (
             <aside className="studio-editor">
               <h2>Editando card {editIndex + 1}</h2>
-              <textarea
-                value={cards[editIndex].text}
-                onChange={(e) => updateText(editIndex, e.target.value)}
-                rows={10}
-              />
-              <label className="studio-variant-label">
+
+              <label className="studio-field-label">
+                Abertura (pequena, Montserrat — opcional)
+                <textarea
+                  value={cards[editIndex].lead}
+                  onChange={(e) => patchCard(editIndex, { lead: e.target.value })}
+                  rows={3}
+                />
+              </label>
+
+              <label className="studio-field-label">
+                Destaque (grande — só as palavras de identificação)
+                <textarea
+                  value={cards[editIndex].headline}
+                  onChange={(e) => patchCard(editIndex, { headline: e.target.value })}
+                  rows={5}
+                />
+              </label>
+
+              <label className="studio-field-label">
+                Fonte do destaque
+                <select
+                  value={cards[editIndex].headlineFont}
+                  onChange={(e) => patchCard(editIndex, { headlineFont: e.target.value as HeadlineFont })}
+                >
+                  <option value="playfair">Playfair Display (padrão do feed)</option>
+                  <option value="cormorant">Cormorant Garamond (editorial)</option>
+                </select>
+              </label>
+
+              <label className="studio-field-label">
                 Fundo
                 <select
                   value={cards[editIndex].variant}
-                  onChange={(e) => updateVariant(editIndex, e.target.value as CardVariant)}
+                  onChange={(e) => patchCard(editIndex, { variant: e.target.value as CardVariant })}
                 >
-                  <option value="capa">Escuro (destaque)</option>
-                  <option value="corpo">Claro</option>
+                  <option value="capa">Escuro (aubergine)</option>
+                  <option value="corpo">Claro (off-white)</option>
                   <option value="fechamento">Escuro (fechamento)</option>
                 </select>
               </label>
+
               <button className="studio-close-edit" onClick={() => setEditIndex(null)}>
                 Fechar
               </button>

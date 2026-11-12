@@ -86,7 +86,7 @@
   margin: 0;
 }
 
-.studio-variant-label {
+.studio-field-label {
   display: flex;
   flex-direction: column;
   gap: 4px;
