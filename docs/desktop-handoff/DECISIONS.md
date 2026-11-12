@@ -34,18 +34,18 @@ roadmap, com avaliação Canva × editor próprio na fase 6.
 
 ## 2. Decisões pendentes
 
-| # | Decisão | Por que importa | Recomendação |
+| # | Decisão | Por que importa | Status |
 |---|---|---|---|
-| D1 | Commitar o trabalho pendente em `carol-v1` | 1.040 linhas + 13 itens só existem no disco | Revisar e commitar antes de qualquer desenvolvimento |
-| D2 | Remote do Git | `origin` aponta para o template público de terceiros | Repositório privado próprio |
-| D3 | Proteção de `dashboard/data/` | Fora do Git; só backups manuais | Versionamento privado ou snapshot diário |
-| D4 | Base técnica da nova interface | Define custo e velocidade | Framework de componentes + PWA (ver PRODUCT-VISION.md) |
-| D5 | Instalar dependências | Exigido por D4 | Aprovar junto com D4 |
-| D6 | Acesso pelo iPhone fora da rede local | Segurança | Rede privada (tipo Tailscale) + autenticação |
-| D7 | Aposentar o dashboard v1 | Duplicação | Sim, após paridade |
-| D8 | Plano Metricool/Windsor | Agendamento, analytics, segundo perfil | Verificar recursos e custos antes da fase 4 |
-| D9 | Perfil Independência Médica | Precisa de estratégia própria | Definir Marketing Core próprio antes da fase 7 |
-| D10 | ~~Canva × editor próprio~~ **Decidido 12/11/2026: editor próprio.** Já há precedente de uso de um editor visual similar no claude.ai (antigo "Claude Design") | Custo do estúdio | — |
-| D11 | Arquivar legado do template | Organização | Mover para pasta `legacy/` em etapa autorizada |
-| D12 | Aplicar a proposta de CLAUDE.md | Novas sessões encontrarem o handoff | Ver [CLAUDE-MD-PROPOSAL.md](CLAUDE-MD-PROPOSAL.md) |
-| D13 | Campanha de novembro | Aguardando aprovação | Ver [agenda-novembro-2026.md](../../tests/marketing-os/campaigns/agenda-novembro-2026.md), seção 4 |
+| D1 | ~~Commitar o trabalho pendente em `carol-v1`~~ | 1.040 linhas + 13 itens só existiam no disco | ✅ Resolvido 12/11/2026 |
+| D2 | ~~Remote do Git~~ | `origin` apontava para o template público de terceiros | ✅ Resolvido 12/11/2026 — repo privado, push ok |
+| D3 | ~~Proteção de `dashboard/data/`~~ | Estava fora do Git; só backups manuais | ✅ Resolvido 12/11/2026 — versionado no Git |
+| D4 | ~~Base técnica da nova interface~~ | Define custo e velocidade | ✅ Resolvido — React + Vite + TypeScript |
+| D5 | ~~Instalar dependências~~ | Exigido por D4 | ✅ Resolvido junto com D4 |
+| D6 | Acesso pelo iPhone | Segurança | 🟡 Parcial 12/11/2026 — autenticação (usuário/senha) + acesso **na mesma rede Wi-Fi**. Acesso de fora de casa (sem estar na mesma rede) ainda depende de rede privada tipo Tailscale — não feito |
+| D7 | Aposentar o dashboard v1 | Duplicação | Pendente — ainda não há paridade completa |
+| D8 | Plano Metricool/Windsor | Agendamento, analytics automático, segundo perfil | Pendente — conectores só funcionam em sessão do Claude, não no servidor |
+| D9 | Perfil Independência Médica | Precisa de estratégia própria | Pendente |
+| D10 | ~~Canva × editor próprio~~ | Custo do estúdio | ✅ Resolvido 12/11/2026 — editor próprio, já construído |
+| D11 | Arquivar legado do template | Organização | Pendente (parcial: `editorial-calendar-v1.md` já movido para `legacy/`) |
+| D12 | Aplicar a proposta de CLAUDE.md | Novas sessões encontrarem o handoff | Pendente |
+| D13 | Campanha de novembro | Aguardando aprovação | Pendente — ver [agenda-novembro-2026.md](../../tests/marketing-os/campaigns/agenda-novembro-2026.md), seção 4 |
