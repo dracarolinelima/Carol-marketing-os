@@ -1,0 +1,126 @@
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/app/fonts/CormorantGaramond-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/app/fonts/CormorantGaramond-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/app/fonts/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/app/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  /* Base colors — Design System da marca (mos-art-director.md) */
+  --aubergine: #4A1C3C;
+  --bordo: #3D1228;
+  --terracota: #A0604A;
+  --rosa-terracota: #C4876A;
+  --bege: #F5EFE6;
+  --branco-quebrado: #FAF7F2;
+  --dourado: #B08D57;
+
+  --dourado-20: rgba(176, 141, 87, 0.20);
+  --dourado-40: rgba(176, 141, 87, 0.40);
+  --dourado-55: rgba(176, 141, 87, 0.55);
+  --aubergine-08: rgba(74, 28, 60, 0.08);
+  --aubergine-50: rgba(74, 28, 60, 0.50);
+  --branco-60: rgba(250, 247, 242, 0.60);
+  --branco-45: rgba(250, 247, 242, 0.45);
+
+  /* Semantic tokens */
+  --surface-dark: var(--aubergine);
+  --surface-dark-deep: var(--bordo);
+  --surface-light: var(--branco-quebrado);
+  --surface-light-warm: var(--bege);
+  --surface-page: var(--bege);
+
+  --text-on-dark: var(--branco-quebrado);
+  --text-on-dark-muted: var(--branco-60);
+  --text-on-light: var(--aubergine);
+  --text-accent: var(--terracota);
+  --text-detail: var(--dourado);
+
+  --rule: var(--dourado);
+  --rule-soft: var(--dourado-40);
+  --rule-faint: var(--dourado-20);
+  --quote-mark: var(--dourado);
+
+  --cta-bg: var(--aubergine);
+  --cta-fg: var(--branco-quebrado);
+  --cta-bg-hover: var(--bordo);
+  --cta-bg-press: var(--bordo);
+
+  /* Status colors — nao fazem parte das 7 cores da marca, uso minimo e funcional apenas para estado de pipeline */
+  --status-backlog: var(--dourado-55);
+  --status-producao: var(--terracota);
+  --status-revisao: var(--rosa-terracota);
+  --status-publicado: #5B7553;
+  --status-arquivado: var(--aubergine-50);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'Canela', Georgia, 'Times New Roman', serif;
+  --font-support: 'Montserrat', system-ui, sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 60px;
+  --space-2xl: 96px;
+
+  /* Shapes */
+  --radius-editorial: 0px;
+  --radius-button: 4px;
+  --radius-pill: 999px;
+
+  /* Shadow */
+  --shadow-subtle: 0 4px 6px rgba(74, 28, 60, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-on-light);
+  font-family: var(--font-support);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg {
+  max-width: 100%;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--text-on-light);
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}

@@ -1,0 +1,127 @@
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+@media (max-width: 700px) {
+  .stat-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.stat-label {
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--aubergine-50);
+}
+
+.section {
+  margin-bottom: var(--space-xl);
+}
+
+.section h2 {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--terracota);
+  margin: 0 0 var(--space-sm);
+}
+
+.decision-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.decision-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+  background: var(--dourado);
+}
+
+.priority-dot.priority-alta { background: var(--terracota); }
+.priority-dot.priority-media { background: var(--dourado); }
+.priority-dot.priority-baixa { background: var(--rosa-terracota); }
+
+.decision-item strong {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.decision-item p {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-on-light);
+  margin: 2px 0 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-sm);
+}
+
+.content-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.content-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-id {
+  font-family: var(--font-support);
+  font-size: 11px;
+  color: var(--aubergine-50);
+}
+
+.content-card strong {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.content-meta {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--aubergine-50);
+}

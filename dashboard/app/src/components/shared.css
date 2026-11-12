@@ -1,0 +1,90 @@
+.page-header {
+  margin-bottom: var(--space-lg);
+}
+
+.page-header h1 {
+  font-size: 32px;
+}
+
+.page-header p {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--aubergine-50);
+  margin: 6px 0 0;
+}
+
+.card {
+  background: var(--surface-light);
+  border: 1px solid var(--dourado-20);
+  border-radius: var(--radius-editorial);
+  padding: var(--space-md);
+}
+
+.state-block {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--aubergine-50);
+  padding: var(--space-lg) 0;
+}
+
+.state-error {
+  color: var(--terracota);
+}
+
+.state-error-hint {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.construction-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 480px;
+}
+
+.construction-tag {
+  align-self: flex-start;
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--terracota);
+  background: rgba(160, 96, 74, 0.12);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.construction-card p {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-on-light);
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  color: var(--branco-quebrado);
+  white-space: nowrap;
+}
+
+.status-backlog { background: var(--status-backlog); color: var(--aubergine); }
+.status-selecionado { background: var(--status-backlog); color: var(--aubergine); }
+.status-em-desenvolvimento { background: var(--status-producao); }
+.status-em-producao { background: var(--status-producao); }
+.status-revisao { background: var(--status-revisao); color: var(--aubergine); }
+.status-pronto { background: var(--status-publicado); }
+.status-publicado { background: var(--status-publicado); }
+.status-arquivado { background: var(--status-arquivado); }

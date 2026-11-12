@@ -1,0 +1,48 @@
+.approval-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.approval-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.approval-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approval-top strong {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.pending-tag {
+  font-family: var(--font-support);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--terracota);
+  color: var(--branco-quebrado);
+}
+
+.approval-note {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-on-light);
+  background: var(--surface-light-warm);
+  border-left: 2px solid var(--dourado);
+  padding: 8px 12px;
+  margin: 4px 0 0;
+}

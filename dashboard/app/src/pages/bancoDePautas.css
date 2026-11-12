@@ -1,0 +1,41 @@
+.pauta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-sm);
+}
+
+.pauta-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pauta-card strong {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.content-meta {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--aubergine-50);
+}
+
+.package-tag {
+  align-self: flex-start;
+  font-family: var(--font-support);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  margin-top: 4px;
+}
+
+.package-frozen { background: rgba(91, 117, 83, 0.15); color: #5B7553; }
+.package-produced { background: var(--dourado-20); color: var(--dourado); }
+.package-pending { background: var(--aubergine-08); color: var(--aubergine-50); }

@@ -14,6 +14,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const SNAPSHOT_PATH = path.join(__dirname, 'data', 'dashboard-snapshot.json');
 const STRATEGY_PATH = path.join(__dirname, 'data', 'strategy.json');
 const V2_DIR = path.join(__dirname, 'v2');
+const APP_DIST_DIR = path.join(__dirname, 'app', 'dist');
 const COPY_DIR = process.env.COPY_DIR ? path.resolve(process.env.COPY_DIR) : path.join(__dirname, 'data', 'copy');
 
 const MIME = {
@@ -21,6 +22,11 @@ const MIME = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.ttf': 'font/ttf',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
 };
 
 const VALID_STATUSES = ['backlog', 'selecionado', 'em-desenvolvimento', 'em-producao', 'revisao', 'pronto', 'publicado', 'arquivado'];
@@ -111,7 +117,9 @@ function serveStatic(res, filePath) {
   const ext = path.extname(filePath);
   const mime = MIME[ext] || 'application/octet-stream';
   try {
-    const content = fs.readFileSync(filePath, 'utf-8');
+    // Read as a Buffer, not a utf-8 string: text-encoding binary files
+    // (fonts, images) here would corrupt them.
+    const content = fs.readFileSync(filePath);
     res.writeHead(200, { 'Content-Type': mime });
     res.end(content);
   } catch {
@@ -1073,6 +1081,25 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ============ Static files ============
+  // Central de Comando (nova interface, React/Vite build)
+  if (pathname === '/app' || pathname === '/app/') {
+    serveStatic(res, path.join(APP_DIST_DIR, 'index.html'));
+    return;
+  }
+  if (pathname.startsWith('/app/')) {
+    const rel = pathname.slice('/app/'.length).replace(/\.\./g, '');
+    const appFile = path.join(APP_DIST_DIR, rel);
+    // SPA fallback: a route like /app/calendario has no matching file on
+    // disk — serve index.html so the client-side router (react-router)
+    // handles it.
+    if (fs.existsSync(appFile) && fs.statSync(appFile).isFile()) {
+      serveStatic(res, appFile);
+    } else {
+      serveStatic(res, path.join(APP_DIST_DIR, 'index.html'));
+    }
+    return;
+  }
+
   // Dashboard v2
   if (pathname === '/v2' || pathname === '/v2/') {
     serveStatic(res, path.join(V2_DIR, 'index.html'));
