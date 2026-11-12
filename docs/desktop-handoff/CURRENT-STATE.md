@@ -75,10 +75,9 @@ atende às necessidades dela.
    rota genérica de arquivos foi fechada (allowlist de `/app.js` e
    `/style.css` apenas). Segue sem autenticação — não expor fora do
    computador sem resolver isso.
-4. **O remote `origin` apontava para o template público**
-   `ericosiu/marketing-os-starter.git`. Resolvido em 12/11/2026: trocado para
-   `https://github.com/dracarolinelima/Carol-marketing-os.git` (repositório
-   privado próprio). Push ainda pendente de autenticação da Dra. Caroline no Mac.
+4. ~~**O remote `origin` apontava para o template público**~~ Resolvido em
+   12/11/2026: trocado para `https://github.com/dracarolinelima/Carol-marketing-os.git`
+   (repositório privado próprio) e `carol-v1` enviado com sucesso.
 5. ~~**Inconsistências de dados:**~~ Resolvido em 12/11/2026: 1.3 e OR-2026
    reconciliados com `publishDate`/`postUrl` reais, confirmados via Metricool.
    `strategy.json` regenerado (ver `sourceRevisions` no próprio arquivo).

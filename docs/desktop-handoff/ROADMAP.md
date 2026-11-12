@@ -12,15 +12,15 @@ funcionando até a nova interface atingir paridade.
 
 ## Fase 0: Proteção e fundação (1 a 2 sessões)
 
-**Status em 12/11/2026:** quase concluída. Itens 1, 4, 5 e 6 feitos; item 2
-parcial (push pendente); item 3 parcial (snapshot manual, sem solução definitiva).
+**Status em 12/11/2026:** concluída, exceto item 3 (solução definitiva de
+backup de `dashboard/data/` ainda pendente de decisão).
 
 **Escopo**
 1. ~~Revisar e commitar o trabalho pendente~~ ✅ Feito: commit `04892b1` em `carol-v1`.
-2. Decidir o remote do Git: 🟡 `origin` trocado para
+2. ~~Decidir o remote do Git~~ ✅ Feito: `origin` trocado para
    `https://github.com/dracarolinelima/Carol-marketing-os.git` (repositório
-   privado). **Push ainda pendente** — exige autenticação da Dra. Caroline no Mac
-   (não é possível autenticar via sessão não-interativa sem expor credenciais).
+   privado) e `carol-v1` enviado com sucesso (autenticação via token pessoal,
+   feita pela própria Dra. Caroline no Mac — nunca manipulada pela sessão).
 3. Proteger `dashboard/data/`: 🟡 snapshot timestamped manual criado em
    `dashboard/data/backups/`. Solução definitiva (versionamento automático ou
    snapshot diário) ainda pendente de decisão.
@@ -37,8 +37,8 @@ parcial (push pendente); item 3 parcial (snapshot manual, sem solução definiti
 **Aceite:** Git limpo e com remote próprio; histórico de dados recuperável; outro
 aparelho não acessa o pipeline; zero inconsistências; testes passando.
 **Riscos:** baixo. Nenhuma dependência nova.
-**Pendente para fechar a fase:** push do git (precisa da Dra. Caroline no Mac);
-decisão sobre versionamento definitivo de `dashboard/data/`.
+**Pendente para fechar a fase por completo:** decisão sobre versionamento
+definitivo de `dashboard/data/` (D3) — hoje só há snapshot manual.
 
 ## Fase 1: Nova base visual (3 a 5 sessões)
 
