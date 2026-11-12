@@ -34,6 +34,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const SNAPSHOT_PATH = path.join(__dirname, 'data', 'dashboard-snapshot.json');
 const STRATEGY_PATH = path.join(__dirname, 'data', 'strategy.json');
 const TASKS_PATH = path.join(__dirname, 'data', 'tasks.json');
+const INSTAGRAM_FEED_PATH = path.join(__dirname, 'data', 'instagram-feed.json');
 const V2_DIR = path.join(__dirname, 'v2');
 const APP_DIST_DIR = path.join(__dirname, 'app', 'dist');
 const COPY_DIR = process.env.COPY_DIR ? path.resolve(process.env.COPY_DIR) : path.join(__dirname, 'data', 'copy');
@@ -1141,6 +1142,22 @@ const server = http.createServer(async (req, res) => {
       const content = fs.readFileSync(absPath, 'utf-8');
       res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
       res.end(content);
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ GET /api/instagram-feed ============
+  // Snapshot manual dos posts reais mais recentes do Instagram (Windsor.ai),
+  // nao limitado ao que esta rastreado no pipeline. Ver dashboard/data/instagram-feed.json.
+  if (pathname === '/api/instagram-feed' && req.method === 'GET') {
+    try {
+      if (fs.existsSync(INSTAGRAM_FEED_PATH)) {
+        sendJSON(res, 200, JSON.parse(fs.readFileSync(INSTAGRAM_FEED_PATH, 'utf-8')));
+      } else {
+        sendJSON(res, 404, { error: true, message: 'Nenhum snapshot do Instagram importado ainda.' });
+      }
     } catch (e) {
       sendJSON(res, 500, { error: true, message: e.message });
     }

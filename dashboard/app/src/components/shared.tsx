@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import './shared.css'
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
@@ -20,6 +21,24 @@ export function Card({ children, className = '', ...rest }: CardProps) {
     <div className={'card ' + className} {...rest}>
       {children}
     </div>
+  )
+}
+
+// Card que leva para a tela de detalhe do conteudo (/app/conteudo/:id).
+// Use em qualquer lugar que mostre um card de conteudo clicavel.
+export function ContentCard({
+  id,
+  children,
+  className = '',
+}: {
+  id: string
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <Link to={`/app/conteudo/${encodeURIComponent(id)}`} className="content-card-link">
+      <Card className={className}>{children}</Card>
+    </Link>
   )
 }
 

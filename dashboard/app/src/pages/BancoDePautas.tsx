@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getPipeline } from '../api/client'
 import { createContent } from '../api/content'
-import { Card, ErrorState, LoadingState, PageHeader } from '../components/shared'
+import { Card, ContentCard, ErrorState, LoadingState, PageHeader } from '../components/shared'
 import type { ContentItem, Pipeline } from '../api/types'
 import './bancoDePautas.css'
 
@@ -112,7 +112,7 @@ export default function BancoDePautas() {
           <h2>{byTerritory[t][0]?.territoryLabel ?? t}</h2>
           <div className="pauta-grid">
             {byTerritory[t].map((c) => (
-              <Card key={c.id} className="pauta-card">
+              <ContentCard key={c.id} id={c.id} className="pauta-card">
                 <strong>{c.title}</strong>
                 <span className="content-meta">{c.editorialFunction ?? 'função não definida'}</span>
                 {c.scientificPackage && (
@@ -120,7 +120,7 @@ export default function BancoDePautas() {
                     {c.scientificPackage} · {statusLabel(c.scientificPackageStatus)}
                   </span>
                 )}
-              </Card>
+              </ContentCard>
             ))}
           </div>
         </section>

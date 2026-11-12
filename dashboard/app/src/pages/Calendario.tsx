@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { getPipeline } from '../api/client'
 import { patchContentDate } from '../api/content'
+import { unscheduleContent } from '../api/handoff'
 import { Card, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
 import type { ContentItem, Pipeline } from '../api/types'
 import './calendario.css'
@@ -10,6 +12,7 @@ const WEEKDAYS = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB']
 const SCHEDULABLE_STATUSES = ['em-producao', 'revisao', 'pronto']
 
 export default function Calendario() {
+  const navigate = useNavigate()
   const [pipeline, setPipeline] = useState<Pipeline | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -57,6 +60,17 @@ export default function Calendario() {
     }
   }
 
+  async function handleUnschedule(c: ContentItem) {
+    try {
+      await unscheduleContent(c.id, c.revision)
+      setNotice(`"${c.title}" voltou para não agendados.`)
+      load()
+    } catch (e) {
+      setNotice(`Não consegui remover: ${String((e as Error).message || e)}`)
+      load()
+    }
+  }
+
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
   const firstOfMonth = new Date(year, month, 1)
@@ -74,7 +88,7 @@ export default function Calendario() {
     <div>
       <PageHeader
         title="Cronograma"
-        subtitle="Arraste um card para outro dia para reagendar — persiste direto no pipeline."
+        subtitle="Arraste um card para outro dia para reagendar. Clique num card para abrir os detalhes. ✕ remove a data."
       />
 
       {notice && <div className="calendar-notice">{notice}</div>}
@@ -112,9 +126,20 @@ export default function Calendario() {
                       className="calendar-chip"
                       draggable
                       onDragStart={() => setDragId(c.id)}
+                      onClick={() => navigate(`/app/conteudo/${encodeURIComponent(c.id)}`)}
                       title={c.title}
                     >
-                      {c.title}
+                      <span className="calendar-chip-title">{c.title}</span>
+                      <button
+                        className="calendar-chip-remove"
+                        title="Remover do cronograma"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleUnschedule(c)
+                        }}
+                      >
+                        <X size={11} strokeWidth={2} />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -127,7 +152,7 @@ export default function Calendario() {
 
         <aside className="calendar-sidebar">
           <h2>Não agendados ({unscheduled.length})</h2>
-          <p className="calendar-sidebar-hint">Arraste para um dia do calendário.</p>
+          <p className="calendar-sidebar-hint">Arraste para um dia do calendário, ou clique para abrir.</p>
           <div className="unscheduled-list">
             {unscheduled.map((c) => (
               <Card
@@ -135,6 +160,7 @@ export default function Calendario() {
                 className="unscheduled-card"
                 draggable
                 onDragStart={() => setDragId(c.id)}
+                onClick={() => navigate(`/app/conteudo/${encodeURIComponent(c.id)}`)}
               >
                 <strong>{c.title}</strong>
                 <StatusBadge status={c.status} />

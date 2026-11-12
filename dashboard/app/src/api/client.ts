@@ -12,6 +12,10 @@ export function getPipeline(): Promise<Pipeline> {
   return getJSON<Pipeline>('/api/pipeline')
 }
 
+export function getContent(id: string) {
+  return getJSON<Pipeline['contents'][number]>(`/api/content/${encodeURIComponent(id)}`)
+}
+
 export function getStrategy(): Promise<StrategyDoc> {
   return getJSON<StrategyDoc>('/api/strategy')
 }

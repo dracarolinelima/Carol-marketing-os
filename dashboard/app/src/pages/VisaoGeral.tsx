@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { usePipeline, useStrategy } from '../api/usePipeline'
-import { Card, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
+import { Card, ContentCard, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
 import { getTasks, type Task } from '../api/tasksClient'
 import './visaoGeral.css'
 
@@ -79,15 +80,24 @@ export default function VisaoGeral() {
         )}
         {pendingDecisions.length > 0 && (
           <Card className="decision-list">
-            {pendingDecisions.map((d, i) => (
-              <div className="decision-item" key={i}>
-                <span className={`priority-dot priority-${(d.priority ?? '').toLowerCase()}`} />
-                <div>
-                  <strong>{d.item}</strong>
-                  <p>{d.decision}</p>
+            {pendingDecisions.map((d, i) => {
+              const linkedContent = d.item && contents.find((c) => c.id === d.item)
+              return (
+                <div className="decision-item" key={i}>
+                  <span className={`priority-dot priority-${(d.priority ?? '').toLowerCase()}`} />
+                  <div>
+                    {linkedContent ? (
+                      <Link to={`/app/conteudo/${encodeURIComponent(linkedContent.id)}`} className="decision-item-link">
+                        <strong>{d.item}</strong>
+                      </Link>
+                    ) : (
+                      <strong>{d.item}</strong>
+                    )}
+                    <p>{d.decision}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </Card>
         )}
       </section>
@@ -98,7 +108,7 @@ export default function VisaoGeral() {
         {pendingApproval.length > 0 && (
           <div className="content-grid">
             {pendingApproval.map((c) => (
-              <Card key={c.id} className="content-card">
+              <ContentCard key={c.id} id={c.id} className="content-card">
                 <div className="content-card-top">
                   <StatusBadge status={c.status} />
                   <span className="content-id">{c.id}</span>
@@ -107,7 +117,7 @@ export default function VisaoGeral() {
                 <span className="content-meta">
                   {c.territoryLabel ?? c.territory} · {c.editorialFunction ?? 'função não definida'}
                 </span>
-              </Card>
+              </ContentCard>
             ))}
           </div>
         )}

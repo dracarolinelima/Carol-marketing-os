@@ -86,6 +86,31 @@
   margin: 0;
 }
 
+.studio-variant-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--terracota);
+}
+
+.studio-variant-label select {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 8px 10px;
+  border: 1px solid var(--dourado-40);
+  border-radius: var(--radius-button);
+  background: var(--surface-page);
+  color: var(--text-on-light);
+}
+
 .studio-editor textarea {
   font-family: var(--font-support);
   font-size: 13px;

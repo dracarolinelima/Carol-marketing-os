@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-11-12T17:22:10.529Z",
+  "lastUpdated": "2026-11-12T17:50:04.998Z",
   "contents": [
     {
       "id": "1.1",
@@ -1234,13 +1234,13 @@
       "leads": [],
       "learnings": [],
       "blocker": null,
-      "note": "Revertendo teste de drag-and-drop do Cronograma (nao era data real).",
+      "note": "Data removida do Cronograma pela Dra. Caroline.",
       "currentOwner": "Caroline",
       "pendingType": "aprovacao",
       "blockerReason": null,
-      "lastUpdate": "2026-11-12T15:59:03.416Z",
-      "lastAgent": "Orchestrator",
-      "revision": 17,
+      "lastUpdate": "2026-11-12T17:50:04.993Z",
+      "lastAgent": "Caroline",
+      "revision": 22,
       "createdAt": "2026-10-08T19:17:31.666Z",
       "history": [
         {

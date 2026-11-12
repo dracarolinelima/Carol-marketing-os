@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Download } from 'lucide-react'
 import { usePipeline } from '../api/usePipeline'
 import { getCopy, type CopyCard } from '../api/copyClient'
@@ -14,6 +15,7 @@ function variantFor(index: number, total: number): CardVariant {
 
 export default function Estudio() {
   const pipeline = usePipeline()
+  const [searchParams] = useSearchParams()
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [cards, setCards] = useState<CardData[] | null>(null)
   const [copyError, setCopyError] = useState<string | null>(null)
@@ -48,6 +50,12 @@ export default function Estudio() {
   }
 
   useEffect(() => {
+    const preselect = searchParams.get('id')
+    if (preselect) loadContent(preselect)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     if (!cards || !fontsReady) return
     cards.forEach((card, i) => {
       const canvas = canvasRefs.current[i]
@@ -75,6 +83,13 @@ export default function Estudio() {
     setCards(next)
   }
 
+  function updateVariant(i: number, variant: CardVariant) {
+    if (!cards) return
+    const next = cards.slice()
+    next[i] = { ...next[i], variant }
+    setCards(next)
+  }
+
   if (pipeline.loading) return <LoadingState />
   if (pipeline.error || !pipeline.data) return <ErrorState message={pipeline.error ?? ''} />
 
@@ -84,7 +99,7 @@ export default function Estudio() {
     <div>
       <PageHeader
         title="Estúdio de arte"
-        subtitle="Editor próprio: gera os 6 cards a partir da copy aprovada, texto editável, exporta PNG 1080×1440 direto do navegador."
+        subtitle="Editor próprio: gera os cards a partir da copy aprovada. Texto e fundo claro/escuro são editáveis agora — tipografia, cores específicas e imagens ainda não (próxima etapa)."
       />
 
       <Card className="studio-picker">
@@ -133,6 +148,17 @@ export default function Estudio() {
                 onChange={(e) => updateText(editIndex, e.target.value)}
                 rows={10}
               />
+              <label className="studio-variant-label">
+                Fundo
+                <select
+                  value={cards[editIndex].variant}
+                  onChange={(e) => updateVariant(editIndex, e.target.value as CardVariant)}
+                >
+                  <option value="capa">Escuro (destaque)</option>
+                  <option value="corpo">Claro</option>
+                  <option value="fechamento">Escuro (fechamento)</option>
+                </select>
+              </label>
               <button className="studio-close-edit" onClick={() => setEditIndex(null)}>
                 Fechar
               </button>

@@ -1,5 +1,5 @@
 import { usePipeline } from '../api/usePipeline'
-import { Card, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
+import { ContentCard, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
 import type { ContentItem } from '../api/types'
 import './producao.css'
 
@@ -33,14 +33,14 @@ export default function Producao() {
             </h2>
             <div className="kanban-items">
               {(byStatus[status] ?? []).map((c) => (
-                <Card key={c.id} className="kanban-card">
+                <ContentCard key={c.id} id={c.id} className="kanban-card">
                   <strong>{c.title}</strong>
                   <span className="content-meta">{c.territoryLabel ?? c.territory}</span>
                   <div className="kanban-card-bottom">
                     <StatusBadge status={c.status} />
                     {c.currentOwner && <span className="owner-tag">{c.currentOwner}</span>}
                   </div>
-                </Card>
+                </ContentCard>
               ))}
               {(byStatus[status] ?? []).length === 0 && <span className="kanban-empty">Vazio</span>}
             </div>

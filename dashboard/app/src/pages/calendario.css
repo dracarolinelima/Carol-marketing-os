@@ -84,17 +84,42 @@
 }
 
 .calendar-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-family: var(--font-support);
   font-size: 10.5px;
   font-weight: 400;
   background: var(--aubergine);
   color: var(--branco-quebrado);
-  padding: 3px 6px;
+  padding: 3px 4px 3px 6px;
   border-radius: var(--radius-button);
-  cursor: grab;
+  cursor: pointer;
+}
+
+.calendar-chip-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+}
+
+.calendar-chip-remove {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--branco-60);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 2px;
+}
+
+.calendar-chip-remove:hover {
+  background: rgba(250, 247, 242, 0.2);
+  color: var(--branco-quebrado);
 }
 
 .calendar-sidebar h2 {
@@ -126,7 +151,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  cursor: grab;
+  cursor: pointer;
   padding: 10px 12px;
 }
 

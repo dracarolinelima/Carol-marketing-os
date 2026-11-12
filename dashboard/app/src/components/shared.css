@@ -21,6 +21,22 @@
   padding: var(--space-md);
 }
 
+.content-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.content-card-link .card {
+  cursor: pointer;
+  transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.content-card-link:hover .card {
+  box-shadow: var(--shadow-subtle);
+  border-color: var(--dourado-55);
+}
+
 .state-block {
   font-family: var(--font-support);
   font-size: 14px;

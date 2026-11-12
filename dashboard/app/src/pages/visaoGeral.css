@@ -72,6 +72,15 @@
 .priority-dot.priority-media { background: var(--dourado); }
 .priority-dot.priority-baixa { background: var(--rosa-terracota); }
 
+.decision-item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.decision-item-link:hover strong {
+  color: var(--terracota);
+}
+
 .decision-item strong {
   font-family: var(--font-support);
   font-size: 13px;

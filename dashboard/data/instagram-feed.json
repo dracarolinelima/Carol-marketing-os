@@ -1,0 +1,54 @@
+{
+  "fetchedAt": "2026-11-12T19:40:00.000Z",
+  "source": "Windsor.ai (connector instagram, get_data, date_preset last_30d) — consulta manual em sessão do Claude, ver INTEGRATIONS.md",
+  "posts": [
+    {
+      "permalink": "https://www.instagram.com/p/Dfc7nXgGBeS/",
+      "timestamp": "2026-11-07T19:27:34+0000",
+      "type": "CAROUSEL_ALBUM",
+      "caption": "Na perimenopausa, as mudanças hormonais podem influenciar a composição corporal.\n\nOs hormônios têm grande importância, mas precisamos olhar também para o sono, o intestino, o metabolismo, o estresse e a alimentação.\n\nO caminho não é necessariamente se esforçar mais, mas entender o que mudou e fazer os ajustes necessários para alcançar seu objetivo.\n\nSe você se identifica com essa situação, agende uma avaliação individualizada pelo link da bio.",
+      "reach": 335,
+      "views": 725,
+      "likes": 14,
+      "comments": 1,
+      "shares": 6,
+      "saves": 5
+    },
+    {
+      "permalink": "https://www.instagram.com/reel/DfR8MirS3oB/",
+      "timestamp": "2026-11-03T13:00:26+0000",
+      "type": "VIDEO",
+      "caption": "Entre consultas, procedimentos, histórias compartilhadas e pequenos detalhes preparados com carinho, existe algo que permanece em cada dia de trabalho: a certeza de que nenhuma mulher é igual à outra.\n\nPor trás de cada exame, de cada decisão e de cada tratamento, existe uma pessoa com suas próprias dúvidas, expectativas e necessidades.\n\nE é por isso que acredito tanto em uma medicina que escuta, investiga e individualiza.\n\nOs detalhes fazem parte da experiência. Mas o cuidado começa muito antes deles: começa quando você se sente verdadeiramente ouvida.\n\nUm pouquinho do que foi nosso outubro por aqui.💕",
+      "reach": 1550,
+      "views": 2043,
+      "likes": 44,
+      "comments": 11,
+      "shares": 6,
+      "saves": 7
+    },
+    {
+      "permalink": "https://www.instagram.com/reel/De7r1zUN5tm/",
+      "timestamp": "2026-10-25T21:37:35+0000",
+      "type": "VIDEO",
+      "caption": "Para algumas mulheres, a menstruação não é apenas uma data no calendário.\n\nÉ algo que interfere em viagens, compromissos, trabalho e momentos de lazer.\n\nQuando a cólica é intensa a ponto de limitar a rotina, não basta ouvir que isso é normal.\n\nA endometriose é uma das possíveis causas, mas não a única. Entender o padrão da dor, os sintomas associados e a história clínica é parte fundamental de uma investigação individualizada.\n\nVocê já precisou mudar seus planos por causa da dor menstrual?",
+      "reach": 2552,
+      "views": 3286,
+      "likes": 37,
+      "comments": 4,
+      "shares": 11,
+      "saves": 8
+    },
+    {
+      "permalink": "https://www.instagram.com/p/De2bVO3loOP/",
+      "timestamp": "2026-10-23T20:34:20+0000",
+      "type": "CAROUSEL_ALBUM",
+      "caption": "Qual flor você escolheu? Comenta o número aqui embaixo!\n\nEstou curiosa para ver qual delas vai ganhar.\n\nE me conta: tem alguma atividade física que você quer começar ou retomar? Pode ser algo pequeno, uma caminhada já vale.",
+      "reach": 457,
+      "views": 1085,
+      "likes": 32,
+      "comments": 17,
+      "shares": 4,
+      "saves": 6
+    }
+  ]
+}

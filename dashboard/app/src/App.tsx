@@ -10,6 +10,7 @@ import Programar from './pages/Programar'
 import PreviaFeed from './pages/PreviaFeed'
 import Estudio from './pages/Estudio'
 import Analise from './pages/Analise'
+import ConteudoDetalhe from './pages/ConteudoDetalhe'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="programar" element={<Programar />} />
         <Route path="feed" element={<PreviaFeed />} />
         <Route path="analise" element={<Analise />} />
+        <Route path="conteudo/:id" element={<ConteudoDetalhe />} />
       </Route>
     </Routes>
   )

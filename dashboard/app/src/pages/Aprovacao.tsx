@@ -1,5 +1,5 @@
 import { usePipeline } from '../api/usePipeline'
-import { Card, ErrorState, LoadingState, PageHeader } from '../components/shared'
+import { Card, ContentCard, ErrorState, LoadingState, PageHeader } from '../components/shared'
 import './aprovacao.css'
 
 export default function Aprovacao() {
@@ -20,7 +20,7 @@ export default function Aprovacao() {
         {pending.map((c) => {
           const lastNote = c.history?.[c.history.length - 1]?.note
           return (
-            <Card key={c.id} className="approval-card">
+            <ContentCard key={c.id} id={c.id} className="approval-card">
               <div className="approval-top">
                 <strong>{c.title}</strong>
                 <span className={`pending-tag pending-${c.pendingType}`}>{c.pendingType}</span>
@@ -29,7 +29,7 @@ export default function Aprovacao() {
                 {c.territoryLabel ?? c.territory} · {c.editorialFunction ?? '—'} · pacote {c.scientificPackage ?? '—'}
               </span>
               {lastNote && <p className="approval-note">{lastNote}</p>}
-            </Card>
+            </ContentCard>
           )
         })}
       </div>

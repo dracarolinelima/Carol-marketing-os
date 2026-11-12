@@ -43,6 +43,37 @@
   font-size: 11px;
 }
 
+.analytics-fetched-at {
+  text-transform: none;
+  font-weight: 300;
+  color: var(--aubergine-50);
+  letter-spacing: normal;
+}
+
+.analytics-table a {
+  color: var(--aubergine);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.analytics-table a:hover {
+  color: var(--terracota);
+  text-decoration: underline;
+}
+
+.tracked-yes {
+  font-size: 11px;
+  font-weight: 500;
+  color: #5B7553;
+}
+
+.tracked-no {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--aubergine-50);
+  font-style: italic;
+}
+
 .analytics-disclaimer {
   font-family: var(--font-support);
   font-weight: 300;
