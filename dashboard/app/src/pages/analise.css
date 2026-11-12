@@ -1,0 +1,54 @@
+.analytics-table-wrap {
+  overflow-x: auto;
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface-light);
+  font-family: var(--font-support);
+  font-size: 13px;
+}
+
+.analytics-table th,
+.analytics-table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--dourado-20);
+  white-space: nowrap;
+}
+
+.analytics-table th {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--terracota);
+}
+
+.analytics-table td {
+  color: var(--text-on-light);
+  font-weight: 300;
+}
+
+.analytics-title-cell {
+  font-weight: 500;
+  color: var(--aubergine);
+  white-space: normal;
+  min-width: 200px;
+}
+
+.analytics-meta-cell {
+  color: var(--aubergine-50);
+  font-size: 11px;
+}
+
+.analytics-disclaimer {
+  font-family: var(--font-support);
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--aubergine-50);
+  margin: var(--space-sm) 0 0;
+  max-width: 640px;
+}

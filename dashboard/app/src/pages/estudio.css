@@ -1,0 +1,124 @@
+.studio-picker {
+  max-width: 480px;
+  margin-bottom: var(--space-lg);
+}
+
+.studio-picker label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--terracota);
+}
+
+.studio-picker select {
+  font-family: var(--font-support);
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 8px 10px;
+  border: 1px solid var(--dourado-40);
+  border-radius: var(--radius-button);
+  background: var(--surface-light);
+  color: var(--text-on-light);
+}
+
+.studio-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.studio-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.studio-canvas {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+  border: 1px solid var(--dourado-20);
+}
+
+.studio-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-support);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--aubergine-50);
+}
+
+.studio-editor {
+  position: sticky;
+  top: var(--space-lg);
+  background: var(--surface-light);
+  border: 1px solid var(--dourado-20);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.studio-editor h2 {
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--terracota);
+  margin: 0;
+}
+
+.studio-editor textarea {
+  font-family: var(--font-support);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 10px;
+  border: 1px solid var(--dourado-40);
+  border-radius: var(--radius-button);
+  background: var(--surface-page);
+  color: var(--text-on-light);
+  resize: vertical;
+}
+
+.studio-close-edit {
+  align-self: flex-start;
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--dourado-40);
+  background: none;
+  color: var(--aubergine);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .studio-layout {
+    grid-template-columns: 1fr;
+  }
+  .studio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .studio-editor {
+    position: static;
+  }
+}
