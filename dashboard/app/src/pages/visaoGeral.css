@@ -119,6 +119,30 @@
   color: var(--aubergine);
 }
 
+.task-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.task-preview-item strong {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--aubergine);
+}
+
+.task-preview-overdue {
+  border-left: 3px solid var(--terracota);
+}
+
 .content-meta {
   font-family: var(--font-support);
   font-weight: 300;

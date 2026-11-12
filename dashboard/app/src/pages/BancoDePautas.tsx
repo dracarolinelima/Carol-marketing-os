@@ -1,17 +1,61 @@
-import { usePipeline } from '../api/usePipeline'
+import { useEffect, useState } from 'react'
+import { getPipeline } from '../api/client'
+import { createContent } from '../api/content'
 import { Card, ErrorState, LoadingState, PageHeader } from '../components/shared'
-import type { ContentItem } from '../api/types'
+import type { ContentItem, Pipeline } from '../api/types'
 import './bancoDePautas.css'
 
 const TERRITORY_ORDER = ['A', 'B', 'C', 'D', 'E', 'F', 'TRANS']
+const TERRITORY_OPTIONS: { value: string; label: string }[] = [
+  { value: 'A', label: 'A — Dor/endometriose/adenomiose' },
+  { value: 'B', label: 'B — Perimenopausa/menopausa' },
+  { value: 'C', label: 'C — Histeroscopia/pólipos' },
+  { value: 'D', label: 'D — Fertilidade' },
+  { value: 'E', label: 'E — Contracepção' },
+  { value: 'F', label: 'F — SOP/metabolismo' },
+  { value: 'TRANS', label: 'Transversal' },
+]
+const FORMAT_OPTIONS = ['Carrossel 6 cards', 'Reel', 'Stories', 'Post único']
 
 export default function BancoDePautas() {
-  const pipeline = usePipeline()
+  const [pipeline, setPipeline] = useState<Pipeline | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [title, setTitle] = useState('')
+  const [territory, setTerritory] = useState('B')
+  const [format, setFormat] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [justCreated, setJustCreated] = useState<string | null>(null)
 
-  if (pipeline.loading) return <LoadingState />
-  if (pipeline.error || !pipeline.data) return <ErrorState message={pipeline.error ?? ''} />
+  function load() {
+    getPipeline()
+      .then(setPipeline)
+      .catch((e) => setError(String(e.message || e)))
+  }
 
-  const backlog = pipeline.data.contents.filter((c) => c.status === 'backlog')
+  useEffect(load, [])
+
+  async function handleCreate(e: React.FormEvent) {
+    e.preventDefault()
+    if (!title.trim()) return
+    setSaving(true)
+    try {
+      const created = await createContent({ title: title.trim(), territory, format: format || undefined })
+      setTitle('')
+      setFormat('')
+      setJustCreated(created.title)
+      load()
+      setTimeout(() => setJustCreated(null), 4000)
+    } catch (err) {
+      setError(String((err as Error).message || err))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (error) return <ErrorState message={error} />
+  if (!pipeline) return <LoadingState />
+
+  const backlog = pipeline.contents.filter((c) => c.status === 'backlog')
 
   const byTerritory = backlog.reduce<Record<string, ContentItem[]>>((acc, c) => {
     const t = c.territory ?? '—'
@@ -27,6 +71,41 @@ export default function BancoDePautas() {
   return (
     <div>
       <PageHeader title="Banco de pautas" subtitle={`${backlog.length} ideias no backlog, por território`} />
+
+      <Card className="pauta-form-card">
+        <form onSubmit={handleCreate} className="pauta-form">
+          <input
+            type="text"
+            placeholder="Nova ideia de pauta…"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="pauta-input"
+          />
+          <select value={territory} onChange={(e) => setTerritory(e.target.value)}>
+            {TERRITORY_OPTIONS.map((t) => (
+              <option key={t.value} value={t.value}>
+                {t.label}
+              </option>
+            ))}
+          </select>
+          <select value={format} onChange={(e) => setFormat(e.target.value)}>
+            <option value="">Formato (opcional)</option>
+            {FORMAT_OPTIONS.map((f) => (
+              <option key={f} value={f}>
+                {f}
+              </option>
+            ))}
+          </select>
+          <button type="submit" disabled={saving || !title.trim()}>
+            Adicionar ao backlog
+          </button>
+        </form>
+        {justCreated && (
+          <p className="pauta-created-notice">
+            "{justCreated}" criada — já aparece aqui, na Produção e no Cronograma assim que ganhar data.
+          </p>
+        )}
+      </Card>
 
       {territories.map((t) => (
         <section className="section" key={t}>

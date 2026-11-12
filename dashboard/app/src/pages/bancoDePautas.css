@@ -1,3 +1,61 @@
+.pauta-form-card {
+  margin-bottom: var(--space-lg);
+}
+
+.pauta-form {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.pauta-form .pauta-input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.pauta-form input,
+.pauta-form select {
+  font-family: var(--font-support);
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--dourado-40);
+  border-radius: var(--radius-button);
+  background: var(--surface-light);
+  color: var(--text-on-light);
+}
+
+.pauta-form button {
+  font-family: var(--font-support);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: var(--radius-button);
+  border: none;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pauta-form button:hover {
+  background: var(--cta-bg-hover);
+}
+
+.pauta-form button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pauta-created-notice {
+  font-family: var(--font-support);
+  font-size: 12px;
+  font-weight: 400;
+  color: #5B7553;
+  background: rgba(91, 117, 83, 0.1);
+  padding: 8px 12px;
+  margin: var(--space-sm) 0 0;
+}
+
 .pauta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));

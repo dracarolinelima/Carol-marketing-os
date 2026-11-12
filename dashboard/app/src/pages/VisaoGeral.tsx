@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { usePipeline, useStrategy } from '../api/usePipeline'
 import { Card, ErrorState, LoadingState, PageHeader, StatusBadge } from '../components/shared'
+import { getTasks, type Task } from '../api/tasksClient'
 import './visaoGeral.css'
 
 interface PendingDecision {
@@ -11,6 +13,13 @@ interface PendingDecision {
 export default function VisaoGeral() {
   const pipeline = usePipeline()
   const strategy = useStrategy()
+  const [tasks, setTasks] = useState<Task[] | null>(null)
+
+  useEffect(() => {
+    getTasks()
+      .then(setTasks)
+      .catch(() => setTasks([]))
+  }, [])
 
   if (pipeline.loading) return <LoadingState />
   if (pipeline.error || !pipeline.data) return <ErrorState message={pipeline.error ?? ''} />
@@ -23,6 +32,10 @@ export default function VisaoGeral() {
 
   const pendingApproval = contents.filter((c) => c.pendingType === 'aprovacao' || c.pendingType === 'decisao')
   const pendingDecisions = (strategy.data?.pendingHumanDecisions as PendingDecision[] | undefined) ?? []
+
+  const today = new Date().toISOString().slice(0, 10)
+  const openTasks = (tasks ?? []).filter((t) => t.status === 'aberta')
+  const overdueTasks = openTasks.filter((t) => t.dueDate && t.dueDate < today)
 
   return (
     <div>
@@ -37,6 +50,26 @@ export default function VisaoGeral() {
         <StatCard label="Em revisão" value={byStatus.revisao ?? 0} />
         <StatCard label="Publicados" value={byStatus.publicado ?? 0} />
       </div>
+
+      <section className="section">
+        <h2>Tarefas ({openTasks.length} abertas{overdueTasks.length > 0 ? `, ${overdueTasks.length} atrasada${overdueTasks.length > 1 ? 's' : ''}` : ''})</h2>
+        {tasks === null && <LoadingState />}
+        {tasks !== null && openTasks.length === 0 && <Card>Nenhuma tarefa aberta.</Card>}
+        {openTasks.length > 0 && (
+          <div className="task-preview-list">
+            {openTasks
+              .slice()
+              .sort((a, b) => (a.dueDate ?? '9999').localeCompare(b.dueDate ?? '9999'))
+              .slice(0, 5)
+              .map((t) => (
+                <Card key={t.id} className={'task-preview-item' + (t.dueDate && t.dueDate < today ? ' task-preview-overdue' : '')}>
+                  <strong>{t.title}</strong>
+                  {t.dueDate && <span className="content-meta">prazo {t.dueDate.split('-').reverse().join('/')}</span>}
+                </Card>
+              ))}
+          </div>
+        )}
+      </section>
 
       <section className="section">
         <h2>Pendências para a Dra. Caroline</h2>
