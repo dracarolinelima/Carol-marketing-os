@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-11-12T17:18:59.077Z",
+  "lastUpdated": "2026-11-12T17:22:10.529Z",
   "contents": [
     {
       "id": "1.1",
@@ -1566,6 +1566,62 @@
           "timestamp": "2026-11-12T17:18:59.073Z",
           "agent": "Caroline",
           "note": "Item de teste E2E da sessao, arquivado apos verificacao.",
+          "revision": 2
+        }
+      ]
+    },
+    {
+      "id": "N-261112-142153",
+      "title": "Teste visual da interface",
+      "slug": null,
+      "territory": "B",
+      "territoryLabel": "Perimenopausa/menopausa",
+      "type": "bloco",
+      "editorialFunction": null,
+      "journeyStage": null,
+      "format": null,
+      "status": "arquivado",
+      "substatus": null,
+      "nextAction": null,
+      "block": null,
+      "publishDate": null,
+      "plannedWeek": null,
+      "scientificPackage": null,
+      "scientificPackageStatus": null,
+      "approvedCopy": null,
+      "visualBrief": null,
+      "caption": null,
+      "assets": [],
+      "postUrl": null,
+      "metrics": {},
+      "leads": [],
+      "learnings": [],
+      "blocker": null,
+      "note": "Teste de QA da interface, arquivado.",
+      "currentOwner": null,
+      "pendingType": "nenhuma",
+      "blockerReason": null,
+      "lastUpdate": "2026-11-12T17:22:10.528Z",
+      "lastAgent": "Caroline",
+      "revision": 2,
+      "createdAt": "2026-11-12T17:21:53.479Z",
+      "history": [
+        {
+          "type": "status",
+          "from": null,
+          "to": "backlog",
+          "timestamp": "2026-11-12T17:21:53.479Z",
+          "agent": "Caroline",
+          "note": "Criado pela Dra. Caroline via Banco de pautas.",
+          "revision": 1
+        },
+        {
+          "type": "status",
+          "from": "backlog",
+          "to": "arquivado",
+          "timestamp": "2026-11-12T17:22:10.528Z",
+          "agent": "Caroline",
+          "note": "Teste de QA da interface, arquivado.",
           "revision": 2
         }
       ]
