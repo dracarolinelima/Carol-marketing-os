@@ -1,7 +1,7 @@
 // Marketing OS Dashboard v2
 // Ported from Claude.ai Artifact (DCLogic) to vanilla JS
-// Reads live data from /api/pipeline + /api/snapshot
-// All edits are local simulation unless noted
+// Reads live data from /api/pipeline (canonical source)
+// Writes via PATCH/POST to /api/content/:id endpoints
 
 (function () {
   'use strict';
@@ -34,7 +34,7 @@
   const COLORS = {RECONHECER:'#D2C4FB',ENTENDER:'#B29BF3',CONFIAR:'#9478E6',PROCURAR:'#7B5BD6'};
   const STAGE_DESC = {RECONHECER:'Reconhecer um sintoma ou uma conexão',ENTENDER:'Entender o porquê e quando investigar',CONFIAR:'Confiar no raciocínio e na resolutividade',PROCURAR:'Saber para quem faz sentido e como funciona'};
   const FUNCS = ['DESCOBERTA','COMPREENSÃO','AUTORIDADE/RESOLUTIVIDADE','CONVERSÃO'];
-  const STATUS = {backlog:'Backlog',selecionado:'Selecionado','em-desenvolvimento':'Em desenvolvimento','em-producao':'Em produção',revisao:'Revisão',pronto:'Pronto',publicado:'Publicado'};
+  const STATUS = {backlog:'Backlog',selecionado:'Selecionado','em-desenvolvimento':'Em desenvolvimento','em-producao':'Em produção',revisao:'Revisão',pronto:'Pronto',publicado:'Publicado',arquivado:'Arquivado'};
   const SUBSTATUS = {'visual-production':'Produção visual'};
   const PENDING = {execucao:'Execução',aprovacao:'Aprovação',decisao:'Decisão',bloqueio:'Bloqueio'};
   const INFLIGHT = ['selecionado','em-desenvolvimento','em-producao','revisao','pronto'];
@@ -114,6 +114,12 @@
       postUrl: c.postUrl || o.postUrl || null,
       platform: c.platform || null,
       metricsData: c.metrics || {},
+      artifactPaths: {
+        approvedCopy: r.approvedCopy || null,
+        visualBrief: r.visualBrief || null,
+        brief: r.brief || null,
+        historyArtifacts: (c.history||[]).filter(h=>h.artifact).map(h=>({path:h.artifact, agent:h.agent||null, type:h.type||null}))
+      },
       proposal: (!hasBrief && (hp || rs.format || rs.editorialFunction)) ? {
         source: hp?hp.source||null:null,
         journey: hp?hp.journeyStage||null:null,
@@ -146,8 +152,10 @@
         platform: c.platform || null,
         metrics: c.metrics || {},
         references: {
-          approvedCopy: c.approvedCopy || null, visualBrief: c.visualBrief || null,
-          scientificPackage: null, brief: null
+          approvedCopy: c.approvedCopy || (c.history||[]).filter(h=>h.artifact&&h.type==='handoff'&&h.agent==='Editor').map(h=>h.artifact).pop() || null,
+          visualBrief: c.visualBrief || (c.history||[]).filter(h=>h.artifact&&h.type==='handoff'&&h.agent==='Art Director').map(h=>h.artifact).pop() || null,
+          scientificPackage: c.scientificPackage || null,
+          brief: (c.history||[]).filter(h=>h.artifact&&h.type==='handoff'&&h.agent==='Strategist').map(h=>h.artifact).pop() || null
         },
         resolved: {
           scientificPackageId: c.scientificPackage || null,
@@ -158,6 +166,7 @@
           segment: null, coreMessage: null, caption: c.caption
         },
         historicalProposal: null,
+        history: c.history || [],
         derived: {}
       }))
     };
@@ -178,6 +187,7 @@
       this._refreshTimer = null;
       this._loading = true;
       this._lastPipelineUpdate = null;
+      this._strategy = null;
 
       this.render();
       this.loadData();
@@ -185,25 +195,25 @@
 
     async loadData() {
       try {
-        // Try enriched snapshot first, fall back to pipeline
+        // Pipeline is the canonical source of truth for operational state
         let snap = null;
-        try {
-          const snapRes = await fetch('/api/snapshot');
-          if (snapRes.ok) snap = await snapRes.json();
-        } catch(e) { /* ignore */ }
-
-        if (!snap) {
-          const pRes = await fetch('/api/pipeline');
-          if (!pRes.ok) throw new Error('Failed to load pipeline');
-          const pipeline = await pRes.json();
-          snap = pipelineToSnapshot(pipeline);
-        }
+        const pRes = await fetch('/api/pipeline');
+        if (!pRes.ok) throw new Error('Failed to load pipeline');
+        const pipeline = await pRes.json();
+        snap = pipelineToSnapshot(pipeline);
 
         this._snapshot = snap;
         this._snapshotMeta = snap.metadata;
         this._records = snap.contents.map(normalize);
         this._loading = false;
         this._lastPipelineUpdate = snap.metadata.generatedAt || snap.metadata.sourcePipelineLastUpdated;
+
+        // Load strategy
+        try {
+          const stRes = await fetch('/api/strategy');
+          if (stRes.ok) this._strategy = await stRes.json();
+        } catch(e) { /* strategy optional */ }
+
         this.render();
 
         // Auto-refresh
@@ -222,21 +232,18 @@
 
     async refreshData() {
       try {
-        let snap = null;
-        try {
-          const snapRes = await fetch('/api/snapshot');
-          if (snapRes.ok) snap = await snapRes.json();
-        } catch(e) { /* ignore */ }
-        if (!snap) {
-          const pRes = await fetch('/api/pipeline');
-          if (!pRes.ok) return;
-          snap = pipelineToSnapshot(await pRes.json());
-        }
-        // Preserve local overlay by keeping state.ov and state.created
+        const pRes = await fetch('/api/pipeline');
+        if (!pRes.ok) return;
+        const snap = pipelineToSnapshot(await pRes.json());
         this._snapshot = snap;
         this._snapshotMeta = snap.metadata;
         this._records = snap.contents.map(normalize);
         this._lastPipelineUpdate = snap.metadata.generatedAt || snap.metadata.sourcePipelineLastUpdated;
+        // Refresh strategy
+        try {
+          const stRes = await fetch('/api/strategy');
+          if (stRes.ok) this._strategy = await stRes.json();
+        } catch(e) { /* silent */ }
         this.render();
       } catch(e) { /* silent */ }
     }
@@ -315,6 +322,8 @@
         const result = await res.json();
         if (!res.ok) { this.toast('Erro: ' + (result.message || res.status)); return null; }
         this.toast('Publicação registrada com sucesso.');
+        const ov = Object.assign({}, this.state.ov||{}); delete ov[id];
+        this.state.ov = ov;
         await this.refreshData();
         return result;
       } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
@@ -329,6 +338,8 @@
         const result = await res.json();
         if (!res.ok) { this.toast('Erro: ' + (result.message || res.status)); return null; }
         this.toast('Métricas registradas.');
+        const ovM = Object.assign({}, this.state.ov||{}); delete ovM[id];
+        this.state.ov = ovM;
         await this.refreshData();
         return result;
       } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
@@ -352,6 +363,68 @@
         if (!res.ok) return null;
         return await res.json();
       } catch(e) { return null; }
+    }
+
+    async apiFreshRevision(id) {
+      try {
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}`);
+        if (!res.ok) return null;
+        return await res.json();
+      } catch(e) { return null; }
+    }
+
+    async apiPatch(id, fields) {
+      try {
+        const fresh = await this.apiFreshRevision(id);
+        if (!fresh) { this.toast('Erro ao obter revisão atual.'); return null; }
+        const body = Object.assign({agent:'Caroline', expectedRevision:fresh.revision}, fields);
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}`, {
+          method: 'PATCH', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(body)
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro: ' + (result.message || result.code || res.status)); return null; }
+        this.toast('Salvo no pipeline.');
+        // Clear local overlay for this item
+        const ov = Object.assign({}, this.state.ov||{}); delete ov[id];
+        this.state.ov = ov;
+        await this.refreshData();
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
+    }
+
+    async apiHandoff(id, data) {
+      try {
+        const fresh = await this.apiFreshRevision(id);
+        if (!fresh) { this.toast('Erro ao obter revisão atual.'); return null; }
+        const body = Object.assign({expectedRevision:fresh.revision}, data);
+        const res = await fetch(`/api/content/${encodeURIComponent(id)}/handoff`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(body)
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro: ' + (result.message || result.code || res.status)); return null; }
+        this.toast('Handoff registrado.');
+        const ov = Object.assign({}, this.state.ov||{}); delete ov[id];
+        this.state.ov = ov;
+        await this.refreshData();
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
+    }
+
+    async apiCreate(title, note) {
+      try {
+        const res = await fetch('/api/content', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({title, note: note || 'Criado via Dashboard'})
+        });
+        const result = await res.json();
+        if (!res.ok) { this.toast('Erro: ' + (result.message || res.status)); return null; }
+        this.toast('Conteúdo criado: ' + result.id);
+        this.state.created = [];
+        await this.refreshData();
+        return result;
+      } catch(e) { this.toast('Erro de rede: ' + e.message); return null; }
     }
 
     toast(msg) {
@@ -387,6 +460,73 @@
     blockLabel(b) { const m=/^B(\d+)$/.exec(b||''); return m?'Bloco '+m[1]:(b||''); }
     pkgLabel(c) { return c.pkg ? c.pkg.id+' · '+(c.pkg.status==='frozen'?'congelado':'a produzir') : 'Sem pacote associado'; }
     needsHuman(c) { return c.currentOwner==='Caroline' && c.pendingType && c.pendingType!=='nenhuma'; }
+
+    // Parse markdown into humanized reading view (cards + legenda + CTA)
+    _parseMdContent(md) {
+      const container = div({display:'flex',flexDirection:'column',gap:'16px'});
+      // Try to extract cards
+      let cards = [];
+      const cardPattern = /\*\*CARD\s*(\d+)\*\*\s*([\s\S]*?)(?=\*\*CARD\s*\d+\*\*|##\s*LEGENDA|##\s*CTA|$)/gi;
+      let m;
+      while ((m = cardPattern.exec(md)) !== null) cards.push({num:m[1], text:m[2].trim()});
+      if (!cards.length) {
+        const alt = /##?\s*Card\s*(\d+)[:\s—-]*([\s\S]*?)(?=##?\s*Card\s*\d+|##\s*LEGENDA|##\s*Legenda|##\s*CTA|$)/gi;
+        while ((m = alt.exec(md)) !== null) cards.push({num:m[1], text:m[2].trim()});
+      }
+      const legendaMatch = md.match(/##\s*LEGENDA\s*([\s\S]*?)(?=##\s*CTA|##\s*REFER|##\s*NOTA|$)/i);
+      const ctaMatch = md.match(/##\s*CTA\s*([\s\S]*?)(?=##|$)/i);
+      if (!cards.length && !legendaMatch) return null; // Not a structured copy
+
+      // Title from first H1
+      const titleMatch = md.match(/^#\s+(.+)/m);
+      if (titleMatch) container.appendChild(div({fontSize:'22px',fontWeight:'600',lineHeight:'1.25',color:'#F2EDF0',padding:'0 0 8px'},titleMatch[1].replace(/\*\*/g,'')));
+
+      // Status/format line
+      const fmtMatch = md.match(/\*\*Formato:\*\*\s*(.+)/i);
+      const fnMatch = md.match(/\*\*Fun[çc][ãa]o:\*\*\s*(.+)/i);
+      if (fmtMatch || fnMatch) {
+        container.appendChild(div({fontSize:'12px',color:'#A59BA6',padding:'0 0 4px'},
+          [fmtMatch?fmtMatch[1].trim():null, fnMatch?fnMatch[1].trim():null].filter(Boolean).join(' · ')));
+      }
+
+      // Cards
+      cards.forEach(c => {
+        const el = div({padding:'20px',borderRadius:'10px',background:'rgba(255,255,255,.035)',border:'1px solid rgba(255,255,255,.06)',display:'flex',flexDirection:'column',gap:'6px'});
+        el.appendChild(div({fontSize:'11px',fontWeight:'700',letterSpacing:'.1em',textTransform:'uppercase',color:'#CDBDF8',paddingBottom:'4px'},'Card '+c.num));
+        const clean = c.text.replace(/\*\*/g,'').replace(/^>\s*/gm,'').replace(/^#+\s*/gm,'').replace(/^---\s*$/gm,'').trim();
+        clean.split('\n').forEach(line => {
+          const t = line.trim();
+          if (!t) return;
+          el.appendChild(div({fontSize:'14.5px',lineHeight:'1.7',color:'#F2EDF0'},t));
+        });
+        container.appendChild(el);
+      });
+
+      // Legenda
+      if (legendaMatch) {
+        const leg = div({padding:'20px',borderRadius:'10px',background:'rgba(120,208,165,.05)',border:'1px solid rgba(120,208,165,.18)',display:'flex',flexDirection:'column',gap:'6px'});
+        leg.appendChild(div({fontSize:'11px',fontWeight:'700',letterSpacing:'.1em',textTransform:'uppercase',color:'#78D0A5',paddingBottom:'4px'},'Legenda'));
+        const legText = legendaMatch[1].replace(/\*\*/g,'').replace(/^>\s*/gm,'').trim();
+        legText.split('\n').forEach(line => {
+          const t = line.trim();
+          if (!t) return;
+          leg.appendChild(div({fontSize:'14px',lineHeight:'1.7',color:'#E4DCE6'},t));
+        });
+        container.appendChild(leg);
+      }
+
+      // CTA
+      if (ctaMatch) {
+        const ctaText = ctaMatch[1].replace(/\*\*/g,'').trim();
+        if (ctaText) {
+          container.appendChild(div({padding:'14px 18px',borderRadius:'8px',background:'rgba(166,140,240,.08)',border:'1px solid rgba(166,140,240,.2)',display:'flex',flexDirection:'column',gap:'4px'},
+            div({fontSize:'11px',fontWeight:'700',letterSpacing:'.1em',textTransform:'uppercase',color:'#CDBDF8'},'CTA'),
+            div({fontSize:'14px',lineHeight:'1.6',color:'#E4DCE6'},ctaText.split('\n').filter(l=>l.trim()).join(' '))));
+        }
+      }
+      return container;
+    }
+
     catOf(c) { return c.status==='publicado'?'publicado':c.publishDate?'datado':c.plannedWeek?'planejado':'producao'; }
 
     catStyle(cat) {
@@ -469,7 +609,7 @@
         ),
         // New content button
         btn('btn2', {display:'flex',alignItems:'center',gap:'10px',height:'40px',padding:'0 12px',border:'1px solid rgba(255,255,255,.09)',borderRadius:'8px',background:'rgba(255,255,255,.06)',color:'#F2EDF0',fontSize:'13px',fontWeight:'500',textAlign:'left'},
-          {onClick: () => { const id = this.createRecord(); this.setState({detail:id}); this.toastLocal('Novo conteúdo criado só nesta simulação'); }, innerHTML: ICON.plus + ' Novo conteúdo'}),
+          {onClick: async () => { const title = prompt('Título do novo conteúdo:'); if (!title || !title.trim()) return; const result = await this.apiCreate(title.trim()); if (result) this.setState({detail:result.id}); }, innerHTML: ICON.plus + ' Novo conteúdo'}),
         // Nav
         h('nav', {style:{display:'flex',flexDirection:'column',gap:'2px'}},
           navItems.map(n => btn('nav', {display:'flex',alignItems:'center',gap:'12px',height:'40px',padding:'0 12px',border:'0',borderRadius:'8px',background:screen===n.key?'rgba(255,255,255,0.07)':'transparent',color:screen===n.key?'#F2EDF0':'#A59BA6',fontSize:'13px',fontWeight:'500',textAlign:'left'},
@@ -523,6 +663,7 @@
       const pubRecs = R.filter(c => c.status==='publicado');
       const td = parse(TODAY);
       const stageFilter = this.state.stage||null;
+      const strat = this._strategy;
 
       const main = h('main', {style:{flex:'999 1 560px',minWidth:'0',boxSizing:'border-box',padding:'24px 28px 32px',display:'flex',flexDirection:'column',gap:'20px'}});
 
@@ -576,6 +717,11 @@
             c.strategy&&c.strategy.journey?c.strategy.journey:'Etapa não informada'),
           span({},'Publicação: '+(c.publishDate?short(c.publishDate):'sem data'))
         ));
+        // Strategic effect from whatDependsOnCaroline
+        const stratDepC = strat && strat.whatDependsOnCaroline ? strat.whatDependsOnCaroline.find(d => d.item === c.id) : null;
+        if (stratDepC && stratDepC.effect) {
+          card.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#78D0A5',padding:'2px 0'}, '→ ' + stratDepC.effect));
+        }
         card.appendChild(div({display:'flex',flexWrap:'wrap',gap:'8px',marginTop:'6px'},
           btn('btn1',{minHeight:'40px',padding:'0 16px',border:'0',borderRadius:'8px',background:'#6F52D1',color:'#FFFFFF',fontSize:'13px',fontWeight:'600'},
             {onClick:()=>this.setState({detail:c.id})}, 'Abrir '+c.id)
@@ -585,6 +731,112 @@
 
       if (humanList.length===0) needsSection.appendChild(div({padding:'14px 4px',fontSize:'13px',color:'#A59BA6'},'Nenhuma pendência sua registrada.'));
       agoraCol.appendChild(needsSection);
+
+      // === PRÓXIMO CONTEÚDO section ===
+      {
+        // Determine next content: items in revisao with aprovacao, ordered by strategy priority
+        const nextCandidates = R.filter(c => c.status === 'revisao' && c.pendingType === 'aprovacao');
+        // Also consider strategy nextActions to enrich context
+        const stratNextActions = (strat && strat.nextActions) || [];
+        const stratWorkByTrack = (strat && strat.nextStrategicWorkByTrack) || {};
+        const whatDepends = (strat && strat.whatDependsOnCaroline) || [];
+        const whatAgents = (strat && strat.whatAgentsCanDoAutonomously) || [];
+
+        if (nextCandidates.length > 0 || whatDepends.length > 0 || whatAgents.length > 0) {
+          const nextSec = div({background:'#1A1A12',border:'1px solid rgba(229,181,67,.25)',borderRadius:'12px',padding:'20px',display:'flex',flexDirection:'column',gap:'16px'});
+          nextSec.appendChild(div({display:'flex',justifyContent:'space-between',alignItems:'baseline'},
+            div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#E5B543'},'Próximo conteúdo'),
+            div({fontSize:'12px',color:'#A59BA6'}, nextCandidates.length === 1 ? '1 peça pronta para revisão' : nextCandidates.length + ' peças prontas para revisão')
+          ));
+
+          // Each next content card with full context
+          nextCandidates.forEach(c => {
+            // Find matching strategy context
+            const stratDep = whatDepends.find(d => d.item === c.id);
+            const trackKey = Object.keys(stratWorkByTrack).find(k => {
+              const t = stratWorkByTrack[k];
+              return t.inProgress && t.inProgress.some(ip => ip.id === c.id);
+            });
+            const trackCtx = trackKey ? stratWorkByTrack[trackKey] : null;
+            const trackInProgress = trackCtx && trackCtx.inProgress ? trackCtx.inProgress.find(ip => ip.id === c.id) : null;
+
+            const card = div({background:'#1D1620',border:'1px solid rgba(255,255,255,.07)',borderRadius:'10px',padding:'18px',display:'flex',flexDirection:'column',gap:'10px'});
+
+            // Header: line + function
+            const lineLabel = c.territory && c.territory.label ? c.territory.label : '';
+            const fnLabel = c.strategy && c.strategy.fn ? c.strategy.fn : '';
+            const journeyLabel = c.strategy && c.strategy.journey ? c.strategy.journey : '';
+            card.appendChild(div({display:'flex',flexWrap:'wrap',alignItems:'center',gap:'6px 12px'},
+              span({padding:'2px 8px',borderRadius:'4px',background:'rgba(229,181,67,.18)',color:'#E5B543',fontSize:'11px',fontWeight:'600'}, 'Próximo'),
+              lineLabel ? span({fontSize:'11.5px',color:'#CDBDF8',fontWeight:'500'}, lineLabel) : null,
+              fnLabel ? span({fontSize:'11.5px',color:'#A59BA6'}, fnLabel) : null
+            ));
+
+            // Title
+            card.appendChild(div({fontSize:'18px',fontWeight:'600',lineHeight:'1.3',letterSpacing:'-.01em'}, c.title));
+            card.appendChild(div({fontSize:'12px',color:'#A59BA6'}, c.id + ' · revisão ' + (c.revision == null ? '?' : c.revision)));
+
+            // Journey context
+            if (journeyLabel) {
+              card.appendChild(div({display:'flex',alignItems:'center',gap:'8px',fontSize:'12.5px'},
+                span({flex:'none',width:'8px',height:'8px',borderRadius:'50%',background:this.stageColorOf(c)}),
+                span({color:'#CDBDF8',fontWeight:'500'}, journeyLabel),
+                trackCtx && trackCtx.contextPublished ? span({color:'#8A808C',fontSize:'11.5px'}, '— após publicação anterior') : null
+              ));
+            }
+
+            // Strategy role (from track context)
+            if (trackInProgress && trackInProgress.role) {
+              card.appendChild(div({fontSize:'12.5px',lineHeight:'1.55',color:'#CFC6D1',padding:'4px 0'}, trackInProgress.role));
+            }
+
+            // What Caroline needs to do
+            if (stratDep) {
+              card.appendChild(div({padding:'8px 10px',borderRadius:'6px',background:'rgba(229,181,67,.06)',border:'1px solid rgba(229,181,67,.15)',display:'flex',flexDirection:'column',gap:'4px'},
+                span({fontSize:'11px',fontWeight:'600',color:'#E5B543'}, '⟶ ' + stratDep.decision),
+                stratDep.effect ? span({fontSize:'11.5px',lineHeight:'1.5',color:'#A59BA6'}, 'Efeito: ' + stratDep.effect) : null,
+                stratDep.context ? span({fontSize:'11px',lineHeight:'1.5',color:'#8A808C'}, stratDep.context) : null
+              ));
+            }
+
+            // Content text available?
+            const hasCopy = c.refs && c.refs.copy;
+            card.appendChild(div({display:'flex',flexWrap:'wrap',gap:'8px',marginTop:'4px'},
+              btn('btn1',{minHeight:'38px',padding:'0 16px',border:'0',borderRadius:'8px',background:'#6F52D1',color:'#FFFFFF',fontSize:'13px',fontWeight:'600'},
+                {onClick:()=>this.setState({detail:c.id})}, 'Abrir ficha completa'),
+              hasCopy ? span({alignSelf:'center',fontSize:'11.5px',color:'#78D0A5'}, '✓ Copy e material disponíveis') :
+                span({alignSelf:'center',fontSize:'11.5px',color:'#8A808C'}, 'Abrir para ver artefatos')
+            ));
+            nextSec.appendChild(card);
+          });
+
+          // What depends on Caroline (non-content decisions like P2)
+          const nonContentDeps = whatDepends.filter(d => !nextCandidates.some(c => c.id === d.item));
+          if (nonContentDeps.length > 0) {
+            nextSec.appendChild(div({paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)',fontSize:'11.5px',letterSpacing:'.06em',textTransform:'uppercase',fontWeight:'500',color:'#E5B543'},'Outras decisões suas'));
+            nonContentDeps.forEach(d => {
+              nextSec.appendChild(div({padding:'8px 10px',borderRadius:'6px',background:'rgba(255,255,255,.03)',display:'flex',flexDirection:'column',gap:'3px'},
+                span({fontSize:'12.5px',fontWeight:'500',color:'#E4DCE6'}, (d.priority === 'ALTA' ? '▲ ' : '') + d.decision),
+                d.effect ? span({fontSize:'11.5px',color:'#A59BA6'}, d.effect) : null,
+                d.context ? span({fontSize:'11px',color:'#8A808C'}, d.context) : null
+              ));
+            });
+          }
+
+          // What agents can do autonomously
+          if (whatAgents.length > 0) {
+            nextSec.appendChild(div({paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)',fontSize:'11.5px',letterSpacing:'.06em',textTransform:'uppercase',fontWeight:'500',color:'#8DB7F4'},'O que os agentes podem fazer'));
+            whatAgents.forEach(a => {
+              nextSec.appendChild(div({padding:'6px 10px',borderRadius:'6px',background:'rgba(111,163,239,.05)',display:'flex',flexDirection:'column',gap:'2px'},
+                span({fontSize:'12px',fontWeight:'500',color:'#8DB7F4'}, a.agent + ': ' + a.action),
+                a.justification ? span({fontSize:'11px',color:'#8A808C'}, a.justification) : null
+              ));
+            });
+          }
+
+          agoraCol.appendChild(nextSec);
+        }
+      }
 
       // In-flight section
       const inflightSec = div({background:'#171119',border:'1px solid rgba(255,255,255,.07)',borderRadius:'12px',padding:'16px 14px 16px',display:'flex',flexDirection:'column',gap:'4px'});
@@ -678,7 +930,7 @@
       });
 
       // No-date chips
-      const nodate = R.filter(c => c.status!=='publicado'&&c.status!=='backlog'&&!c.publishDate);
+      const nodate = R.filter(c => c.status!=='publicado'&&c.status!=='backlog'&&c.status!=='arquivado'&&!c.publishDate);
       if (nodate.length) {
         const nd = div({margin:'6px 6px 0',paddingTop:'12px',borderTop:'1px solid rgba(255,255,255,.06)',display:'flex',flexWrap:'wrap',alignItems:'center',gap:'8px'});
         nd.appendChild(span({fontSize:'12px',fontWeight:'600',color:'#CDBDF8'},'Em andamento, sem data de publicação'));
@@ -691,10 +943,16 @@
       const upcoming = R.filter(c=>c.publishDate&&c.publishDate>=TODAY&&c.status!=='publicado').sort((a,b)=>a.publishDate<b.publishDate?-1:1)[0];
       const frozenPk = [...new Set(R.filter(c=>c.pkg&&c.pkg.status==='frozen').map(c=>c.pkg.id))].sort();
       const todoPk = [...new Set(R.filter(c=>c.pkg&&c.pkg.status==='todo').map(c=>c.pkg.id))].sort();
+      const nextStratText = strat && strat.nextActions && strat.nextActions.length
+        ? strat.nextActions[0].action + (strat.nextActions[0].justification ? ' — ' + strat.nextActions[0].justification : '')
+        : 'Ainda não definido pelo Strategist';
+      const stratStale = strat && strat.generatedAt && this._lastPipelineUpdate
+        ? new Date(strat.generatedAt) < new Date(this._lastPipelineUpdate)
+        : false;
       const nextSteps = [
         {label:'Próxima publicação', value: upcoming?upcoming.title+' · '+short(upcoming.publishDate):'Nenhum conteúdo com data de publicação definida', go:()=>this.setState({screen:'calendario',view:'semana',cursor:upcoming?upcoming.publishDate:TODAY})},
         {label:'Pacotes científicos', value:'Congelados: '+(frozenPk.join(', ')||'nenhum')+'. A produzir: '+(todoPk.join(', ')||'nenhum'), go:()=>this.setState({screen:'backlog'})},
-        {label:'Próximo trabalho estratégico', value:'Ainda não definido pelo Strategist', go:()=>this.setState({screen:'jornada'})},
+        {label:'Próximo trabalho estratégico'+(stratStale?' (desatualizado)':''), value:nextStratText, go:()=>this.setState({screen:'jornada'})},
         {label:'Backlog', value:R.filter(c=>c.status==='backlog').length+' propostas históricas do calendário v1, aguardando seleção', go:()=>this.setState({screen:'backlog'})},
       ];
       const nextSec = div({background:'#171119',border:'1px solid rgba(255,255,255,.07)',borderRadius:'12px',padding:'16px 14px 8px',display:'flex',flexDirection:'column'});
@@ -719,23 +977,67 @@
         span({fontSize:'12px',color:'#8A808C'},'para onde vai a estratégia')
       ));
 
-      // Bloco atual
+      // Bloco atual — from strategy if available, else from pipeline block field
+      const stBlock = strat && strat.activeBlock;
       const blocked = R.filter(c=>c.block);
       const blockCodes = [...new Set(blocked.map(c=>c.block))];
       const blockTerr = [...new Set(blocked.map(c=>c.territory.label).filter(Boolean))];
       const transRecs = R.filter(c=>c.territory.code==='TRANS'&&c.status!=='backlog');
 
       const blocoSec = div({background:'#1D1620',border:'1px solid rgba(166,140,240,.2)',borderRadius:'12px',padding:'20px',display:'flex',flexDirection:'column',gap:'14px'});
-      blocoSec.appendChild(div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Bloco atual'));
-      blocoSec.appendChild(h('h2',{style:{margin:'0',fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'36px',fontWeight:'500',lineHeight:'1.05',letterSpacing:'-.005em'}}, blockCodes.length?blockCodes.map(b=>this.blockLabel(b)).join(' · '):'Bloco não informado'));
-      blocoSec.appendChild(div({fontSize:'13px',color:'#CFC6D1'}, blocked.length?blockTerr.join(' · '):'Nenhum conteúdo tem bloco atribuído'));
-      if (blocked.length) blocoSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#8A808C'}, 'Conteúdo no bloco: '+blocked.map(c=>c.id+' '+c.title).join('; ')));
+      blocoSec.appendChild(div({display:'flex',justifyContent:'space-between',alignItems:'baseline'},
+        div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Bloco atual'),
+        stratStale ? span({fontSize:'11px',color:'#E5636B'},'Análise desatualizada') : strat ? span({fontSize:'11px',color:'#8A808C'},'Strategist '+strat.generatedAt.slice(0,10)) : null
+      ));
+      blocoSec.appendChild(h('h2',{style:{margin:'0',fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'36px',fontWeight:'500',lineHeight:'1.05',letterSpacing:'-.005em'}}, stBlock?stBlock.name:(blockCodes.length?blockCodes.map(b=>this.blockLabel(b)).join(' · '):'Bloco não informado')));
+      blocoSec.appendChild(div({fontSize:'13px',color:'#CFC6D1'}, stBlock?stBlock.rationale:(blocked.length?blockTerr.join(' · '):'Nenhum conteúdo tem bloco atribuído')));
+      if (stBlock && stBlock.publishedContext) {
+        blocoSec.appendChild(div({fontSize:'12.5px',lineHeight:'1.5',color:'#78D0A5',padding:'2px 0'}, stBlock.publishedContext));
+      }
+      if (strat && strat.publicationReconciliation && !strat.publicationReconciliation.correspondenceConfirmed) {
+        blocoSec.appendChild(div({padding:'8px 10px',borderRadius:'6px',background:'rgba(229,181,67,.1)',border:'1px solid rgba(229,181,67,.25)',fontSize:'12px',lineHeight:'1.5',color:'#E5B543'},'⚠ '+strat.publicationReconciliation.pendingAction));
+      }
+      if (stBlock && stBlock.contents) {
+        stBlock.contents.forEach(sc => {
+          blocoSec.appendChild(div({display:'flex',alignItems:'center',gap:'8px',padding:'4px 0',fontSize:'12.5px'},
+            span({flex:'none',width:'8px',height:'8px',borderRadius:'50%',background:COLORS[sc.journeyStage]||'#8A808C'}),
+            span({fontWeight:'500'},sc.id+' '+sc.title),
+            span({color:'#A59BA6'},'· '+sc.function+' · '+(sc.humanDecisionRequired||STATUS[sc.status]||''))
+          ));
+        });
+      } else if (blocked.length) {
+        blocoSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#8A808C'}, 'Conteúdo no bloco: '+blocked.map(c=>c.id+' '+c.title).join('; ')));
+      }
+      if (stBlock && stBlock.nextNeeded) {
+        blocoSec.appendChild(div({paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)',fontSize:'12.5px',lineHeight:'1.5',color:'#CDBDF8'},
+          'Próximo: '+stBlock.nextNeeded.function+' ('+stBlock.nextNeeded.journeyStage+') — '+stBlock.nextNeeded.description
+        ));
+      }
 
       const alwaysOn = div({paddingTop:'12px',borderTop:'1px solid rgba(255,255,255,.06)',display:'flex',flexDirection:'column',gap:'8px'});
-      alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12.5px'},
-        span({flex:'none',width:'9px',height:'9px',boxSizing:'border-box',borderRadius:'50%',border:'1.5px solid #8A808C'}),
-        span({color:'#8A808C',width:'82px',flex:'none'},'Always-on'),
-        span({color:'#8A808C'},'não informado no snapshot')));
+      const aoStrat = strat && strat.alwaysOn;
+      if (aoStrat) {
+        alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12.5px'},
+          span({flex:'none',width:'9px',height:'9px',boxSizing:'border-box',borderRadius:'50%',border:'1.5px solid #CDBDF8'}),
+          span({color:'#CDBDF8',width:'82px',flex:'none'},'Always-on'),
+          span({color:'#CFC6D1'},aoStrat.line+' · '+aoStrat.cadence)));
+        (aoStrat.published||[]).forEach(p => {
+          alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12px',paddingLeft:'19px'},
+            span({color:'#78D0A5'},p.id+' '+p.title+' · publicado')));
+        });
+        (aoStrat.inReview||[]).forEach(r => {
+          alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12px',paddingLeft:'19px'},
+            span({color:'#CDBDF8'},r.id+' '+r.title+' · '+(r.humanDecisionRequired||'em revisão'))));
+        });
+        if (aoStrat.nextNeeded) {
+          alwaysOn.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#8A808C',paddingLeft:'19px'},'Próximo: '+aoStrat.nextNeeded.description));
+        }
+      } else {
+        alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12.5px'},
+          span({flex:'none',width:'9px',height:'9px',boxSizing:'border-box',borderRadius:'50%',border:'1.5px solid #8A808C'}),
+          span({color:'#8A808C',width:'82px',flex:'none'},'Always-on'),
+          span({color:'#8A808C'},'informação não disponível')));
+      }
       transRecs.forEach(t => {
         alwaysOn.appendChild(div({display:'flex',alignItems:'center',gap:'10px',fontSize:'12.5px'},
           span({flex:'none',width:'9px',height:'9px',boxSizing:'border-box',borderRadius:'50%',border:'1.5px dashed #CFC6D1'}),
@@ -815,7 +1117,7 @@
       header.appendChild(div({},
         h('h1',{style:{margin:'0',fontSize:'20px',fontWeight:'600',letterSpacing:'-.01em'}},'Calendário'),
         div({marginTop:'4px',fontSize:'13px',color:'#A59BA6'},calTitle),
-        div({marginTop:'2px',fontSize:'11.5px',color:'#8A808C'},'Mover, editar e planejar aqui é simulação local. Nada é gravado no MOS.')
+        div({marginTop:'2px',fontSize:'11.5px',color:'#8A808C'},'Arraste para planejar. Abra o detalhe e clique "Salvar alterações" para gravar no pipeline.')
       ));
       const controls = div({display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'});
       // View toggle
@@ -832,25 +1134,37 @@
       main.appendChild(header);
 
       if (isWeek) {
-        // Strategic focus
-        const blocked = R.filter(c=>c.block);
-        const blockCodes = [...new Set(blocked.map(c=>c.block))];
-        const blockTerr = [...new Set(blocked.map(c=>c.territory.label).filter(Boolean))];
+        // Strategic focus — from strategy.json
+        const calStrat = this._strategy;
+        const calBlock = calStrat && calStrat.activeBlock;
+        const calStale = calStrat && calStrat.generatedAt && this._lastPipelineUpdate
+          ? new Date(calStrat.generatedAt) < new Date(this._lastPipelineUpdate) : false;
+        const calBlockedPl = R.filter(c=>c.block);
+        const calBlockCodes = [...new Set(calBlockedPl.map(c=>c.block))];
+        const calBlockTerr = [...new Set(calBlockedPl.map(c=>c.territory.label).filter(Boolean))];
+        const calNextAction = calStrat && calStrat.nextActions && calStrat.nextActions.length
+          ? calStrat.nextActions[0].action : 'Ainda não definido pelo Strategist';
         const stratSec = div({background:'#1D1620',border:'1px solid rgba(166,140,240,.28)',borderRadius:'12px',padding:'20px',display:'flex',flexDirection:'column',gap:'16px'});
         stratSec.appendChild(div({display:'flex',flexWrap:'wrap',justifyContent:'space-between',alignItems:'baseline',gap:'4px 16px'},
-          div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Foco estratégico'),
+          div({display:'flex',alignItems:'center',gap:'8px'},
+            div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Foco estratégico'),
+            calStale ? span({fontSize:'11px',padding:'1px 7px',borderRadius:'4px',background:'rgba(229,99,107,.15)',color:'#E5636B'},'desatualizado') : null
+          ),
           btn('lnk',{minHeight:'32px',padding:'0',border:'0',background:'none',color:'#A59BA6',fontSize:'12px',fontWeight:'500'},{onClick:()=>this.setState({screen:'jornada'})},'Ver Jornada →')
         ));
         stratSec.appendChild(div({display:'flex',flexWrap:'wrap',gap:'16px 40px',alignItems:'flex-start'},
           div({flex:'0 1 360px',minWidth:'0'},
             div({fontSize:'11.5px',color:'#8A808C'},'Bloco atual'),
-            div({marginTop:'2px',fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'28px',fontWeight:'500',lineHeight:'1.1'}, blockCodes.length?blockCodes.map(b=>this.blockLabel(b)).join(' · ')+' · '+blockTerr.join(' / '):'Bloco não informado no snapshot')
+            div({marginTop:'2px',fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'28px',fontWeight:'500',lineHeight:'1.1'}, calBlock?calBlock.name:(calBlockCodes.length?calBlockCodes.map(b=>this.blockLabel(b)).join(' · ')+' · '+calBlockTerr.join(' / '):'Bloco não informado'))
           ),
           div({flex:'1 1 320px',minWidth:'0',display:'flex',flexDirection:'column',gap:'6px'},
             div({fontSize:'11.5px',color:'#8A808C'},'Próximo trabalho estratégico'),
-            div({fontSize:'14px',color:'#CFC6D1'},'Ainda não definido pelo Strategist')
+            div({fontSize:'14px',color:'#CFC6D1'},calNextAction)
           )
         ));
+        if (calStrat && calStrat.strategicRationale) {
+          stratSec.appendChild(div({paddingTop:'10px',borderTop:'1px solid rgba(255,255,255,.06)',fontSize:'12px',lineHeight:'1.6',color:'#A59BA6'},calStrat.strategicRationale));
+        }
         main.appendChild(stratSec);
 
         // Legend
@@ -951,7 +1265,7 @@
       }
 
       // Sem data section
-      const semItems = R.filter(c=>!c.publishDate&&!c.plannedWeek&&c.status!=='publicado'&&c.status!=='backlog');
+      const semItems = R.filter(c=>!c.publishDate&&!c.plannedWeek&&c.status!=='publicado'&&c.status!=='backlog'&&c.status!=='arquivado');
       const semOpen = !!this.state.semOpen;
       const semSec = div({boxSizing:'border-box',background:'transparent',border:'1px solid rgba(255,255,255,.07)',borderRadius:'10px',padding:'0 14px',
         onDragOver:this.allowDrop('sem'), onDrop:this.dropOn(id=>{this.unplace(id);this.toastLocal('Retirado da semana');})});
@@ -1067,11 +1381,129 @@
         div({marginTop:'4px',fontSize:'13px',color:'#A59BA6'},'Progressão estratégica confirmada por briefs. Propostas históricas do backlog não entram nesta leitura.')
       ));
 
-      // Next strategic work
+      // Next strategic work — from strategy.json
+      const jStrat = this._strategy;
+      const jStale = jStrat && jStrat.generatedAt && this._lastPipelineUpdate
+        ? new Date(jStrat.generatedAt) < new Date(this._lastPipelineUpdate) : false;
       const nextSec = div({background:'#231B2E',border:'1px solid rgba(166,140,240,.26)',borderRadius:'12px',padding:'20px',display:'flex',flexDirection:'column',gap:'10px'});
-      nextSec.appendChild(div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Próximo trabalho estratégico'));
-      nextSec.appendChild(div({fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'30px',fontWeight:'500',lineHeight:'1.15'},'Ainda não definido pelo Strategist'));
-      nextSec.appendChild(div({maxWidth:'640px',fontSize:'13px',lineHeight:'1.55',color:'#A59BA6'},'Quando o Strategist definir o próximo objetivo estratégico, ele aparece aqui. Conteúdos do backlog não ocupam esta posição.'));
+      nextSec.appendChild(div({display:'flex',justifyContent:'space-between',alignItems:'baseline'},
+        div({fontSize:'12px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Direção estratégica'),
+        jStale ? span({fontSize:'11px',padding:'1px 7px',borderRadius:'4px',background:'rgba(229,99,107,.15)',color:'#E5636B'},'Pipeline mudou desde a análise')
+          : jStrat ? span({fontSize:'11px',color:'#8A808C'},'Strategist '+jStrat.generatedAt.slice(0,10)) : null
+      ));
+
+      if (jStrat) {
+        const jBlock = jStrat.activeBlock;
+        if (jBlock) {
+          nextSec.appendChild(div({fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'30px',fontWeight:'500',lineHeight:'1.15'}, jBlock.name));
+          nextSec.appendChild(div({maxWidth:'640px',fontSize:'13px',lineHeight:'1.55',color:'#CFC6D1'},'Progressão: '+jBlock.journeyProgression));
+          if (jBlock.publishedContext) {
+            nextSec.appendChild(div({fontSize:'12.5px',lineHeight:'1.5',color:'#78D0A5',padding:'4px 0'},'Contexto publicado: '+jBlock.publishedContext));
+          }
+        }
+
+        // Publication reconciliation notice
+        if (jStrat.publicationReconciliation && !jStrat.publicationReconciliation.correspondenceConfirmed) {
+          const reconSec = div({padding:'10px 12px',borderRadius:'8px',background:'rgba(229,181,67,.1)',border:'1px solid rgba(229,181,67,.3)',display:'flex',flexDirection:'column',gap:'4px'});
+          reconSec.appendChild(span({fontSize:'11.5px',fontWeight:'600',color:'#E5B543'},'Reconciliação pendente'));
+          reconSec.appendChild(div({fontSize:'12.5px',lineHeight:'1.5',color:'#CFC6D1'},jStrat.publicationReconciliation.analysis));
+          reconSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#A59BA6'},jStrat.publicationReconciliation.pendingAction));
+          nextSec.appendChild(reconSec);
+        }
+
+        // Next strategic work by track
+        const trackWork = jStrat.nextStrategicWorkByTrack;
+        if (trackWork) {
+          const trackSec = div({display:'flex',flexDirection:'column',gap:'10px',paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)'});
+          trackSec.appendChild(span({fontSize:'11.5px',fontWeight:'600',color:'#CDBDF8'},'Próximo trabalho por trilha'));
+          if (trackWork.bloco1_perimenopausa) {
+            const t = trackWork.bloco1_perimenopausa;
+            const tSec = div({display:'flex',flexDirection:'column',gap:'4px',padding:'8px 0'});
+            tSec.appendChild(span({fontSize:'12px',fontWeight:'600',color:'#E3D9FB'},'Bloco 1 — Perimenopausa'));
+            tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#78D0A5'},t.contextPublished));
+            if (t.inProgress) t.inProgress.forEach(ip => {
+              tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#CFC6D1'},ip.id+': '+ip.role+' ('+ip.status+')'));
+            });
+            if (t.nextEditorialNeed) {
+              tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#CDBDF8'},'Próxima necessidade: '+t.nextEditorialNeed.function+' ('+t.nextEditorialNeed.journeyStage+') — '+t.nextEditorialNeed.objective));
+            }
+            if (t.progressionTowardsProcurar) {
+              tSec.appendChild(div({fontSize:'11.5px',lineHeight:'1.5',color:'#8A808C'},'Progressão: '+t.progressionTowardsProcurar));
+            }
+            trackSec.appendChild(tSec);
+          }
+          if (trackWork.alwaysOn_histeroscopia) {
+            const t = trackWork.alwaysOn_histeroscopia;
+            const tSec = div({display:'flex',flexDirection:'column',gap:'4px',padding:'8px 0',borderTop:'1px solid rgba(255,255,255,.04)'});
+            tSec.appendChild(span({fontSize:'12px',fontWeight:'600',color:'#E3D9FB'},'Always-on — Histeroscopia'));
+            tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#78D0A5'},t.contextPublished));
+            if (t.inProgress) t.inProgress.forEach(ip => {
+              tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#CFC6D1'},ip.id+': '+ip.role+' ('+ip.status+')'));
+            });
+            if (t.nextEditorialNeed) {
+              tSec.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#CDBDF8'},'Próxima necessidade: '+t.nextEditorialNeed.function+' ('+t.nextEditorialNeed.journeyStage+') — '+t.nextEditorialNeed.objective));
+            }
+            if (t.progressionTowardsProcurar) {
+              tSec.appendChild(div({fontSize:'11.5px',lineHeight:'1.5',color:'#8A808C'},'Progressão: '+t.progressionTowardsProcurar));
+            }
+            trackSec.appendChild(tSec);
+          }
+          nextSec.appendChild(trackSec);
+        }
+
+        // What depends on Caroline
+        if (jStrat.whatDependsOnCaroline && jStrat.whatDependsOnCaroline.length) {
+          const hdList = div({display:'flex',flexDirection:'column',gap:'6px',paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)'});
+          hdList.appendChild(span({fontSize:'11.5px',fontWeight:'600',color:'#CDBDF8'},'Depende de Caroline'));
+          jStrat.whatDependsOnCaroline.forEach(hd => {
+            hdList.appendChild(div({display:'flex',gap:'8px',fontSize:'12.5px',lineHeight:'1.5'},
+              span({flex:'none',padding:'1px 6px',borderRadius:'4px',background:hd.priority==='ALTA'?'rgba(229,99,107,.15)':'rgba(255,255,255,.06)',color:hd.priority==='ALTA'?'#F29A9F':'#A59BA6',fontSize:'11px',fontWeight:'600'},hd.priority),
+              div({},
+                span({color:'#F2EDF0'},hd.item+': '+hd.decision),
+                hd.effect ? span({color:'#78D0A5'},' → '+hd.effect) : null,
+                hd.context ? span({color:'#8A808C'},' — '+hd.context) : null
+              )
+            ));
+          });
+          nextSec.appendChild(hdList);
+        }
+
+        // What agents can do autonomously
+        if (jStrat.whatAgentsCanDoAutonomously && jStrat.whatAgentsCanDoAutonomously.length) {
+          const aaList = div({display:'flex',flexDirection:'column',gap:'6px',paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)'});
+          aaList.appendChild(span({fontSize:'11.5px',fontWeight:'600',color:'#8DB7F4'},'Agentes podem avançar (autonomia B)'));
+          jStrat.whatAgentsCanDoAutonomously.forEach(aa => {
+            aaList.appendChild(div({display:'flex',gap:'8px',fontSize:'12.5px',lineHeight:'1.5'},
+              span({flex:'none',width:'7px',height:'7px',marginTop:'7px',borderRadius:'50%',background:'#6FA3EF'}),
+              div({},
+                span({color:'#F2EDF0'},aa.action),
+                span({color:'#8A808C'},' ('+aa.agent+') — '+aa.justification),
+                aa.dependency && aa.dependency !== 'Nenhuma' ? span({color:'#E5B543'},' Dep: '+aa.dependency) : null
+              )
+            ));
+          });
+          nextSec.appendChild(aaList);
+        }
+
+        // Ordered next actions
+        if (jStrat.nextActions && jStrat.nextActions.length) {
+          const naList = div({display:'flex',flexDirection:'column',gap:'6px',paddingTop:'8px',borderTop:'1px solid rgba(255,255,255,.06)'});
+          naList.appendChild(span({fontSize:'11.5px',fontWeight:'600',color:'#CDBDF8'},'Sequência de ações'));
+          jStrat.nextActions.forEach(na => {
+            naList.appendChild(div({display:'flex',gap:'8px',fontSize:'12.5px',lineHeight:'1.5'},
+              span({flex:'none',color:'#8A808C',fontWeight:'600'},String(na.order)+'.'),
+              div({},
+                span({color:'#F2EDF0'},na.action),
+                span({color:'#8A808C'},' — '+na.justification)
+              )
+            ));
+          });
+          nextSec.appendChild(naList);
+        }
+      } else {
+        nextSec.appendChild(div({fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:'30px',fontWeight:'500',lineHeight:'1.15'},'Análise estratégica não disponível'));
+        nextSec.appendChild(div({maxWidth:'640px',fontSize:'13px',lineHeight:'1.55',color:'#A59BA6'},'Execute o Strategist para gerar a análise. O resultado aparecerá aqui automaticamente.'));
+      }
       main.appendChild(nextSec);
 
       // Progressão confirmada
@@ -1191,7 +1623,7 @@
       main.appendChild(h('header',{},
         h('h1',{style:{margin:'0',fontSize:'20px',fontWeight:'600',letterSpacing:'-.01em'}},'Backlog'),
         div({marginTop:'4px',fontSize:'13px',color:'#A59BA6'},'Temas do calendário v1, como propostas históricas. A estratégia de cada um é confirmada pelo Strategist quando for selecionado.'),
-        div({marginTop:'2px',fontSize:'11.5px',color:'#8A808C'},'Selecionar aqui é simulação local. Nada é gravado no MOS.')
+        div({marginTop:'2px',fontSize:'11.5px',color:'#8A808C'},'Selecionar grava no pipeline real via PATCH.')
       ));
 
       // Filters
@@ -1233,8 +1665,11 @@
           if (c.proposal&&c.proposal.objective) card.appendChild(div({fontSize:'12px',lineHeight:'1.5',color:'#A59BA6'},c.proposal.objective));
           card.appendChild(div({fontSize:'11.5px',color:c.pkg?(c.pkg.status==='frozen'?'#CDBDF8':'#A59BA6'):'#8A808C'},this.pkgLabel(c)));
           card.appendChild(btn('btn2',{alignSelf:'flex-start',minHeight:'34px',padding:'0 12px',border:'0',borderRadius:'8px',background:sel?'rgba(166,140,240,.28)':'rgba(255,255,255,.06)',color:sel?'#E3D9FB':'#F2EDF0',fontSize:'12px',fontWeight:'600'},
-            {onClick:()=>{if(sel){this.unselectItem(c.id);this.toastLocal(c.title+': seleção desfeita');}else{this.selectItem(c.id);this.toastLocal(c.title+': selecionado');}}},
-            sel?'Selecionado (simulação local). Desfazer':'Selecionar (simulação local)'
+            {onClick:async()=>{
+              if(sel){ await this.apiPatch(c.id,{status:'backlog',_historyNote:'Deselecionado via Dashboard'}); }
+              else{ await this.apiPatch(c.id,{status:'selecionado',_historyNote:'Selecionado via Dashboard'}); }
+            }},
+            sel?'Selecionado. Desfazer':'Selecionar'
           ));
           grid.appendChild(card);
         });
@@ -1358,19 +1793,89 @@
         return wrap;
       };
 
-      fields.appendChild(mkField('Título','text',sel.title,e=>this.patch(sel.id,{title:e.target.value}),'Título do conteúdo'));
-      const statusOpts = ['backlog','selecionado','em-desenvolvimento','em-producao','revisao','pronto','publicado'].map(s=>({v:s,label:STATUS[s]}));
-      fields.appendChild(mkField('Situação no pipeline','select',sel.status,e=>this.patch(sel.id,{status:e.target.value}),{options:statusOpts}));
-      fields.appendChild(mkField('Próxima ação','text',sel.nextAction,e=>this.patch(sel.id,{nextAction:e.target.value||null}),'Não informada'));
-      const dateField = mkField('Data de publicação','date',sel.publishDate,e=>this.setPublishDate(sel.id,e.target.value||null));
-      dateField.appendChild(span({fontSize:'11px',color:'#8A808C'},'Mover a data move o conteúdo no calendário. Simulação local.'));
+      fields.appendChild(mkField('Título','text',sel.title,e=>{
+        const v=e.target.value; this.patch(sel.id,{title:v});
+      },'Título do conteúdo'));
+      const statusOpts = ['backlog','selecionado','em-desenvolvimento','em-producao','revisao','pronto','publicado','arquivado'].map(s=>({v:s,label:STATUS[s]}));
+      fields.appendChild(mkField('Situação no pipeline','select',sel.status,()=>{},{options:statusOpts,disabled:true}));
+      fields.appendChild(span({fontSize:'11px',color:'#8A808C',marginTop:'-8px'},'Status controlado pelo protocolo de handoff.'));
+      fields.appendChild(mkField('Próxima ação','text',sel.nextAction,e=>{
+        const v=e.target.value||null; this.patch(sel.id,{nextAction:v});
+      },'Não informada'));
+      const dateField = mkField('Data de publicação','date',sel.publishDate,e=>{
+        const v=e.target.value||null; this.patch(sel.id,{publishDate:v});
+      });
+      dateField.appendChild(span({fontSize:'11px',color:'#8A808C'},'Mover a data move o conteúdo no calendário.'));
       fields.appendChild(dateField);
 
       const weekOpts = [{v:'',label:'Sem semana planejada'}].concat([-1,0,1,2,3,4].map(n=>addDays(todayWeek,n*7)).map(m=>({v:m,label:'Semana de '+weekLabel(m)})));
-      const weekField = mkField('Semana planejada (simulação local)','select',sel.plannedWeek||'',e=>{if(e.target.value)this.planForWeek(sel.id,e.target.value);else this.unplace(sel.id);},{options:weekOpts,disabled:!!sel.publishDate});
+      const weekField = mkField('Semana planejada','select',sel.plannedWeek||'',e=>{if(e.target.value)this.planForWeek(sel.id,e.target.value);else this.unplace(sel.id);},{options:weekOpts,disabled:!!sel.publishDate});
       if (sel.publishDate) weekField.appendChild(span({fontSize:'11px',color:'#8A808C'},'Definida pela data de publicação.'));
       fields.appendChild(weekField);
+
+      // Save field changes to API
+      const saveFieldsBtn = btn('btn1',{alignSelf:'flex-start',minHeight:'36px',padding:'0 14px',border:'0',borderRadius:'8px',background:'#6F52D1',color:'#FFFFFF',fontSize:'12.5px',fontWeight:'600'},
+        {onClick:async()=>{
+          const ov = (this.state.ov||{})[sel.id];
+          if (!ov || !Object.keys(ov).length) { this.toast('Nenhuma alteração para salvar.'); return; }
+          const patchFields = {};
+          if (ov.title !== undefined) patchFields.title = ov.title;
+          if (ov.nextAction !== undefined) patchFields.nextAction = ov.nextAction;
+          if (ov.publishDate !== undefined) patchFields.publishDate = ov.publishDate;
+          if (ov.plannedWeek !== undefined) patchFields.plannedWeek = ov.plannedWeek;
+          if (!Object.keys(patchFields).length) { this.toast('Nenhum campo editável alterado.'); return; }
+          await this.apiPatch(sel.id, patchFields);
+          this.setState({detail:sel.id});
+        }},'Salvar alterações');
+      const hasLocalChanges = !!(this.state.ov||{})[sel.id];
+      fields.appendChild(div({display:'flex',gap:'8px',alignItems:'center'},
+        hasLocalChanges ? saveFieldsBtn : null,
+        hasLocalChanges ? span({fontSize:'11px',color:'#CDBDF8'},'Alterações pendentes de gravação') : span({fontSize:'11px',color:'#8A808C'},'Sem alterações locais')
+      ));
       panel.appendChild(fields);
+
+      // ---- APPROVE / RETURN BUTTONS (for pendingType aprovacao, never for published) ----
+      if (sel.pendingType === 'aprovacao' && sel.currentOwner === 'Caroline' && sel.status !== 'publicado') {
+        const approvalSec = div({padding:'14px',borderRadius:'10px',background:'#231B2E',border:'1px solid rgba(166,140,240,.3)',display:'flex',flexDirection:'column',gap:'10px'});
+        approvalSec.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Revisão e aprovação'));
+        approvalSec.appendChild(div({fontSize:'13px',color:'#CFC6D1'},'Este conteúdo aguarda sua aprovação. As ações abaixo são gravadas no pipeline real via handoff.'));
+        const returnNote = h('input',{type:'text',id:'return-note-'+sel.id,placeholder:'Motivo da devolução (obrigatório para devolver)',style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px',width:'100%'}});
+        approvalSec.appendChild(returnNote);
+        approvalSec.appendChild(div({display:'flex',flexWrap:'wrap',gap:'8px'},
+          btn('btn1',{minHeight:'40px',padding:'0 18px',border:'0',borderRadius:'8px',background:'#5FBF8F',color:'#110C13',fontSize:'13px',fontWeight:'600'},
+            {onClick:async()=>{
+              await this.apiHandoff(sel.id, {agent:'Caroline', toOwner:null, pendingType:'nenhuma', status:'pronto', note:'Conteúdo aprovado via Dashboard'});
+              this.setState({detail:sel.id});
+            }},'Aprovar'),
+          btn('btn2',{minHeight:'40px',padding:'0 18px',border:'1px solid rgba(229,99,107,.4)',borderRadius:'8px',background:'rgba(229,99,107,.1)',color:'#F29A9F',fontSize:'13px',fontWeight:'600'},
+            {onClick:async()=>{
+              const note = returnNote.value.trim();
+              if (!note) { this.toast('Informe o motivo da devolução.'); return; }
+              await this.apiHandoff(sel.id, {agent:'Caroline', toOwner:'Creator', pendingType:'nenhuma', status:'em-producao', note:note});
+              this.setState({detail:sel.id});
+            }},'Devolver para ajustes'),
+          btn('btn2',{minHeight:'40px',padding:'0 18px',border:'1px solid rgba(229,99,107,.4)',borderRadius:'8px',background:'rgba(229,99,107,.15)',color:'#E5636B',fontSize:'13px',fontWeight:'600'},
+            {onClick:async()=>{
+              const note = returnNote.value.trim();
+              if (!note) { this.toast('Informe o motivo da rejeição no campo acima.'); return; }
+              const fresh = await (await fetch('/api/content/'+encodeURIComponent(sel.id))).json();
+              if (!fresh || fresh.error) { this.toast('Erro ao verificar revisão.'); return; }
+              const r = await this.apiPatch(sel.id, {status:'arquivado', confirmClosePending:true, note:note});
+              if (r) this.setState({detail:sel.id});
+            }},'Rejeitar pauta')
+        ));
+        panel.appendChild(approvalSec);
+      }
+
+      // Archived banner
+      if (sel.status === 'arquivado') {
+        const archBanner = div({padding:'14px',borderRadius:'10px',background:'rgba(229,99,107,.08)',border:'1px solid rgba(229,99,107,.25)',display:'flex',flexDirection:'column',gap:'6px'});
+        archBanner.appendChild(div({fontSize:'12px',fontWeight:'600',color:'#E5636B'},'Pauta arquivada'));
+        // Find the archival note from history
+        const archNote = sel.artifactPaths && sel.artifactPaths.historyArtifacts ? null : null;
+        archBanner.appendChild(div({fontSize:'12.5px',lineHeight:'1.5',color:'#A59BA6'},'Esta pauta foi rejeitada pela Caroline. Não está em produção nem no backlog. O histórico de decisões anteriores está preservado.'));
+        panel.appendChild(archBanner);
+      }
 
       // Info sections
       const kv = (arr) => arr.filter(x=>x[1]).map(x=>({k:x[0],v:String(x[1])}));
@@ -1406,8 +1911,100 @@
       if (sel.refs.visual) refRows.push({k:'Brief visual',v:'Associado'});
       panel.appendChild(renderSection('Referências', refRows));
 
+      // ---- MATERIAL COMPLETO ----
+      if (sel.artifactPaths) {
+        const ap = sel.artifactPaths;
+        const artSec = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'10px'});
+        artSec.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Material completo'));
+
+        // Open reading view in full screen
+        const openReadingView = async (filePath, label) => {
+          const screen = h('div',{style:{position:'fixed',top:'0',left:'0',right:'0',bottom:'0',zIndex:'100',background:'#110C13',display:'flex',flexDirection:'column',overflow:'hidden'}});
+          // Top bar
+          const topBar = div({flex:'none',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 28px',borderBottom:'1px solid rgba(255,255,255,.08)'});
+          topBar.appendChild(div({display:'flex',flexDirection:'column',gap:'2px'},
+            span({fontSize:'11px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},label),
+            span({fontSize:'15px',fontWeight:'600',color:'#F2EDF0'},sel.title)
+          ));
+          topBar.appendChild(btn('btn2',{minHeight:'40px',padding:'0 18px',border:'1px solid rgba(255,255,255,.12)',borderRadius:'8px',background:'rgba(255,255,255,.06)',color:'#F2EDF0',fontSize:'13px',fontWeight:'500'},{onClick:()=>screen.remove()},'Fechar'));
+          screen.appendChild(topBar);
+          // Scrollable body
+          const body = div({flex:'1',overflowY:'auto',padding:'28px',display:'flex',justifyContent:'center'});
+          const content = div({maxWidth:'640px',width:'100%',display:'flex',flexDirection:'column',gap:'16px'});
+          body.appendChild(content);
+          screen.appendChild(body);
+          document.body.appendChild(screen);
+          // Load and render
+          content.appendChild(span({fontSize:'13px',color:'#8A808C'},'Carregando…'));
+          try {
+            const r = await fetch('/api/artifact?path='+encodeURIComponent(filePath));
+            content.innerHTML = '';
+            if (!r.ok) { content.appendChild(span({color:'#E5636B'},'Erro ao carregar ('+r.status+')')); return; }
+            const md = await r.text();
+            // Parse content
+            const parsed = this._parseMdContent(md);
+            if (parsed) { content.appendChild(parsed); }
+            else {
+              // Fallback: render as clean text, line by line
+              md.split('\n').forEach(line => {
+                const t = line.trim();
+                if (!t) { content.appendChild(div({height:'8px'})); return; }
+                if (t.startsWith('# ')) { content.appendChild(div({fontSize:'20px',fontWeight:'600',lineHeight:'1.3',color:'#F2EDF0',padding:'8px 0 4px'},t.slice(2).replace(/\*\*/g,''))); return; }
+                if (t.startsWith('## ')) { content.appendChild(div({fontSize:'16px',fontWeight:'600',lineHeight:'1.3',color:'#CDBDF8',padding:'12px 0 4px'},t.slice(3).replace(/\*\*/g,''))); return; }
+                if (t.startsWith('### ')) { content.appendChild(div({fontSize:'14px',fontWeight:'600',lineHeight:'1.3',color:'#A59BA6',padding:'8px 0 2px'},t.slice(4).replace(/\*\*/g,''))); return; }
+                if (t.startsWith('- ') || t.startsWith('* ')) { content.appendChild(div({fontSize:'13.5px',lineHeight:'1.65',color:'#E4DCE6',paddingLeft:'16px'},'· '+t.slice(2).replace(/\*\*/g,''))); return; }
+                if (t.startsWith('---')) { content.appendChild(div({height:'1px',background:'rgba(255,255,255,.08)',margin:'8px 0'})); return; }
+                if (t.startsWith('>')) { content.appendChild(div({fontSize:'13.5px',lineHeight:'1.65',color:'#A59BA6',fontStyle:'italic',paddingLeft:'16px',borderLeft:'2px solid rgba(255,255,255,.1)'},t.slice(1).trim().replace(/\*\*/g,''))); return; }
+                content.appendChild(div({fontSize:'13.5px',lineHeight:'1.65',color:'#E4DCE6'},t.replace(/\*\*/g,'')));
+              });
+            }
+            // Source path at bottom
+            content.appendChild(div({marginTop:'20px',paddingTop:'16px',borderTop:'1px solid rgba(255,255,255,.06)',fontSize:'11px',color:'#5A525C'},'Arquivo: '+filePath));
+          } catch(e) { content.innerHTML = ''; content.appendChild(span({color:'#E5636B'},'Erro: '+e.message)); }
+        };
+
+        // Buttons to open reading view
+        const mkOpenBtn = (label, filePath, isPrimary) => {
+          if (!filePath) {
+            return div({display:'flex',alignItems:'center',gap:'8px'},
+              span({fontSize:'11.5px',color:'#5A525C'},label+':'),
+              span({fontSize:'11.5px',color:'#5A525C',fontStyle:'italic'},'não produzido'));
+          }
+          return btn('btn2',{minHeight:'34px',padding:'0 14px',border:isPrimary?'1px solid rgba(166,140,240,.3)':'1px solid rgba(255,255,255,.08)',borderRadius:'7px',background:isPrimary?'rgba(166,140,240,.1)':'rgba(255,255,255,.04)',color:isPrimary?'#CDBDF8':'#A59BA6',fontSize:'12px',fontWeight:'500',textAlign:'left',display:'flex',alignItems:'center',gap:'8px'},
+            {onClick:()=>openReadingView(filePath, label)},
+            span({},label), span({fontSize:'11px',color:'#8A808C'},'→ abrir leitura'));
+        };
+
+        artSec.appendChild(mkOpenBtn('Copy aprovada (cards + legenda)', ap.approvedCopy, true));
+        artSec.appendChild(mkOpenBtn('Brief visual', ap.visualBrief, false));
+        artSec.appendChild(mkOpenBtn('Brief estratégico', ap.brief, false));
+
+        // History artifacts as secondary list
+        if (ap.historyArtifacts && ap.historyArtifacts.length) {
+          const histWrap = div({paddingTop:'6px',borderTop:'1px solid rgba(255,255,255,.04)',display:'flex',flexDirection:'column',gap:'4px'});
+          histWrap.appendChild(span({fontSize:'10.5px',color:'#5A525C'},'Artefatos técnicos'));
+          ap.historyArtifacts.forEach(ha => {
+            const lbl = (ha.agent||'Agente') + (ha.type==='service-run'?' (serviço)':'');
+            histWrap.appendChild(btn('btn2',{minHeight:'26px',padding:'0 10px',border:'0',background:'transparent',color:'#6A5F6C',fontSize:'11px',textAlign:'left'},{onClick:()=>openReadingView(ha.path, lbl+': '+ha.path.split('/').pop())},lbl+' → '+ha.path.split('/').pop()));
+          });
+          artSec.appendChild(histWrap);
+        }
+
+        panel.appendChild(artSec);
+      }
+
+      // ---- COPY EDITORIAL (editor versionado; salvar != aprovar) ----
+      if (window.CopyEditor && sel.status !== 'backlog' && !sel.local) {
+        const copySec = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
+        copySec.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#CDBDF8'},'Copy editorial'));
+        copySec.appendChild(div({fontSize:'11.5px',lineHeight:'1.5',color:'#8A808C'}, sel.status==='publicado' ? 'Conteúdo publicado: a copy só pode ser consultada.' : 'Edite cards e legenda. Salvar cria um rascunho versionado e não aprova nem aciona agentes.'));
+        copySec.appendChild(btn('btn2',{alignSelf:'flex-start',minHeight:'36px',padding:'0 14px',border:'1px solid rgba(166,140,240,.3)',borderRadius:'8px',background:'rgba(166,140,240,.1)',color:'#CDBDF8',fontSize:'12.5px',fontWeight:'600'},
+          {'data-act':'open-copy-editor',onClick:()=>window.CopyEditor.open({id:sel.id,title:sel.title})}, sel.status==='publicado' ? 'Ver copy (somente leitura)' : 'Abrir editor de copy'));
+        panel.appendChild(copySec);
+      }
+
       // ---- PUBLICATION FORM (only for pronto or unpublished content without pending) ----
-      if (sel.status !== 'publicado' && sel.status !== 'backlog') {
+      if (sel.status !== 'publicado' && sel.status !== 'backlog' && sel.status !== 'arquivado') {
         const pubForm = div({padding:'12px 14px',borderRadius:'10px',background:'#1D1620',display:'flex',flexDirection:'column',gap:'8px'});
         pubForm.appendChild(div({fontSize:'11.5px',letterSpacing:'.08em',textTransform:'uppercase',fontWeight:'600',color:'#78D0A5'},'Registrar publicação'));
         const pubDate = h('input',{type:'date',id:'pub-date-'+sel.id,value:sel.publishDate||toISO(new Date()),style:{height:'34px',boxSizing:'border-box',padding:'0 10px',border:'1px solid rgba(255,255,255,.1)',borderRadius:'6px',background:'#1D1620',color:'#F2EDF0',fontSize:'12.5px',colorScheme:'dark'}});
@@ -1538,7 +2135,7 @@
           {onClick:()=>{this.discard(sel.id);this.toast(sel.title+': alterações locais descartadas');}},'Desfazer alterações locais'));
       }
 
-      panel.appendChild(div({fontSize:'11.5px',lineHeight:'1.5',color:'#8A808C'},'Os campos acima são uma simulação local. As edições aparecem em todas as telas desta página, mas não são gravadas no MOS.'));
+      panel.appendChild(div({fontSize:'11.5px',lineHeight:'1.5',color:'#8A808C'},'Edite os campos e clique "Salvar alterações" para gravar no pipeline. Aprovação e devolução usam o protocolo de handoff.'));
       overlay.appendChild(panel);
       return overlay;
     }

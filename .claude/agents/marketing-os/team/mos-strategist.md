@@ -1461,6 +1461,113 @@ patients.
 
 ---
 
+## EDITORIAL LEARNINGS FROM PUBLISHED CONTENT
+
+These learnings are derived from comparison between system-produced content
+and the final versions published by Dra. Caroline for posts 1.1 (Perimenopausa
+sem fogacho, published 2026-10-09) and 1.3 (Pólipo endometrial e histeroscopia).
+
+Provenance: baseline_T1_r1, baseline_T1_r2, baseline_T2_r1, approved versions
+T1 and T2, published version 1.1, and rejection of N-261008-154937.
+
+### CARD ARCHITECTURE
+
+Default to 6 cards for Instagram carousels.
+
+The system consistently produced 7 cards. Caroline consistently reduced to 6
+in both published posts. The seventh card (synthesis or extended orientation)
+was merged or eliminated.
+
+Do not plan a separate synthesis card and a separate orientation card when
+both can be accomplished in one.
+
+### OPENING ANGLE SELECTION
+
+The opening must create experiential recognition or raise a specific question
+the reader already has. It must not deliver topic-level information.
+
+System tendency to avoid:
+
+"Perimenopausa não é necessariamente calor."
+
+This is informational. It teaches before the reader has a reason to care.
+
+Published pattern:
+
+"Você não sente calores, mas sabe que algo mudou."
+
+This is recognition-driven. The reader identifies with the experience before
+understanding the clinical territory.
+
+For COMPREENSÃO content:
+
+"Seu ultrassom veio com 'pólipo endometrial'. Mas o que isso quer dizer na
+prática?"
+
+This is situational. The reader recognizes her exact circumstance.
+
+When briefing the Creator, specify whether the opening should be:
+
+- RECOGNITION (reader sees herself before understanding the topic)
+- SITUATIONAL (reader recognizes her exact circumstance)
+- QUESTION (reader recognizes a question she already has)
+
+Do not brief openings as informational statements about the medical topic.
+
+### TOPIC SEQUENCING WITHIN A TERRITORY
+
+Do not schedule a deeper-layer post (e.g., conduta) immediately after a
+compreensão post in the same territory.
+
+N-261008-154937 (conduta for pólipos) was rejected by Caroline after 1.3
+(compreensão for pólipos). Two reasons:
+
+1. Timing: too soon in the same territory — the audience needs time to absorb
+each layer before the next one.
+
+2. Framing: the brief presented "acompanhar versus tratar" as a generic
+decision framework. Caroline does not want content that frames watchful
+waiting for polyps as a generic alternative that may encourage delaying
+evaluation. She values individualized investigation, considering that
+malignancy risk exists even if generally low. This does NOT mean all polyps
+require immediate surgery — the conduct is individualized.
+
+When planning within a territory, space editorial layers appropriately. The
+priority is coverage across territories, not depth within one territory in
+rapid succession.
+
+If the pólipos conduta topic returns, do not use "acompanhar vs tratar" as
+equivalent options. Emphasize individualized evaluation, the role of
+hysteroscopy (diagnostic or surgical depending on context), and that the
+decision depends on clinical context.
+
+### RECOGNITION CONTENT ARCHITECTURE
+
+For RECONHECER function, plan one experience per card with no mechanism or
+explanation stacked on top.
+
+The system planned cards containing recognition + explanation + medical context
+in the same card. Caroline separated recognition from explanation and
+eliminated explanation within recognition cards.
+
+Brief the Creator with the principle: the reader should finish each
+recognition card thinking "this is me", not "I understand what this means
+medically."
+
+### COGNITIVE TERRITORY SELECTION
+
+Not every symptom territory needs a dedicated card.
+
+Caroline eliminated the cognição card entirely from 1.1. The published post
+covered sono, humor, ciclo, and the clinical clarification about fogacho.
+
+When selecting which territories to include, prioritize the most universal
+and least anxiety-inducing ones for the target audience. Cognição (word
+retrieval, concentration) may be better served in a separate, dedicated piece
+rather than compressed into a recognition carousel.
+
+---
+
 ## STATE REGISTRATION
 
 Ao concluir trabalho em um conteúdo, registrar handoff via API do Dashboard.

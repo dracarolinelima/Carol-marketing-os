@@ -12,7 +12,9 @@ const PRE_HANDOFF_PATH = DATA_PATH.replace(/\.json$/, '.pre-handoff.json');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 
 const SNAPSHOT_PATH = path.join(__dirname, 'data', 'dashboard-snapshot.json');
+const STRATEGY_PATH = path.join(__dirname, 'data', 'strategy.json');
 const V2_DIR = path.join(__dirname, 'v2');
+const COPY_DIR = process.env.COPY_DIR ? path.resolve(process.env.COPY_DIR) : path.join(__dirname, 'data', 'copy');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -21,7 +23,7 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
 };
 
-const VALID_STATUSES = ['backlog', 'selecionado', 'em-desenvolvimento', 'em-producao', 'revisao', 'pronto', 'publicado'];
+const VALID_STATUSES = ['backlog', 'selecionado', 'em-desenvolvimento', 'em-producao', 'revisao', 'pronto', 'publicado', 'arquivado'];
 const AGENTS = ['Orchestrator', 'Scientific Research', 'Strategist', 'Creator', 'Editor', 'Art Director'];
 const SERVICES = ['Audience Intelligence', 'Market Research', 'Performance Analyst'];
 const ALL_AGENTS = [...AGENTS, ...SERVICES, 'Caroline'];
@@ -59,7 +61,7 @@ function checkCoherence(item) {
     return { code: 'COERENCIA_C7', message: 'Servicos (Audience Intelligence, Market Research, Performance Analyst) nunca podem ser currentOwner.' };
   }
   // C8: backlog, pronto, publicado require null owner and nenhuma
-  if (['backlog', 'pronto', 'publicado'].includes(item.status)) {
+  if (['backlog', 'pronto', 'publicado', 'arquivado'].includes(item.status)) {
     if (item.currentOwner !== null || item.pendingType !== 'nenhuma') {
       return { code: 'COERENCIA_C8', message: 'Status backlog, pronto e publicado exigem currentOwner null e pendingType nenhuma.' };
     }
@@ -222,9 +224,18 @@ function matchRoute(pathname, pattern) {
   return params;
 }
 
+const copyStore = require('./copy-store').createCopyStore({
+  readPipeline, parseBody, sendJSON, PROJECT_ROOT, ALL_AGENTS, SERVICES, COPY_DIR,
+});
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   const pathname = url.pathname;
+
+  // ============ Copy Store (/api/content/:id/copy/...) ============
+  if (pathname.startsWith('/api/content/') && pathname.includes('/copy')) {
+    if (await copyStore.handle(req, res, pathname, url, matchRoute)) return;
+  }
 
   // ============ GET /api/pipeline ============
   if (pathname === '/api/pipeline' && req.method === 'GET') {
@@ -282,6 +293,7 @@ const server = http.createServer(async (req, res) => {
         nextAction: null,
         block: null,
         publishDate: null,
+        plannedWeek: body.plannedWeek || null,
         scientificPackage: null,
         scientificPackageStatus: null,
         approvedCopy: null,
@@ -367,12 +379,12 @@ const server = http.createServer(async (req, res) => {
       // Status change checks
       if (body.status && body.status !== item.status) {
         // pronto and publicado: only Caroline
-        if (['pronto', 'publicado'].includes(body.status) && body.agent !== 'Caroline') {
-          sendJSON(res, 403, { error: true, message: 'Somente Caroline pode definir status pronto ou publicado.' }); return;
+        if (['pronto', 'publicado', 'arquivado'].includes(body.status) && body.agent !== 'Caroline') {
+          sendJSON(res, 403, { error: true, message: 'Somente Caroline pode definir status pronto, publicado ou arquivado.' }); return;
         }
 
         // Check if moving to backlog/pronto/publicado with pending owner
-        if (['backlog', 'pronto', 'publicado'].includes(body.status)) {
+        if (['backlog', 'pronto', 'publicado', 'arquivado'].includes(body.status)) {
           if (item.currentOwner !== null || item.pendingType !== 'nenhuma') {
             if (!body.confirmClosePending) {
               sendJSON(res, 422, {
@@ -392,8 +404,8 @@ const server = http.createServer(async (req, res) => {
         const oldStatus = item.status;
         item.status = body.status;
         const now = new Date().toISOString();
-        const histNote = body._historyNote || body.confirmClosePending
-          ? (body._historyNote || '') + (body.confirmClosePending ? ' Pendencia fechada automaticamente.' : '')
+        const histNote = body.note || body._historyNote || body.confirmClosePending
+          ? (body.note || body._historyNote || '') + (body.confirmClosePending ? ' Pendencia fechada automaticamente.' : '')
           : null;
         item.history.push({
           type: 'status',
@@ -523,8 +535,8 @@ const server = http.createServer(async (req, res) => {
         );
         if (!isAllowed) {
           // pronto/publicado: 403 for non-Caroline
-          if (['pronto', 'publicado'].includes(body.status)) {
-            sendJSON(res, 403, { error: true, message: 'Somente Caroline pode definir status pronto ou publicado.' }); return;
+          if (['pronto', 'publicado', 'arquivado'].includes(body.status)) {
+            sendJSON(res, 403, { error: true, message: 'Somente Caroline pode definir status pronto, publicado ou arquivado.' }); return;
           }
           sendJSON(res, 422, { error: true, code: 'STATUS_TRANSITION', message: `Transicao ${item.status} para ${body.status} nao permitida para ${body.agent}.` }); return;
         }
@@ -562,7 +574,7 @@ const server = http.createServer(async (req, res) => {
       }
 
       // Handle closing pending when moving to backlog/pronto/publicado
-      if (body.status && ['backlog', 'pronto', 'publicado'].includes(body.status)) {
+      if (body.status && ['backlog', 'pronto', 'publicado', 'arquivado'].includes(body.status)) {
         if ((toOwner !== null && body.status !== 'pronto') || (item.currentOwner !== null && toOwner === undefined)) {
           // Will be handled by setting toOwner null for these states
         }
@@ -1000,6 +1012,47 @@ const server = http.createServer(async (req, res) => {
       sendJSON(res, 201, { path: relativePath, size: buffer.length, filename });
     } catch (e) {
       sendJSON(res, 400, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ GET /api/strategy ============
+  if (pathname === '/api/strategy' && req.method === 'GET') {
+    try {
+      if (fs.existsSync(STRATEGY_PATH)) {
+        const strategy = JSON.parse(fs.readFileSync(STRATEGY_PATH, 'utf-8'));
+        sendJSON(res, 200, strategy);
+      } else {
+        sendJSON(res, 404, { error: true, message: 'Estrategia nao encontrada. Execute o Strategist primeiro.' });
+      }
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
+    }
+    return;
+  }
+
+  // ============ GET /api/artifact?path=... ============
+  if (pathname === '/api/artifact' && req.method === 'GET') {
+    try {
+      const params = new URL(req.url, 'http://localhost').searchParams;
+      const relPath = params.get('path');
+      if (!relPath) { sendJSON(res, 400, { error: true, message: 'path query parameter required.' }); return; }
+      // Security: resolve relative to project root, reject traversal
+      const absPath = path.resolve(PROJECT_ROOT, relPath);
+      if (!absPath.startsWith(PROJECT_ROOT)) {
+        sendJSON(res, 403, { error: true, message: 'Path outside project.' }); return;
+      }
+      if (!absPath.endsWith('.md')) {
+        sendJSON(res, 400, { error: true, message: 'Only .md files allowed.' }); return;
+      }
+      if (!fs.existsSync(absPath)) {
+        sendJSON(res, 404, { error: true, message: 'File not found: ' + relPath }); return;
+      }
+      const content = fs.readFileSync(absPath, 'utf-8');
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+      res.end(content);
+    } catch (e) {
+      sendJSON(res, 500, { error: true, message: e.message });
     }
     return;
   }

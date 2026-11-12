@@ -65,7 +65,7 @@ A copywriting technique never overrides a higher-level source.
 
 Before writing any piece, read:
 
-`tests/marketing-os/voice-corpus.md`
+`memory/marketing-os/voice-corpus.md`
 
 This corpus shows how Dra. Caroline explains, guides, reassures and leads
 reasoning. Use it as a reference for mechanism and tone, not as a source of
@@ -1777,6 +1777,122 @@ The goal is not to make the content sound more persuasive.
 
 The goal is to make the right message clear, credible, useful and
 compelling to the right woman.
+
+---
+
+## EDITORIAL LEARNINGS FROM PUBLISHED CONTENT
+
+These learnings are derived from comparison between system-produced content
+and the final versions published by Dra. Caroline for posts 1.1 (Perimenopausa
+sem fogacho, published 2026-10-09) and 1.3 (Pólipo endometrial e histeroscopia).
+
+Provenance: baseline_T1_r1, baseline_T1_r2, baseline_T2_r1, approved versions
+T1 and T2, published version 1.1.
+
+### CARD DENSITY: 2-3 SENTENCES
+
+Caroline's published cards average 2-3 sentences each. System baseline cards
+averaged 4-6 sentences.
+
+Published example (1.1, Card 2):
+
+"Você acorda no meio da noite.
+Pela manhã, continua cansada."
+
+System baseline (T1 r2, Card 2):
+
+"O sono mudou.
+Você dorme, mas acorda no meio da noite. Fica acordada por uma hora, duas.
+Retorna ao sono, mas de manhã o descanso não está lá.
+Esse tipo de alteração de sono pode aparecer na transição menopausal. Não
+como sinal dramático. Como algo que vai mudando aos poucos, sem uma
+explicação óbvia."
+
+The system version explains the experience. The published version presents
+the experience for the reader to recognize.
+
+Default to the shorter form. Reserve longer explanations for cards whose
+editorial function is COMPREENSÃO, not RECONHECER.
+
+### RECOGNITION CONTENT: EXPERIENCE ONLY
+
+For RECONHECER content, do not explain within recognition cards. No mechanism,
+no medical term, no caveat, no "esse padrão pode ter contexto hormonal."
+
+Each recognition card is one experience, stated as something the reader can
+test against her own life.
+
+The clarification (e.g., "E não, você não precisa ter calores para estar na
+perimenopausa") comes after the recognition sequence, not within it.
+
+### FIRST PERSON FOR CLINICAL AUTHORITY
+
+Use first person when it builds personal clinical authority.
+
+Published (1.3, Card 4):
+
+"Com ela, eu consigo olhar diretamente dentro do útero e confirmar o que
+realmente está ali."
+
+System baseline (T2 r1, Card 4):
+
+"A histeroscopia é o exame de referência para confirmar o diagnóstico de
+pólipo endometrial. Ela permite visualizar a cavidade uterina diretamente."
+
+The first version sounds like a doctor explaining her own practice. The
+second sounds like a textbook.
+
+When the content describes something Dra. Caroline personally does (a
+procedure, an investigation, a clinical reasoning step), prefer first person.
+
+### CONSULTATION VOICE
+
+Published content sounds like a direct conversation between a doctor and a
+patient. System content sounds like an educational article.
+
+Structural signals of consultation voice:
+
+- "Você" addressing the reader directly
+- "Eu consigo" / "a gente consegue" for what the doctor does
+- Short, declarative sentences
+- No enumeration of medical criteria within conversational flow
+- No parenthetical qualifications
+
+Do not confuse consultation voice with informality. The voice is still
+authoritative. It is simply directed.
+
+### OPENING: RECOGNITION OVER INFORMATION
+
+Do not open with a teaching statement about the topic.
+
+System tendency:
+
+"A perimenopausa não começa com calor."
+
+Published pattern:
+
+"Você não sente calores, mas sabe que algo mudou."
+
+The published opening places the reader inside the experience. The system
+opening tells the reader a fact about perimenopause.
+
+For RECONHECER content, the opening should make the reader say "this is
+about me" before she knows the topic.
+
+For COMPREENSÃO content, the opening should make the reader say "this is my
+exact situation" before she receives the explanation.
+
+### 6 CARDS, NOT 7
+
+Default to 6 cards for Instagram carousels. Do not plan a separate synthesis
+card and a separate orientation card. Caroline consistently merged or
+eliminated the seventh card.
+
+### LEGENDA
+
+Published legendas are 3-4 clean paragraphs. No lists, no enumeration, no
+technical terms, no markdown formatting. The legenda adds context or
+perspective, not a summary of the cards.
 
 ---
 

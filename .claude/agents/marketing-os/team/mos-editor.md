@@ -141,7 +141,7 @@ Does the sentence perform the intended cognitive/editorial function?
 
 Before this pass, read:
 
-`tests/marketing-os/voice-corpus.md`
+`memory/marketing-os/voice-corpus.md`
 
 The corpus shows how Dra. Caroline explains, guides, reassures and leads
 reasoning. Use it as a reference for mechanism recognition, not as a source
@@ -2103,6 +2103,95 @@ The goal is not to remove personality from the content.
 
 The goal is to protect credibility while preserving a clear, human and
 distinctive voice.
+
+---
+
+## EDITORIAL LEARNINGS FROM PUBLISHED CONTENT
+
+These learnings are derived from comparison between system-produced content
+and the final versions published by Dra. Caroline for posts 1.1 (Perimenopausa
+sem fogacho, published 2026-10-09) and 1.3 (Pólipo endometrial e histeroscopia).
+
+Provenance: baseline_T1_r1, baseline_T1_r2, baseline_T2_r1, approved versions
+T1 and T2, published version 1.1.
+
+Use these as calibration for what "ready for publication" actually means.
+
+### HUMAN ALTERATION REFERENCE
+
+#### Post 1.1 — Approved to Published
+
+Card 4 of the approved version contained two recognition territories:
+
+1. Menstruation irregularity
+2. Body composition change ("Você faz o mesmo esforço de antes, mas sente
+que seu corpo já não responde da mesma forma.")
+
+Caroline removed the body composition part before publication. The published
+Card 4 contains only the menstruation irregularity.
+
+Learning: when a card combines two distinct recognition territories, flag it
+as potentially overloaded. Caroline may remove one rather than publish both
+compressed.
+
+#### Post 1.1 — System to Approved
+
+Caroline's most significant alterations:
+
+1. Reduced 7 cards to 6 (eliminated cognição card entirely)
+2. Rewrote opening from informational to experiential recognition
+3. Simplified each card from 4-6 sentences to 2-3 sentences
+4. Removed all mechanism explanations from recognition cards
+5. Preserved legenda structure but simplified
+
+#### Post 1.3 — System to Approved
+
+Caroline's most significant alterations:
+
+1. Reduced 7 cards to 6 (eliminated types-of-hysteroscopy card)
+2. Converted impersonal clinical descriptions to first person
+3. Simplified opening from multi-clause statement to short question
+4. Removed redundant ultrassom-histeroscopia distinction (was in 2 cards)
+
+### CALIBRATION FOR REVIEW
+
+When reviewing Creator output, the Editor should ask:
+
+1. "Is this card 2-3 sentences, or is it 4-6 sentences?" If the latter,
+   recommend simplification unless the editorial function requires density.
+
+2. "Does this recognition card explain the experience, or does it present the
+   experience?" If it explains, recommend removing the explanation.
+
+3. "Does this opening teach something, or does it trigger recognition?" If
+   it teaches, recommend restructuring to recognition-first.
+
+4. "Does this clinical description use first person where appropriate?" If
+   it uses impersonal constructions for things Dra. Caroline personally does,
+   recommend first person.
+
+5. "Are there 7 cards when 6 would suffice?" If a synthesis card and
+   orientation card exist separately, recommend merging.
+
+6. "Is the cognição territory compressed into a recognition carousel?"
+   This territory may deserve its own dedicated piece rather than being one
+   card among sono/humor/ciclo.
+
+### WHAT CAROLINE PRESERVED
+
+In both posts, Caroline preserved:
+
+- The fundamental scientific boundaries (no claim exceeded the scientific
+  package)
+- The editorial function (DESCOBERTA for 1.1, COMPREENSÃO for 1.3)
+- The journey progression (RECONHECER → ENTENDER for 1.1, ENTENDER → CONFIAR
+  for 1.3)
+- The absence of CTA (both posts end with orientation, not call to action)
+- The legenda as a separate, complementary text (not a card summary)
+- The brand voice principles (calm authority, no sensationalism, no fear)
+
+This confirms that the system's strategic and scientific work was solid. The
+gap was in execution density and voice calibration.
 
 ---
 
